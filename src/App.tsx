@@ -1,0 +1,242 @@
+import { Stethoscope, Palette, ChefHat, FlaskConical, PawPrint, Pill, Scale, Ruler } from 'lucide-react';
+import { useEffect } from 'react';
+import Lenis from '@studio-freight/lenis';
+import WaitlistForm from './components/WaitlistForm';
+
+const programs = [
+  { name: 'Future Dentist', icon: Stethoscope },
+  { name: 'Young Artist', icon: Palette },
+  { name: 'Young Chef', icon: ChefHat },
+  { name: 'Future Scientist', icon: FlaskConical },
+  { name: 'Future Vet', icon: PawPrint },
+  { name: 'Future Pharmacist', icon: Pill },
+  { name: 'Future Lawyer', icon: Scale },
+  { name: 'Young Designer', icon: Ruler },
+];
+
+const galleryItems = [
+  {
+    name: 'Future Dentist',
+    role: 'Future Dentist',
+    image: '/images/kid-dentist.png',
+  },
+  {
+    name: 'Young Artist',
+    role: 'Young Artist',
+    image: '/images/kid-artist.png',
+  },
+  {
+    name: 'Young Chef',
+    role: 'Young Chef',
+    image: '/images/kid-chef.png',
+  },
+  {
+    name: 'Future Scientist',
+    role: 'Future Scientist',
+    image: '/images/kid-scientist.png',
+  },
+  {
+    name: 'Future Vet',
+    role: 'Future Vet / Doctor',
+    image: '/images/kid-doctor.jpg',
+  },
+  {
+    name: 'Future Pharmacist',
+    role: 'Future Pharmacist',
+    image: '/images/kid-pharmacist.png',
+  },
+  {
+    name: 'Future Lawyer',
+    role: 'Future Lawyer',
+    image: '/images/kid-lawyer.png',
+  },
+  {
+    name: 'Young Designer',
+    role: 'Young Designer',
+    image: '/images/kid-designer.png',
+  },
+];
+
+function App() {
+  useEffect(() => {
+    const lenis = new Lenis({
+      lerp: 0.12,
+      smoothWheel: true,
+    });
+
+    const onRaf = (time: number) => {
+      lenis.raf(time);
+      requestAnimationFrame(onRaf);
+    };
+
+    requestAnimationFrame(onRaf);
+
+    return () => {
+      lenis.destroy();
+    };
+  }, []);
+
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-[#ffe8f0] via-[#fff7e5] to-white text-[#0e1f3e]">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
+        <header className="mb-16" id="hero">
+          <div className="flex flex-col lg:flex-row items-center gap-10">
+            <div className="flex-1 text-center lg:text-left">
+              <div className="inline-flex items-center mb-4 rounded-full bg-white/70 px-4 py-1 text-xs sm:text-sm font-semibold text-[#ca3433] shadow-sm">
+                <span className="mr-2 inline-block h-2 w-2 rounded-full bg-[#ca3433]" />
+                Big dreams for little professionals
+              </div>
+              <div className="flex items-center justify-center lg:justify-start gap-4 mb-4">
+                <div className="inline-flex items-center justify-center w-20 h-20 sm:w-24 sm:h-24 bg-[#ca3433] rounded-3xl rotate-3 shadow-lg">
+                  <span className="text-white text-4xl font-black">E</span>
+                </div>
+                <div className="text-left">
+                  <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight mb-2">
+                    Exceed&apos;s Future
+                    <span className="block text-[#ca3433]">Professionals Series</span>
+                  </h1>
+                  <p className="text-sm sm:text-base text-[#1f2a4d]/80">
+                    Fun, career-inspired adventures for curious kids in K-6  coming soon.
+                  </p>
+                </div>
+              </div>
+              <div className="flex flex-wrap justify-center lg:justify-start items-center gap-4">
+                <a
+                  href="#join"
+                  className="inline-flex items-center justify-center px-6 py-3 rounded-full bg-[#ca3433] text-white text-sm sm:text-base font-semibold shadow-md hover:bg-[#b1302f] transition-colors"
+                >
+                  Join the interest list
+                </a>
+                <a
+                  href="#about"
+                  className="inline-flex items-center justify-center px-5 py-2.5 rounded-full bg-white/80 text-[#0e1f3e] text-xs sm:text-sm font-semibold shadow-sm hover:bg-white transition-colors"
+                >
+                  See programs
+                </a>
+              </div>
+            </div>
+
+            <div className="flex-1 w-full max-w-md">
+              <div className="rounded-3xl bg-white/70 shadow-xl overflow-hidden">
+                <img
+                  src="/images/kids-group.png"
+                  alt="Kids exploring future careers together"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <main className="space-y-16">
+          <section id="about">
+            <div className="bg-white rounded-3xl shadow-xl p-8 sm:p-10 lg:p-12 max-w-4xl mx-auto">
+              <h2 className="text-3xl font-bold text-[#0e1f3e] mb-6 text-center">
+                Discover Your Future Career Potential
+              </h2>
+              <p className="text-lg text-gray-700 leading-relaxed mb-6">
+                This program helps children discover their future career potential by providing fun,
+                hands-on, and immersive experiences that answer the question:
+                <span className="font-semibold text-[#ca3433]"> "Who do you want to be when you grow up?"</span>
+              </p>
+              <p className="text-lg text-gray-700 leading-relaxed mb-8">
+                Through engaging activities like role-playing, guest speaker sessions, and interactive projects,
+                young students get an early, tangible sense of what different professions involve. The goal is to
+                spark curiosity, connect their school subjects to real-world jobs, and build a foundational
+                self-awareness of their interests, talents, and values. By experiencing a variety of careers at
+                a young age, children can gain clarity and confidence in understanding the possibilities for their future.
+              </p>
+
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
+                <div className="bg-[#f7e0e0] rounded-2xl p-6 text-center">
+                  <div className="text-4xl font-bold text-[#ca3433] mb-2">K-6</div>
+                  <div className="text-sm font-semibold text-[#0e1f3e]">Ages</div>
+                </div>
+                <div className="bg-[#f7e0e0] rounded-2xl p-6 text-center">
+                  <div className="text-2xl font-bold text-[#ca3433] mb-2">Taught by</div>
+                  <div className="text-sm font-semibold text-[#0e1f3e]">Professionals</div>
+                </div>
+                <div className="bg-[#f7e0e0] rounded-2xl p-6 text-center">
+                  <div className="text-2xl font-bold text-[#ca3433] mb-2">Hands-On</div>
+                  <div className="text-sm font-semibold text-[#0e1f3e]">Learning</div>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                {programs.map((program) => {
+                  const Icon = program.icon;
+                  return (
+                    <div
+                      key={program.name}
+                      className="flex flex-col items-center p-4 bg-[#f7e0e0] rounded-2xl hover:shadow-lg transition-shadow"
+                    >
+                      <Icon className="w-10 h-10 text-[#ca3433] mb-2" />
+                      <span className="text-xs sm:text-sm font-semibold text-[#0e1f3e] text-center">
+                        {program.name}
+                      </span>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </section>
+
+          <section id="gallery">
+            <div className="-mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8">
+              <h2 className="text-3xl font-bold text-[#0e1f3e] mb-4 text-center">
+                Kids in action
+              </h2>
+              <p className="text-base sm:text-lg text-gray-700 mb-8 text-center max-w-2xl mx-auto">
+                A peek at the kinds of hands-on adventures your child might experience 
+                from lab coats and chef hats to sketchbooks and stethoscopes.
+              </p>
+              <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3 sm:gap-4 md:gap-5 auto-rows-[140px] sm:auto-rows-[180px] md:auto-rows-[200px] lg:auto-rows-[220px]">
+                {galleryItems.map((item, index) => (
+                  <div
+                    key={item.name}
+                    className={`relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#ffe0e7] via-[#fff3c9] to-[#e0f3ff] border border-white shadow-md group col-span-1 md:col-span-2 ${
+                      index === 0
+                        ? 'md:row-span-2 lg:col-span-3'
+                        : index === 3
+                        ? 'lg:row-span-2'
+                        : index === 4
+                        ? 'lg:col-span-3'
+                        : index === 7
+                        ? 'md:col-span-4 lg:col-span-6 md:row-span-3 lg:row-span-3'
+                        : ''
+                    }`}
+                  >
+                    <img
+                      src={item.image}
+                      alt={item.name}
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-black/10 group-hover:bg-black/20 transition-colors" />
+                    <div className="absolute bottom-3 left-3 right-3 flex items-end justify-between gap-2 text-white">
+                      <div>
+                        <p className="text-[10px] uppercase tracking-wide font-semibold opacity-80">
+                          {item.role}
+                        </p>
+                        <p className="text-xs sm:text-sm font-bold">Future Professionals Series</p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          <section id="join">
+            <WaitlistForm />
+          </section>
+        </main>
+
+        <footer className="mt-10 text-center text-gray-600 text-sm">
+          <p>&copy; 2025 Exceed&apos;s Future Professionals Series. All rights reserved.</p>
+        </footer>
+      </div>
+    </div>
+  );
+}
+
+export default App;
