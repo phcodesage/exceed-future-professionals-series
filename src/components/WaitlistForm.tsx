@@ -100,29 +100,29 @@ export default function WaitlistForm() {
   };
 
   return (
-    <div className="max-w-3xl mx-auto bg-white rounded-2xl shadow-xl p-8 sm:p-10">
-      <h2 className="text-3xl font-bold text-[#0e1f3e] mb-2 text-center">Join the Interest List</h2>
-      <p className="text-gray-700 mb-1 text-center text-sm sm:text-base">
+    <div className="max-w-3xl mx-auto bg-white rounded-2xl shadow-xl p-10 sm:p-12">
+      <h2 className="text-4xl font-bold text-[#0e1f3e] mb-3 text-center">Join the Interest List</h2>
+      <p className="text-gray-700 mb-2 text-center text-base sm:text-lg">
         Exceed&apos;s Future Professionals Series is <span className="font-semibold">coming soon</span>.
       </p>
-      <p className="text-gray-700 mb-6 text-center text-xs sm:text-sm">
-        No payment needed yet  this is just a waitlist so we can keep you posted.
+      <p className="text-gray-700 mb-7 text-center text-sm sm:text-base">
+        No payment needed yet this is just a waitlist so we can keep you posted.
       </p>
 
       {submitted ? (
-        <div className="bg-green-50 border border-green-200 text-green-800 px-4 py-3 rounded-xl text-center">
+        <div className="bg-green-50 border border-green-200 text-green-800 px-6 py-4 rounded-xl text-center text-base sm:text-lg">
           Thank you! You&apos;re on the list. We&apos;ll reach out with program updates soon.
         </div>
       ) : (
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-7">
           {error && (
-            <div className="bg-red-50 border border-red-200 text-red-800 px-4 py-2 rounded-xl text-sm">
+            <div className="bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-xl text-sm sm:text-base">
               {error}
             </div>
           )}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div>
-              <label className="block text-sm font-semibold text-[#0e1f3e] mb-1" htmlFor="parentName">
+              <label className="block text-base font-semibold text-[#0e1f3e] mb-2" htmlFor="parentName">
                 Parent / Guardian Name
               </label>
               <input
@@ -132,12 +132,12 @@ export default function WaitlistForm() {
                 required
                 value={form.parentName}
                 onChange={handleChange}
-                className="w-full rounded-xl border border-gray-300 px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#ca3433] focus:border-[#ca3433]"
+                className="w-full rounded-xl border border-gray-300 px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-[#ca3433] focus:border-[#ca3433]"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-semibold text-[#0e1f3e] mb-1" htmlFor="childName">
+              <label className="block text-base font-semibold text-[#0e1f3e] mb-2" htmlFor="childName">
                 Child&apos;s Name
               </label>
               <input
@@ -147,14 +147,14 @@ export default function WaitlistForm() {
                 required
                 value={form.childName}
                 onChange={handleChange}
-                className="w-full rounded-xl border border-gray-300 px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#ca3433] focus:border-[#ca3433]"
+                className="w-full rounded-xl border border-gray-300 px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-[#ca3433] focus:border-[#ca3433]"
               />
             </div>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div>
-              <label className="block text-sm font-semibold text-[#0e1f3e] mb-1" htmlFor="email">
+              <label className="block text-base font-semibold text-[#0e1f3e] mb-2" htmlFor="email">
                 Email Address
               </label>
               <input
@@ -164,12 +164,12 @@ export default function WaitlistForm() {
                 required
                 value={form.email}
                 onChange={handleChange}
-                className="w-full rounded-xl border border-gray-300 px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#ca3433] focus:border-[#ca3433]"
+                className="w-full rounded-xl border border-gray-300 px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-[#ca3433] focus:border-[#ca3433]"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-semibold text-[#0e1f3e] mb-1" htmlFor="phone">
+              <label className="block text-base font-semibold text-[#0e1f3e] mb-2" htmlFor="phone">
                 Phone Number
               </label>
               <input
@@ -179,13 +179,13 @@ export default function WaitlistForm() {
                 required
                 value={form.phone}
                 onChange={handleChange}
-                className="w-full rounded-xl border border-gray-300 px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#ca3433] focus:border-[#ca3433]"
+                className="w-full rounded-xl border border-gray-300 px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-[#ca3433] focus:border-[#ca3433]"
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-sm font-semibold text-[#0e1f3e] mb-1" htmlFor="gradeLevel">
+            <label className="block text-base font-semibold text-[#0e1f3e] mb-2" htmlFor="gradeLevel">
               Child&apos;s Grade Level
             </label>
             <select
@@ -194,7 +194,7 @@ export default function WaitlistForm() {
               required
               value={form.gradeLevel}
               onChange={handleChange}
-              className="w-full rounded-xl border border-gray-300 px-4 py-2.5 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-[#ca3433] focus:border-[#ca3433]"
+              className="w-full rounded-xl border border-gray-300 px-4 py-3 text-base bg-white focus:outline-none focus:ring-2 focus:ring-[#ca3433] focus:border-[#ca3433]"
             >
               <option value="">Select grade</option>
               <option value="K">Kindergarten</option>
@@ -205,18 +205,18 @@ export default function WaitlistForm() {
           </div>
 
           <div>
-            <p className="block text-sm font-semibold text-[#0e1f3e] mb-2">
+            <p className="block text-base font-semibold text-[#0e1f3e] mb-3">
               Which careers is your child most interested in? (Choose all that apply)
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
               {programOptions.map((option) => (
-                <label key={option} className="inline-flex items-center gap-2 text-xs sm:text-sm text-[#0e1f3e]">
+                <label key={option} className="inline-flex items-center gap-3 text-sm sm:text-base text-[#0e1f3e]">
                   <input
                     type="checkbox"
                     value={option}
                     checked={form.programInterests.includes(option)}
                     onChange={handleProgramInterestChange}
-                    className="h-4 w-4 rounded border-gray-300 text-[#ca3433] focus:ring-[#ca3433]"
+                    className="h-5 w-5 rounded border-gray-300 text-[#ca3433] focus:ring-[#ca3433]"
                   />
                   <span>{option}</span>
                 </label>
@@ -225,16 +225,16 @@ export default function WaitlistForm() {
           </div>
 
           <div>
-            <label className="block text-sm font-semibold text-[#0e1f3e] mb-1" htmlFor="interests">
+            <label className="block text-base font-semibold text-[#0e1f3e] mb-2" htmlFor="interests">
               Anything else we should know? (optional)
             </label>
             <textarea
               id="interests"
               name="interests"
-              rows={3}
+              rows={4}
               value={form.interests}
               onChange={handleChange}
-              className="w-full rounded-xl border border-gray-300 px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#ca3433] focus:border-[#ca3433]"
+              className="w-full rounded-xl border border-gray-300 px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-[#ca3433] focus:border-[#ca3433]"
               placeholder="e.g., scheduling needs, additional interests, questions"
             />
           </div>
@@ -242,7 +242,7 @@ export default function WaitlistForm() {
           <button
             type="submit"
             disabled={submitting}
-            className="w-full sm:w-auto inline-flex justify-center px-8 py-3 rounded-full bg-[#ca3433] text-white text-sm font-semibold shadow-md hover:bg-[#b1302f] transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
+            className="w-full sm:w-auto inline-flex justify-center px-10 py-3.5 rounded-full bg-[#ca3433] text-white text-base sm:text-lg font-semibold shadow-md hover:bg-[#b1302f] transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
           >
             {submitting ? 'Submitting...' : 'Join Waitlist'}
           </button>
