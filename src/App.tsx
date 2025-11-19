@@ -87,8 +87,12 @@ function App() {
                 Big dreams for little professionals
               </div>
               <div className="flex items-center justify-center lg:justify-start gap-4 mb-4">
-                <div className="inline-flex items-center justify-center w-20 h-20 sm:w-24 sm:h-24 bg-[#ca3433] rounded-3xl rotate-3 shadow-lg">
-                  <span className="text-white text-4xl font-black">E</span>
+                <div className="inline-flex items-center justify-center w-20 h-20 sm:w-24 sm:h-24 bg-white rounded-3xl rotate-3 shadow-lg overflow-hidden">
+                  <img
+                    src="/images/logo.png"
+                    alt="Exceed logo"
+                    className="w-full h-full object-contain"
+                  />
                 </div>
                 <div className="text-left">
                   <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight mb-2">
