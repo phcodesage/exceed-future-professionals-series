@@ -1,7 +1,8 @@
 import { Stethoscope, Palette, ChefHat, FlaskConical, PawPrint, Pill, Scale, Ruler } from 'lucide-react';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Lenis from '@studio-freight/lenis';
 import WaitlistForm from './components/WaitlistForm';
+import AdminDashboard from './components/AdminDashboard';
 
 const programs = [
   { name: 'Future Dentist', icon: Stethoscope },
@@ -58,7 +59,18 @@ const galleryItems = [
 ];
 
 function App() {
+  const [isAdminRoute, setIsAdminRoute] = useState(false);
+
   useEffect(() => {
+    const updateRoute = () => {
+      if (typeof window !== 'undefined') {
+        const { pathname, hash } = window.location;
+        setIsAdminRoute(pathname.startsWith('/admin') || hash.startsWith('#/admin'));
+      }
+    };
+
+    updateRoute();
+
     const lenis = new Lenis({
       lerp: 0.12,
       smoothWheel: true,
@@ -71,10 +83,19 @@ function App() {
 
     requestAnimationFrame(onRaf);
 
+    window.addEventListener('hashchange', updateRoute);
+    window.addEventListener('popstate', updateRoute);
+
     return () => {
+      window.removeEventListener('hashchange', updateRoute);
+      window.removeEventListener('popstate', updateRoute);
       lenis.destroy();
     };
   }, []);
+
+  if (isAdminRoute) {
+    return <AdminDashboard />;
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#ffe8f0] via-[#fff7e5] to-white text-[#0e1f3e]">
