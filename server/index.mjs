@@ -2,6 +2,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import nodemailer from 'nodemailer';
 
 dotenv.config();
 
@@ -12,6 +13,26 @@ const MONGODB_URI = process.env.MONGODB_URI;
 if (!MONGODB_URI) {
   console.warn('MONGODB_URI is not set. Please add it to your .env file.');
 }
+
+// Email configuration
+const transporter = nodemailer.createTransport({
+  host: process.env.MAIL_SERVER,
+  port: process.env.MAIL_PORT,
+  secure: process.env.MAIL_USE_SSL === 'True',
+  auth: {
+    user: process.env.MAIL_USERNAME,
+    pass: process.env.MAIL_PASSWORD,
+  },
+});
+
+// Verify email configuration
+transporter.verify((error, success) => {
+  if (error) {
+    console.warn('Email configuration error:', error);
+  } else {
+    console.log('Email server is ready to send messages');
+  }
+});
 
 app.use(cors());
 app.use(express.json());
@@ -50,6 +71,31 @@ app.post('/api/waitlist', async (req, res) => {
     });
 
     await entry.save();
+
+    // Send email notification
+    try {
+      const mailOptions = {
+        from: process.env.MAIL_DEFAULT_SENDER || process.env.MAIL_USERNAME,
+        to: process.env.MAIL_RECEIVER,
+        subject: 'New Waitlist Entry - Exceed Future Professionals Series',
+        html: `
+          <h2>New Waitlist Entry Received</h2>
+          <p><strong>Parent Name:</strong> ${parentName}</p>
+          <p><strong>Child Name:</strong> ${childName}</p>
+          <p><strong>Email:</strong> ${email}</p>
+          <p><strong>Phone:</strong> ${phone}</p>
+          <p><strong>Grade Level:</strong> ${gradeLevel}</p>
+          <p><strong>Program Interests:</strong> ${programInterests.length > 0 ? programInterests.join(', ') : 'None specified'}</p>
+          <p><strong>Additional Interests:</strong> ${interests || 'None specified'}</p>
+          <p><strong>Submitted:</strong> ${new Date().toLocaleString()}</p>
+        `,
+      };
+
+      await transporter.sendMail(mailOptions);
+      console.log('Notification email sent successfully');
+    } catch (emailError) {
+      console.error('Failed to send notification email:', emailError);
+    }
 
     return res.status(201).json({ message: 'Waitlist entry saved.' });
   } catch (error) {
