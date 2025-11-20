@@ -71,7 +71,7 @@ export default function WaitlistForm() {
       interests: form.interests,
     };
 
-    const rawBaseUrl = import.meta.env.VITE_API_URL;
+    const rawBaseUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
     const baseUrl = rawBaseUrl.replace(/\/+$/, '');
 
     setSubmitting(true);
