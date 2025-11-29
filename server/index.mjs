@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
+import mailchimp from '@mailchimp/mailchimp_marketing';
 
 dotenv.config();
 
@@ -12,6 +13,18 @@ const MONGODB_URI = process.env.MONGODB_URI;
 const ADMIN_USERNAME = process.env.ADMIN_USERNAME;
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
 const JWT_SECRET = process.env.JWT_SECRET;
+const MAILCHIMP_API_KEY = process.env.MAILCHIMP_API_KEY;
+const MAILCHIMP_SERVER_PREFIX = process.env.MAILCHIMP_SERVER_PREFIX;
+const MAILCHIMP_AUDIENCE_ID = process.env.MAILCHIMP_AUDIENCE_ID;
+
+if (MAILCHIMP_API_KEY && MAILCHIMP_SERVER_PREFIX) {
+  mailchimp.setConfig({
+    apiKey: MAILCHIMP_API_KEY,
+    server: MAILCHIMP_SERVER_PREFIX,
+  });
+} else {
+  console.warn('Mailchimp credentials not found. Mailchimp integration disabled.');
+}
 
 if (!MONGODB_URI) {
   console.warn('MONGODB_URI is not set. Please add it to your .env file.');
@@ -118,6 +131,29 @@ app.post('/api/waitlist', async (req, res) => {
     });
 
     await entry.save();
+
+    // Add to Mailchimp
+    if (MAILCHIMP_API_KEY && MAILCHIMP_AUDIENCE_ID) {
+      try {
+        const [firstName, ...lastNameParts] = parentName.split(' ');
+        const lastName = lastNameParts.join(' ') || '';
+
+        await mailchimp.lists.addListMember(MAILCHIMP_AUDIENCE_ID, {
+          email_address: email,
+          status: 'subscribed',
+          tags: ['Exceed-Website-Signup'],
+          merge_fields: {
+            FNAME: firstName,
+            LNAME: lastName,
+            PHONE: phone,
+          },
+        });
+        console.log(`Added ${email} to Mailchimp.`);
+      } catch (mcError) {
+        console.error('Error adding to Mailchimp:', mcError.response ? mcError.response.body : mcError);
+        // Do not fail the request if Mailchimp fails, as the DB save was successful
+      }
+    }
 
     return res.status(201).json({ message: 'Waitlist entry saved.' });
   } catch (error) {
