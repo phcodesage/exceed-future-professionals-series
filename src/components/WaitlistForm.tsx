@@ -1,6 +1,7 @@
 import { FormEvent, useState } from 'react';
 
 const programOptions = [
+  'Future Doctor',
   'Future Dentist',
   'Young Artist',
   'Young Chef',
