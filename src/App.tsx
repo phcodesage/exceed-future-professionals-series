@@ -9,7 +9,7 @@ const galleryItems = [
   {
     name: 'Future Dentist',
     role: 'Future Dentist',
-    video: '/videos/8471342-uhd_2160_4096_25fps.mp4',
+    video: '/videos/Young_Dentist_Checks_Stuffed_Toy.mp4',
   },
   {
     name: 'Young Artist',
@@ -19,7 +19,7 @@ const galleryItems = [
   {
     name: 'Young Chef',
     role: 'Young Chef',
-    video: '/videos/8926563-hd_1080_1920_25fps.mp4',
+    video: '/videos/Child_Chef_Video_Generation.mp4',
   },
   {
     name: 'Future Scientist',
@@ -32,19 +32,14 @@ const galleryItems = [
     video: '/videos/8471427-uhd_2160_4096_25fps.mp4',
   },
   {
-    name: 'Future Pharmacist',
-    role: 'Future Pharmacist',
-    video: '/videos/8926576-hd_1080_1920_25fps.mp4',
-  },
-  {
-    name: 'Future Lawyer',
-    role: 'Future Lawyer',
-    video: '/videos/8471427-uhd_2160_4096_25fps.mp4',
-  },
-  {
     name: 'Young Designer',
     role: 'Young Designer',
     video: '/videos/8471342-uhd_2160_4096_25fps.mp4',
+  },
+  {
+    name: 'Future Pharmacist',
+    role: 'Future Pharmacist',
+    video: '/videos/5519028-uhd_2160_3840_24fps.mp4',
   },
 ];
 
@@ -236,19 +231,13 @@ function App() {
                 A peek at the kinds of hands-on adventures your child might experience  —
                 from lab coats and chef hats to sketchbooks and stethoscopes.
               </p>
-              <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 sm:gap-5 md:gap-6 auto-rows-[160px] sm:auto-rows-[200px] md:auto-rows-[220px] lg:auto-rows-[240px]">
+              <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 sm:gap-5 md:gap-6 auto-rows-[200px] sm:auto-rows-[260px] md:auto-rows-[300px] lg:auto-rows-[340px]">
                 {galleryItems.map((item, index) => (
                   <div
                     key={item.name}
-                    className={`relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#ffe0e7] via-[#fff3c9] to-[#e0f3ff] border border-white shadow-md group col-span-1 md:col-span-2 ${index === 0
-                      ? 'md:row-span-2 lg:col-span-3'
-                      : index === 3
-                        ? 'lg:row-span-2'
-                        : index === 4
-                          ? 'lg:col-span-3'
-                          : index === 7
-                            ? 'md:col-span-4 lg:col-span-6 md:row-span-3 lg:row-span-3'
-                            : ''
+                    className={`relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#ffe0e7] via-[#fff3c9] to-[#e0f3ff] border border-white shadow-md group col-span-1 md:col-span-2 md:row-span-2 ${index <= 2
+                        ? 'lg:col-span-2'
+                        : 'lg:col-span-3'
                       }`}
                   >
                     <video
