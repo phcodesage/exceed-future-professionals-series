@@ -77,12 +77,41 @@ function App() {
     window.addEventListener('hashchange', updateRoute);
     window.addEventListener('popstate', updateRoute);
 
+    // Store lenis instance on window for access in other effects
+    (window as any).lenisInstance = lenis;
+
     return () => {
       window.removeEventListener('hashchange', updateRoute);
       window.removeEventListener('popstate', updateRoute);
       lenis.destroy();
+      delete (window as any).lenisInstance;
     };
   }, []);
+
+  // Lock body scroll when modal is open
+  useEffect(() => {
+    if (selectedProgram) {
+      // Stop Lenis smooth scroll
+      const lenis = (window as any).lenisInstance;
+      if (lenis) {
+        lenis.stop();
+      }
+      // Prevent body scroll
+      document.body.style.overflow = 'hidden';
+    } else {
+      // Resume Lenis smooth scroll
+      const lenis = (window as any).lenisInstance;
+      if (lenis) {
+        lenis.start();
+      }
+      // Restore body scroll
+      document.body.style.overflow = '';
+    }
+
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [selectedProgram]);
 
   if (isAdminRoute) {
     return <AdminDashboard />;
@@ -251,8 +280,9 @@ function App() {
       {selectedProgram && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm" onClick={() => setSelectedProgram(null)}>
           <div
-            className="bg-white rounded-3xl w-full max-w-4xl max-h-[90vh] overflow-y-auto shadow-2xl animate-in fade-in zoom-in duration-300"
+            className="bg-white rounded-3xl w-full max-w-4xl max-h-[90vh] overflow-y-auto shadow-2xl animate-in fade-in zoom-in duration-300 overscroll-y-contain"
             onClick={(e) => e.stopPropagation()}
+            data-lenis-prevent
           >
             <div className="sticky top-0 z-10 flex items-center justify-between p-6 bg-white border-b border-gray-100">
               <div className="flex items-center gap-4">

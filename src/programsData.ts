@@ -8,7 +8,7 @@ export const programs = [
         hasSyllabus: true,
         content: [
             {
-                title: 'Part 1: Semester 1 - 6 weeks',
+                title: 'Semester 1 - 6 weeks',
                 schedules: [
                     {
                         grades: 'K-2',
@@ -35,7 +35,7 @@ export const programs = [
                 ],
             },
             {
-                title: 'Part 2: Semester 2 - 6 weeks + White Coat Ceremony',
+                title: 'Semester 2 - 6 weeks + White Coat Ceremony',
                 ceremony: 'White Coat Ceremony and Graduation: all sections: April 5, 2pm.',
                 schedules: [
                     {
@@ -71,7 +71,7 @@ export const programs = [
         hasSyllabus: true,
         content: [
             {
-                title: 'Part 1: Semester 1 - 6 weeks',
+                title: 'Semester 1 - 6 weeks',
                 schedules: [
                     {
                         grades: 'K-2',
@@ -98,7 +98,7 @@ export const programs = [
                 ],
             },
             {
-                title: 'Part 2: Semester 2 - 6 weeks + White Coat Ceremony',
+                title: 'Semester 2 - 6 weeks + White Coat Ceremony',
                 ceremony: 'White Coat Ceremony and Graduation: all sections: April 5, 4pm.',
                 schedules: [
                     {
@@ -126,24 +126,6 @@ export const programs = [
                 ],
             },
         ],
-    },
-    {
-        id: 'lawyer',
-        name: 'Future Lawyer',
-        icon: Scale,
-        hasSyllabus: false,
-    },
-    {
-        id: 'vet',
-        name: 'Future Vet',
-        icon: PawPrint,
-        hasSyllabus: false,
-    },
-    {
-        id: 'pharmacist',
-        name: 'Future Pharmacist',
-        icon: Pill,
-        hasSyllabus: false,
     },
     {
         id: 'chef',
@@ -183,12 +165,6 @@ export const programs = [
         ],
     },
     {
-        id: 'scientist',
-        name: 'Future Scientist',
-        icon: FlaskConical,
-        hasSyllabus: false,
-    },
-    {
         id: 'artist',
         name: 'Young Artist',
         icon: Palette,
@@ -224,5 +200,29 @@ export const programs = [
                 ],
             },
         ],
+    },
+    {
+        id: 'lawyer',
+        name: 'Future Lawyer',
+        icon: Scale,
+        hasSyllabus: false,
+    },
+    {
+        id: 'vet',
+        name: 'Future Vet',
+        icon: PawPrint,
+        hasSyllabus: false,
+    },
+    {
+        id: 'pharmacist',
+        name: 'Future Pharmacist',
+        icon: Pill,
+        hasSyllabus: false,
+    },
+    {
+        id: 'scientist',
+        name: 'Future Scientist',
+        icon: FlaskConical,
+        hasSyllabus: false,
     },
 ];
