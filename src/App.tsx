@@ -236,8 +236,8 @@ function App() {
                   <div
                     key={item.name}
                     className={`relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#ffe0e7] via-[#fff3c9] to-[#e0f3ff] border border-white shadow-md group col-span-1 md:col-span-2 md:row-span-2 ${index <= 2
-                        ? 'lg:col-span-2'
-                        : 'lg:col-span-3'
+                      ? 'lg:col-span-2'
+                      : 'lg:col-span-3'
                       }`}
                   >
                     <video
@@ -355,13 +355,37 @@ function App() {
               )}
             </div>
 
-            <div className="p-6 border-t border-gray-100 bg-gray-50 flex justify-end">
+            <div className="p-6 border-t border-gray-100 bg-gray-50 flex flex-col sm:flex-row items-center justify-end gap-4">
+              <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
+                {/* Single Semester Option */}
+                <a
+                  href="https://buy.stripe.com/5kQ28k9Kk9se9S92SfdfG01"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-6 py-3 bg-[#ca3433] text-white font-semibold rounded-full shadow-md hover:bg-[#b1302f] transition-colors text-center"
+                >
+                  {selectedProgram.content && selectedProgram.content.length > 1 ? 'Register for Semester 1' : 'Register Now'}
+                </a>
+
+                {/* Two Semester Option (only if applicable) */}
+                {selectedProgram.content && selectedProgram.content.length > 1 && (
+                  <a
+                    href="https://buy.stripe.com/14A14g8Gg47Uc0hgJ5dfG07"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-6 py-3 bg-[#0e1f3e] text-white font-semibold rounded-full shadow-md hover:bg-[#1f2a4d] transition-colors text-center"
+                  >
+                    Register for Full Year
+                  </a>
+                )}
+              </div>
+
               <button
                 onClick={() => {
                   setSelectedProgram(null);
                   document.getElementById('join')?.scrollIntoView({ behavior: 'smooth' });
                 }}
-                className="px-6 py-3 bg-[#ca3433] text-white font-semibold rounded-full shadow-md hover:bg-[#b1302f] transition-colors"
+                className="px-6 py-3 bg-white border-2 border-gray-200 text-gray-600 font-semibold rounded-full hover:bg-gray-50 transition-colors"
               >
                 Join Waitlist
               </button>
