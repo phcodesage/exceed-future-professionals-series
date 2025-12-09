@@ -7,34 +7,14 @@ import { programs } from './programsData';
 
 const galleryItems = [
   {
-    name: 'Future Dentist',
+    name: 'Future Dentist (Realistic)',
+    role: 'Future Dentist',
+    video: '/videos/Realistic_Dentist_Girl_Video_Generation.mp4',
+  },
+  {
+    name: 'Future Dentist (Play)',
     role: 'Future Dentist',
     video: '/videos/Young_Dentist_Checks_Stuffed_Toy.mp4',
-  },
-  {
-    name: 'Young Artist',
-    role: 'Young Artist',
-    video: '/videos/8926576-hd_1080_1920_25fps.mp4',
-  },
-  {
-    name: 'Young Chef',
-    role: 'Young Chef',
-    video: '/videos/Child_Chef_Video_Generation.mp4',
-  },
-  {
-    name: 'Future Scientist',
-    role: 'Future Scientist',
-    video: '/videos/8926563-hd_1080_1920_25fps.mp4',
-  },
-  {
-    name: 'Future Vet',
-    role: 'Future Vet / Doctor',
-    video: '/videos/8471427-uhd_2160_4096_25fps.mp4',
-  },
-  {
-    name: 'Young Designer',
-    role: 'Young Designer',
-    video: '/videos/8471342-uhd_2160_4096_25fps.mp4',
   },
   {
     name: 'Future Pharmacist',
@@ -375,7 +355,7 @@ function App() {
                     rel="noopener noreferrer"
                     className="px-6 py-3 bg-[#0e1f3e] text-white font-semibold rounded-full shadow-md hover:bg-[#1f2a4d] transition-colors text-center"
                   >
-                    Register for Full Year
+                    Register for 2 Semesters
                   </a>
                 )}
               </div>
