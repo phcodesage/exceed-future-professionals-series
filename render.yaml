@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: exceed-future-professionals-backend
+    env: node
+    plan: free
+    buildCommand: npm install
+    startCommand: node server/index.mjs
+    envVars:
+      - key: MONGODB_URI
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: ADMIN_USERNAME
+        sync: false
+      - key: ADMIN_PASSWORD
+        sync: false
+      - key: MAILCHIMP_API_KEY
+        sync: false
+      - key: MAILCHIMP_SERVER_PREFIX
+        sync: false
+      - key: MAILCHIMP_AUDIENCE_ID
+        sync: false
