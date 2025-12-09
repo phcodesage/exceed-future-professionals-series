@@ -36,6 +36,7 @@ export default function WaitlistForm() {
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
 
   const handleChange = (e: any) => {
     const { name, value } = e.target;
@@ -111,8 +112,35 @@ export default function WaitlistForm() {
       </p>
 
       {submitted ? (
-        <div className="bg-green-50 border border-green-200 text-green-800 px-6 py-4 rounded-xl text-center text-base sm:text-lg">
-          Thank you! You&apos;re on the list. We&apos;ll reach out with program updates soon.
+        <div className="bg-green-50 border border-green-200 text-green-800 px-6 py-4 rounded-xl text-center">
+          <p className="text-base sm:text-lg font-semibold mb-4">
+            Thank you! You&apos;re on the list. We&apos;ll reach out with program updates soon.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-3 justify-center mt-6">
+            <button
+              onClick={() => setShowPaymentModal(true)}
+              className="inline-flex items-center justify-center px-6 py-3 rounded-full bg-[#ca3433] text-white text-base font-semibold shadow-md hover:bg-[#b1302f] transition-colors"
+            >
+              Register Now
+            </button>
+            <button
+              onClick={() => {
+                setSubmitted(false);
+                setForm({
+                  parentName: '',
+                  childName: '',
+                  email: '',
+                  phone: '',
+                  gradeLevel: '',
+                  programInterests: [],
+                  interests: '',
+                });
+              }}
+              className="inline-flex items-center justify-center px-6 py-3 rounded-full bg-white border-2 border-gray-300 text-gray-700 text-base font-semibold hover:bg-gray-50 transition-colors"
+            >
+              Exit
+            </button>
+          </div>
         </div>
       ) : (
         <form onSubmit={handleSubmit} className="space-y-7">
@@ -248,6 +276,50 @@ export default function WaitlistForm() {
             {submitting ? 'Submitting...' : 'Join Waitlist'}
           </button>
         </form>
+      )}
+
+      {/* Payment Options Modal */}
+      {showPaymentModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm" onClick={() => setShowPaymentModal(false)}>
+          <div
+            className="bg-white rounded-3xl w-full max-w-md shadow-2xl animate-in fade-in zoom-in duration-300"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="p-6 sm:p-8">
+              <h3 className="text-2xl font-bold text-[#0e1f3e] mb-4 text-center">Choose Your Registration</h3>
+              <p className="text-gray-600 mb-6 text-center">Select the option that works best for you:</p>
+
+              <div className="space-y-4">
+                <a
+                  href="https://buy.stripe.com/5kQ28k9Kk9se9S92SfdfG01"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block w-full px-6 py-4 rounded-xl bg-[#ca3433] text-white text-center font-semibold shadow-md hover:bg-[#b1302f] transition-colors"
+                >
+                  <div className="text-lg mb-1">Semester 1 Only</div>
+                  <div className="text-sm opacity-90">Single semester registration</div>
+                </a>
+
+                <a
+                  href="https://buy.stripe.com/14A14g8Gg47Uc0hgJ5dfG07"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block w-full px-6 py-4 rounded-xl bg-[#0e1f3e] text-white text-center font-semibold shadow-md hover:bg-[#1f2a4d] transition-colors"
+                >
+                  <div className="text-lg mb-1">2 Semesters</div>
+                  <div className="text-sm opacity-90">Full year registration</div>
+                </a>
+              </div>
+
+              <button
+                onClick={() => setShowPaymentModal(false)}
+                className="mt-6 w-full px-6 py-3 rounded-full bg-gray-100 text-gray-700 font-semibold hover:bg-gray-200 transition-colors"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );
