@@ -6,6 +6,9 @@ export const programs = [
         name: 'Future Doctor',
         icon: Stethoscope,
         hasSyllabus: true,
+        videos: [
+            '/videos/5519028-uhd_2160_3840_24fps.mp4',
+        ],
         content: [
             {
                 title: 'Semester 1 - 6 weeks',
@@ -69,6 +72,10 @@ export const programs = [
         name: 'Future Dentist',
         icon: Smile,
         hasSyllabus: true,
+        videos: [
+            '/videos/Realistic_Dentist_Girl_Video_Generation.mp4',
+            '/videos/Young_Dentist_Checks_Stuffed_Toy.mp4',
+        ],
         content: [
             {
                 title: 'Semester 1 - 6 weeks',
@@ -132,6 +139,7 @@ export const programs = [
         name: 'Young Chef',
         icon: ChefHat,
         hasSyllabus: true,
+        videos: [],
         content: [
             {
                 title: '8 Weeks Program',
@@ -169,6 +177,7 @@ export const programs = [
         name: 'Young Artist',
         icon: Palette,
         hasSyllabus: true,
+        videos: [],
         content: [
             {
                 title: '8 Weeks Program',
@@ -206,23 +215,27 @@ export const programs = [
         name: 'Future Lawyer',
         icon: Scale,
         hasSyllabus: false,
+        videos: [],
     },
     {
         id: 'vet',
         name: 'Future Vet',
         icon: PawPrint,
         hasSyllabus: false,
+        videos: [],
     },
     {
         id: 'pharmacist',
         name: 'Future Pharmacist',
         icon: Pill,
         hasSyllabus: false,
+        videos: [],
     },
     {
         id: 'scientist',
         name: 'Future Scientist',
         icon: FlaskConical,
         hasSyllabus: false,
+        videos: [],
     },
 ];

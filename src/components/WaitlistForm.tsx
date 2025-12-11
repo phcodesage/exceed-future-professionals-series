@@ -223,7 +223,7 @@ export default function WaitlistForm() {
               required
               value={form.gradeLevel}
               onChange={handleChange}
-              className="w-full rounded-xl border border-gray-300 px-4 py-3 text-base bg-white focus:outline-none focus:ring-2 focus:ring-[#ca3433] focus:border-[#ca3433]"
+              className="w-full rounded-xl border border-gray-300 px-4 py-3 text-base bg-white focus:outline-none focus:ring-2 focus:ring-[#ca3433] focus:border-[#ca3433] accent-[#ca3433]"
             >
               <option value="">Select grade</option>
               <option value="K">Kindergarten</option>
@@ -245,7 +245,7 @@ export default function WaitlistForm() {
                     value={option}
                     checked={form.programInterests.includes(option)}
                     onChange={handleProgramInterestChange}
-                    className="h-5 w-5 rounded border-gray-300 text-[#ca3433] focus:ring-[#ca3433]"
+                    className="h-5 w-5 rounded border-gray-300 text-[#ca3433] focus:ring-[#ca3433] accent-[#ca3433]"
                   />
                   <span>{option}</span>
                 </label>

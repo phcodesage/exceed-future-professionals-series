@@ -66,20 +66,61 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
                     const [firstName, ...lastNameParts] = parentName.split(' ');
                     const lastName = lastNameParts.join(' ') || '';
 
-                    await mailchimp.lists.addListMember(MAILCHIMP_AUDIENCE_ID, {
+                    const memberData = {
                         email_address: email,
-                        status: 'subscribed',
+                        status: 'subscribed' as const,
                         tags: ['Exceed-Website-Signup'],
                         merge_fields: {
                             FNAME: firstName,
                             LNAME: lastName,
                             PHONE: phone,
                         },
-                    });
-                    console.log(`Added ${email} to Mailchimp.`);
+                    };
+
+                    try {
+                        // Try to add as new member
+                        await mailchimp.lists.addListMember(MAILCHIMP_AUDIENCE_ID, memberData);
+                        console.log(`Added ${email} to Mailchimp.`);
+                    } catch (addError: any) {
+                        // Check if member already exists
+                        if (addError.status === 400 && addError.response?.body?.title === 'Member Exists') {
+                            console.log(`Member ${email} already exists. Re-triggering welcome automation...`);
+
+                            // Get subscriber hash for the email
+                            const crypto = require('crypto');
+                            const subscriberHash = crypto
+                                .createHash('md5')
+                                .update(email.toLowerCase())
+                                .digest('hex');
+
+                            // Step 1: Temporarily unsubscribe to reset automation
+                            await mailchimp.lists.updateListMember(
+                                MAILCHIMP_AUDIENCE_ID,
+                                subscriberHash,
+                                {
+                                    status: 'unsubscribed',
+                                }
+                            );
+                            console.log(`Temporarily unsubscribed ${email}`);
+
+                            // Step 2: Re-subscribe with updated info to trigger automation
+                            await mailchimp.lists.updateListMember(
+                                MAILCHIMP_AUDIENCE_ID,
+                                subscriberHash,
+                                {
+                                    ...memberData,
+                                    status: 'subscribed',
+                                }
+                            );
+                            console.log(`Re-subscribed ${email} - welcome automation should trigger`);
+                        } else {
+                            // Different error, log it
+                            throw addError;
+                        }
+                    }
                 } catch (mcError: any) {
                     console.error(
-                        'Error adding to Mailchimp:',
+                        'Error with Mailchimp:',
                         mcError.response ? mcError.response.body : mcError
                     );
                     // Do not fail the request if Mailchimp fails, as the DB save was successful

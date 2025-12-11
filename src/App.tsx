@@ -5,23 +5,6 @@ import WaitlistForm from './components/WaitlistForm';
 import AdminDashboard from './components/AdminDashboard';
 import { programs } from './programsData';
 
-const galleryItems = [
-  {
-    name: 'Future Dentist (Realistic)',
-    role: 'Future Dentist',
-    video: '/videos/Realistic_Dentist_Girl_Video_Generation.mp4',
-  },
-  {
-    name: 'Future Dentist (Play)',
-    role: 'Future Dentist',
-    video: '/videos/Young_Dentist_Checks_Stuffed_Toy.mp4',
-  },
-  {
-    name: 'Future Pharmacist',
-    role: 'Future Pharmacist',
-    video: '/videos/5519028-uhd_2160_3840_24fps.mp4',
-  },
-];
 
 function App() {
   const [isAdminRoute, setIsAdminRoute] = useState(false);
@@ -182,55 +165,54 @@ function App() {
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-5">
-                {programs.map((program) => {
-                  const Icon = program.icon;
-                  return (
-                    <div
-                      key={program.name}
-                      onClick={() => setSelectedProgram(program)}
-                      className="group flex flex-col items-center p-5 bg-[#f7e0e0] rounded-2xl hover:shadow-lg transition-all cursor-pointer hover:bg-[#ca3433] hover:text-white hover:-translate-y-1"
-                    >
-                      <Icon className="w-12 h-12 text-[#ca3433] mb-3 group-hover:text-white transition-colors" />
-                      <span className="text-sm sm:text-base font-semibold text-[#0e1f3e] text-center group-hover:text-white transition-colors">
-                        {program.name}
-                      </span>
-                    </div>
-                  );
-                })}
+              {/* Active Programs - Doctor and Dentist */}
+              <div className="mb-12">
+                <h3 className="text-2xl font-bold text-[#ca3433] mb-4 text-center">Now Enrolling</h3>
+                <div className="grid grid-cols-2 gap-5">
+                  {programs.filter(p => p.id === 'doctor' || p.id === 'dentist').map((program) => {
+                    const Icon = program.icon;
+                    return (
+                      <div
+                        key={program.name}
+                        onClick={() => setSelectedProgram(program)}
+                        className="group flex flex-col items-center p-6 bg-[#f7e0e0] rounded-2xl hover:shadow-lg transition-all cursor-pointer hover:bg-[#ca3433] hover:text-white hover:-translate-y-1"
+                      >
+                        <Icon className="w-16 h-16 text-[#ca3433] mb-3 group-hover:text-white transition-colors" />
+                        <span className="text-base sm:text-lg font-semibold text-[#0e1f3e] text-center group-hover:text-white transition-colors">
+                          {program.name}
+                        </span>
+                        <span className="text-xs sm:text-sm text-gray-600 mt-2 group-hover:text-white/90 transition-colors">
+                          Register Now
+                        </span>
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
-            </div>
-          </section>
 
-          <section id="gallery">
-            <div className="-mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8">
-              <h2 className="text-4xl font-bold text-[#0e1f3e] mb-6 text-center">
-                Kids in action
-              </h2>
-              <p className="text-lg sm:text-xl text-gray-700 mb-10 text-center max-w-2xl mx-auto">
-                A peek at the kinds of hands-on adventures your child might experience  —
-                from lab coats and chef hats to sketchbooks and stethoscopes.
-              </p>
-              <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 sm:gap-5 md:gap-6 auto-rows-[200px] sm:auto-rows-[260px] md:auto-rows-[300px] lg:auto-rows-[340px]">
-                {galleryItems.map((item, index) => (
-                  <div
-                    key={item.name}
-                    className={`relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#ffe0e7] via-[#fff3c9] to-[#e0f3ff] border border-white shadow-md group col-span-1 md:col-span-2 md:row-span-2 ${index <= 2
-                      ? 'lg:col-span-2'
-                      : 'lg:col-span-3'
-                      }`}
-                  >
-                    <video
-                      src={item.video}
-                      autoPlay
-                      muted
-                      loop
-                      playsInline
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    />
-                    <div className="absolute inset-0 bg-black/10 group-hover:bg-black/20 transition-colors" />
-                  </div>
-                ))}
+              {/* Future Programs */}
+              <div>
+                <h3 className="text-2xl font-bold text-[#0e1f3e] mb-2 text-center">Future Programs</h3>
+                <p className="text-sm text-gray-600 mb-4 text-center">
+                  Interested in these programs? Join the waitlist to be notified when they launch!
+                </p>
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                  {programs.filter(p => p.id !== 'doctor' && p.id !== 'dentist').map((program) => {
+                    const Icon = program.icon;
+                    return (
+                      <div
+                        key={program.name}
+                        onClick={() => setSelectedProgram(program)}
+                        className="group flex flex-col items-center p-4 bg-gray-50 rounded-2xl hover:shadow-lg transition-all cursor-pointer hover:bg-gray-100 hover:-translate-y-1"
+                      >
+                        <Icon className="w-10 h-10 text-gray-400 mb-2 group-hover:text-gray-600 transition-colors" />
+                        <span className="text-xs sm:text-sm font-semibold text-gray-600 text-center group-hover:text-gray-800 transition-colors">
+                          {program.name}
+                        </span>
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
             </div>
           </section>
@@ -269,6 +251,31 @@ function App() {
             </div>
 
             <div className="p-6 sm:p-10">
+              {/* Videos Section */}
+              {selectedProgram.videos && selectedProgram.videos.length > 0 && (
+                <div className="mb-10">
+                  <h4 className="text-2xl font-bold text-[#0e1f3e] mb-6">Kids in Action</h4>
+                  <div className="grid grid-cols-1 gap-6">
+                    {selectedProgram.videos.map((video, index) => (
+                      <div
+                        key={index}
+                        className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#ffe0e7] via-[#fff3c9] to-[#e0f3ff] border border-white shadow-md group aspect-video"
+                      >
+                        <video
+                          src={video}
+                          autoPlay
+                          muted
+                          loop
+                          playsInline
+                          className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                        />
+                        <div className="absolute inset-0 bg-black/10 group-hover:bg-black/20 transition-colors" />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
               {selectedProgram.hasSyllabus && selectedProgram.content ? (
                 <div className="space-y-12">
                   {selectedProgram.content.map((part, index) => (
@@ -336,39 +343,43 @@ function App() {
             </div>
 
             <div className="p-6 border-t border-gray-100 bg-gray-50 flex flex-col sm:flex-row items-center justify-end gap-4">
-              <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
-                {/* Single Semester Option */}
-                <a
-                  href="https://buy.stripe.com/5kQ28k9Kk9se9S92SfdfG01"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="px-6 py-3 bg-[#ca3433] text-white font-semibold rounded-full shadow-md hover:bg-[#b1302f] transition-colors text-center"
-                >
-                  {selectedProgram.content && selectedProgram.content.length > 1 ? 'Register for Semester 1' : 'Register Now'}
-                </a>
-
-                {/* Two Semester Option (only if applicable) */}
-                {selectedProgram.content && selectedProgram.content.length > 1 && (
+              {/* Show payment options for Doctor and Dentist */}
+              {(selectedProgram.id === 'doctor' || selectedProgram.id === 'dentist') ? (
+                <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
+                  {/* Single Semester Option */}
                   <a
-                    href="https://buy.stripe.com/14A14g8Gg47Uc0hgJ5dfG07"
+                    href="https://buy.stripe.com/5kQ28k9Kk9se9S92SfdfG01"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="px-6 py-3 bg-[#0e1f3e] text-white font-semibold rounded-full shadow-md hover:bg-[#1f2a4d] transition-colors text-center"
+                    className="px-6 py-3 bg-[#ca3433] text-white font-semibold rounded-full shadow-md hover:bg-[#b1302f] transition-colors text-center"
                   >
-                    Register for 2 Semesters
+                    {selectedProgram.content && selectedProgram.content.length > 1 ? 'Register for Semester 1' : 'Register Now'}
                   </a>
-                )}
-              </div>
 
-              <button
-                onClick={() => {
-                  setSelectedProgram(null);
-                  document.getElementById('join')?.scrollIntoView({ behavior: 'smooth' });
-                }}
-                className="px-6 py-3 bg-white border-2 border-gray-200 text-gray-600 font-semibold rounded-full hover:bg-gray-50 transition-colors"
-              >
-                Join Waitlist
-              </button>
+                  {/* Two Semester Option (only if applicable) */}
+                  {selectedProgram.content && selectedProgram.content.length > 1 && (
+                    <a
+                      href="https://buy.stripe.com/14A14g8Gg47Uc0hgJ5dfG07"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-6 py-3 bg-[#0e1f3e] text-white font-semibold rounded-full shadow-md hover:bg-[#1f2a4d] transition-colors text-center"
+                    >
+                      Register for 2 Semesters
+                    </a>
+                  )}
+                </div>
+              ) : (
+                /* Show waitlist for future programs */
+                <button
+                  onClick={() => {
+                    setSelectedProgram(null);
+                    document.getElementById('join')?.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                  className="px-8 py-3 bg-[#ca3433] text-white font-semibold rounded-full shadow-md hover:bg-[#b1302f] transition-colors"
+                >
+                  Join Waitlist for This Program
+                </button>
+              )}
             </div>
           </div>
         </div>

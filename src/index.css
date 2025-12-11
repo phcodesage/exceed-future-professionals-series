@@ -1,3 +1,53 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+
+    /* Override browser default select styling to use red instead of blue */
+    select {
+        accent-color: #ca3433;
+    }
+
+    select option:checked,
+    select option:hover {
+        background-color: #ca3433 !important;
+        color: white !important;
+    }
+
+    select:focus option:checked {
+        background: linear-gradient(#ca3433, #ca3433);
+        background-color: #ca3433 !important;
+        color: white !important;
+    }
+
+    /* Style the select dropdown header when open */
+    select:focus {
+        outline: none;
+        border-color: #ca3433;
+        box-shadow: 0 0 0 2px rgba(202, 52, 51, 0.2);
+    }
+
+    /* Webkit-specific styling for select options */
+    select option {
+        background-color: white;
+        color: #0e1f3e;
+    }
+
+    select option:checked {
+        background-color: #ca3433 !important;
+        background: #ca3433 !important;
+        color: white !important;
+    }
+
+    /* Force red highlight on Windows/Chrome */
+    select option[selected] {
+        background-color: #ca3433 !important;
+        color: white !important;
+    }
+
+    /* Override system colors */
+    select {
+        color-scheme: light;
+    }
+}
