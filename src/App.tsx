@@ -359,12 +359,12 @@ function App() {
                   {/* Two Semester Option (only if applicable) */}
                   {selectedProgram.content && selectedProgram.content.length > 1 && (
                     <a
-                      href="https://buy.stripe.com/14A14g8Gg47Uc0hgJ5dfG07"
+                      href="https://buy.stripe.com/3cI00c7Cc33Q1lDboLdfG09"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="px-6 py-3 bg-[#0e1f3e] text-white font-semibold rounded-full shadow-md hover:bg-[#1f2a4d] transition-colors text-center"
                     >
-                      Register for 2 Semesters
+                      Register for Both Semesters
                     </a>
                   )}
                 </div>
