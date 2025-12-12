@@ -348,7 +348,7 @@ function App() {
                 <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
                   {/* Single Semester Option */}
                   <a
-                    href="https://buy.stripe.com/5kQ28k9Kk9se9S92SfdfG01"
+                    href="https://buy.stripe.com/14A14g8Gg47Uc0hgJ5dfG07"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="px-6 py-3 bg-[#ca3433] text-white font-semibold rounded-full shadow-md hover:bg-[#b1302f] transition-colors text-center"
