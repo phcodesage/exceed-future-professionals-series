@@ -1,15 +1,8 @@
 import { FormEvent, useState } from 'react';
 
 const programOptions = [
-  'Future Doctor',
-  'Future Dentist',
   'Young Artist',
   'Young Chef',
-  'Future Scientist',
-  'Future Vet',
-  'Future Pharmacist',
-  'Future Lawyer',
-  'Young Designer',
 ];
 
 interface FormState {
