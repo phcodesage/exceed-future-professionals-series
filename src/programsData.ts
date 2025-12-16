@@ -7,7 +7,7 @@ export const programs = [
         icon: Stethoscope,
         hasSyllabus: true,
         videos: [
-            '/videos/5519028-uhd_2160_3840_24fps.mp4',
+            '/videos/doctor-kids.mp4',
         ],
         content: [
             {
@@ -73,8 +73,7 @@ export const programs = [
         icon: Smile,
         hasSyllabus: true,
         videos: [
-            '/videos/Realistic_Dentist_Girl_Video_Generation.mp4',
-            '/videos/Young_Dentist_Checks_Stuffed_Toy.mp4',
+            '/videos/dentist-kid.mp4',
         ],
         content: [
             {

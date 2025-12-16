@@ -370,7 +370,7 @@ function App() {
                     {selectedProgram.videos.map((video, index) => (
                       <div
                         key={index}
-                        className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#ffe0e7] via-[#fff3c9] to-[#e0f3ff] border border-white shadow-md group aspect-video"
+                        className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#ffe0e7] via-[#fff3c9] to-[#e0f3ff] border border-white shadow-md group aspect-[9/16] max-w-sm mx-auto"
                       >
                         <video
                           src={video}
@@ -378,7 +378,7 @@ function App() {
                           muted
                           loop
                           playsInline
-                          className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                          className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-105"
                         />
                         <div className="absolute inset-0 bg-black/10 group-hover:bg-black/20 transition-colors" />
                       </div>
