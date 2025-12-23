@@ -51,7 +51,7 @@ export const programs = [
                     {
                         grades: '3-6',
                         options: [
-                            { label: 'Option 1', time: 'Sundays 3:30-4:30', dates: 'Feb 22 - Apr 8' },
+                            { label: 'Option 1', time: 'Sundays 3:30-4:30', dates: 'Feb 22 - March 29' },
                             { label: 'Option 2', time: 'Fridays 4-5', dates: 'Feb 27 - Apr 3' },
                         ],
                     },
@@ -117,7 +117,7 @@ export const programs = [
                     {
                         grades: '3-6',
                         options: [
-                            { label: 'Option 1', time: 'Sundays 4:30-5:30', dates: 'Feb 22 - Apr 8' },
+                            { label: 'Option 1', time: 'Sundays 4:30-5:30', dates: 'Feb 22 - March 29' },
                             { label: 'Option 2', time: 'Thursdays 5:30-6:30', dates: 'Feb 26 - Apr 2' },
                         ],
                     },
