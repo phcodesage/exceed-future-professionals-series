@@ -16,15 +16,15 @@ export const programs = [
                     {
                         grades: 'K-2',
                         options: [
-                            { label: 'Option 1', time: 'Sundays 2-3', dates: 'Jan 4 - Feb 8' },
-                            { label: 'Option 2', time: 'Wednesdays 4-5', dates: 'Jan 7 - Feb 11' },
+                            { label: 'Option 1', time: 'Sundays 2-3', dates: 'Feb 22 - Apr 3' },
+                            { label: 'Option 2', time: 'Wednesdays 4-5', dates: 'Feb 25 - Apr 1' },
                         ],
                     },
                     {
                         grades: '3-6',
                         options: [
-                            { label: 'Option 1', time: 'Sundays 3:30-4:30', dates: 'Jan 4 - Feb 8' },
-                            { label: 'Option 2', time: 'Fridays 4-5', dates: 'Jan 9 - Feb 13' },
+                            { label: 'Option 1', time: 'Sundays 3:30-4:30', dates: 'Feb 22 - Apr 3' },
+                            { label: 'Option 2', time: 'Fridays 4-5', dates: 'Feb 27 - Apr 3' },
                         ],
                     },
                 ],
@@ -39,20 +39,20 @@ export const programs = [
             },
             {
                 title: 'Semester 2 - 6 weeks + White Coat Ceremony',
-                ceremony: 'White Coat Ceremony and Graduation: all sections: April 5, 2pm.',
+                ceremony: 'White Coat Ceremony and Graduation: all sections: May 24, 2pm.',
                 schedules: [
                     {
                         grades: 'K-2',
                         options: [
-                            { label: 'Option 1', time: 'Sundays 2-3', dates: 'Feb 22 - March 29' },
-                            { label: 'Option 2', time: 'Wednesdays 4-5', dates: 'Feb 25 - Apr 1' },
+                            { label: 'Option 1', time: 'Sundays 2-3', dates: 'Apr 12 - May 22' },
+                            { label: 'Option 2', time: 'Wednesdays 4-5', dates: 'Apr 15 - May 20' },
                         ],
                     },
                     {
                         grades: '3-6',
                         options: [
-                            { label: 'Option 1', time: 'Sundays 3:30-4:30', dates: 'Feb 22 - March 29' },
-                            { label: 'Option 2', time: 'Fridays 4-5', dates: 'Feb 27 - Apr 3' },
+                            { label: 'Option 1', time: 'Sundays 3:30-4:30', dates: 'Apr 12 - May 22' },
+                            { label: 'Option 2', time: 'Fridays 4-5', dates: 'Apr 17 - May 22' },
                         ],
                     },
                 ],
@@ -82,15 +82,15 @@ export const programs = [
                     {
                         grades: 'K-2',
                         options: [
-                            { label: 'Option 1', time: 'Sundays 3-4', dates: 'Jan 4 - Feb 8' },
-                            { label: 'Option 2', time: 'Thursdays 4-5', dates: 'Jan 8 - Feb 12' },
+                            { label: 'Option 1', time: 'Sundays 3-4', dates: 'Feb 22 - Apr 3' },
+                            { label: 'Option 2', time: 'Thursdays 4-5', dates: 'Feb 26 - Apr 2' },
                         ],
                     },
                     {
                         grades: '3-6',
                         options: [
-                            { label: 'Option 1', time: 'Sundays 4:30-5:30', dates: 'Jan 4 - Feb 8' },
-                            { label: 'Option 2', time: 'Thursdays 5:30-6:30', dates: 'Jan 9 - Feb 13' },
+                            { label: 'Option 1', time: 'Sundays 4:30-5:30', dates: 'Feb 22 - Apr 3' },
+                            { label: 'Option 2', time: 'Thursdays 5:30-6:30', dates: 'Feb 26 - Apr 2' },
                         ],
                     },
                 ],
@@ -105,20 +105,20 @@ export const programs = [
             },
             {
                 title: 'Semester 2 - 6 weeks + White Coat Ceremony',
-                ceremony: 'White Coat Ceremony and Graduation: all sections: April 5, 4pm.',
+                ceremony: 'White Coat Ceremony and Graduation: all sections: May 24, 4pm.',
                 schedules: [
                     {
                         grades: 'K-2',
                         options: [
-                            { label: 'Option 1', time: 'Sundays 3-4', dates: 'Feb 22 - March 29' },
-                            { label: 'Option 2', time: 'Thursdays 4-5', dates: 'Feb 26 - Apr 2' },
+                            { label: 'Option 1', time: 'Sundays 3-4', dates: 'Apr 12 - May 22' },
+                            { label: 'Option 2', time: 'Thursdays 4-5', dates: 'Apr 16 - May 21' },
                         ],
                     },
                     {
                         grades: '3-6',
                         options: [
-                            { label: 'Option 1', time: 'Sundays 4:30-5:30', dates: 'Feb 22 - March 29' },
-                            { label: 'Option 2', time: 'Thursdays 5:30-6:30', dates: 'Feb 26 - Apr 2' },
+                            { label: 'Option 1', time: 'Sundays 4:30-5:30', dates: 'Apr 12 - May 22' },
+                            { label: 'Option 2', time: 'Thursdays 5:30-6:30', dates: 'Apr 16 - May 21' },
                         ],
                     },
                 ],
