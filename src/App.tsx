@@ -1,4 +1,4 @@
-import { X } from 'lucide-react';
+import { X, Calendar, Sparkles, Clock, MapPin } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import Lenis from '@studio-freight/lenis';
 import WaitlistForm from './components/WaitlistForm';
@@ -9,6 +9,7 @@ import { programs } from './programsData';
 function App() {
   const [isAdminRoute, setIsAdminRoute] = useState(false);
   const [selectedProgram, setSelectedProgram] = useState<(typeof programs)[0] | null>(null);
+  const [showExperiencePopup, setShowExperiencePopup] = useState(false);
 
   useEffect(() => {
     const updateRoute = () => {
@@ -48,7 +49,7 @@ function App() {
 
   // Lock body scroll when modal is open
   useEffect(() => {
-    if (selectedProgram) {
+    if (selectedProgram || showExperiencePopup) {
       // Stop Lenis smooth scroll
       const lenis = (window as any).lenisInstance;
       if (lenis) {
@@ -69,7 +70,7 @@ function App() {
     return () => {
       document.body.style.overflow = '';
     };
-  }, [selectedProgram]);
+  }, [selectedProgram, showExperiencePopup]);
 
   if (isAdminRoute) {
     return <AdminDashboard />;
@@ -126,6 +127,60 @@ function App() {
         </header>
 
         <main className="space-y-20">
+          {/* FREE Experience Day Section - First/Top */}
+          <section id="experience-day" className="relative">
+            <div className="bg-gradient-to-r from-[#ca3433] via-[#d94140] to-[#e85653] rounded-3xl shadow-2xl p-8 sm:p-12 max-w-4xl mx-auto text-white overflow-hidden">
+              {/* Decorative elements */}
+              <div className="absolute top-0 right-0 w-40 h-40 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2" />
+              <div className="absolute bottom-0 left-0 w-32 h-32 bg-white/10 rounded-full translate-y-1/2 -translate-x-1/2" />
+
+              <div className="relative z-10">
+                <div className="flex items-center justify-center gap-2 mb-4">
+                  <Sparkles className="w-6 h-6 text-yellow-300 animate-pulse" />
+                  <span className="inline-block bg-yellow-400 text-[#0e1f3e] text-sm font-bold px-4 py-1 rounded-full uppercase tracking-wide">
+                    FREE Event
+                  </span>
+                  <Sparkles className="w-6 h-6 text-yellow-300 animate-pulse" />
+                </div>
+
+                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-center mb-4">
+                  Future Professionals<br />
+                  <span className="text-yellow-300">60-Minute Experience</span>
+                </h2>
+
+                <p className="text-lg sm:text-xl text-white/90 text-center max-w-2xl mx-auto mb-6">
+                  Come experience what it means to be a <strong>Future Doctor</strong> or <strong>Future Dentist</strong>!
+                  Kids dive into exciting hands-on activities while parents learn more about our programs.
+                </p>
+
+                <div className="flex flex-wrap justify-center gap-4 mb-8 text-sm sm:text-base">
+                  <div className="flex items-center gap-2 bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full">
+                    <Calendar className="w-5 h-5" />
+                    <span>Jan 18, 19 & Feb 8</span>
+                  </div>
+                  <div className="flex items-center gap-2 bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full">
+                    <Clock className="w-5 h-5" />
+                    <span>10:00 AM & 12:00 PM</span>
+                  </div>
+                  <div className="flex items-center gap-2 bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full">
+                    <MapPin className="w-5 h-5" />
+                    <span>Exceed Academy</span>
+                  </div>
+                </div>
+
+                <div className="flex justify-center">
+                  <button
+                    onClick={() => setShowExperiencePopup(true)}
+                    className="group inline-flex items-center gap-3 px-10 py-4 bg-white text-[#ca3433] text-lg sm:text-xl font-bold rounded-full shadow-lg hover:bg-yellow-300 hover:text-[#0e1f3e] transition-all hover:scale-105 hover:shadow-xl"
+                  >
+                    <span>Join for FREE</span>
+                    <span className="group-hover:translate-x-1 transition-transform">→</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </section>
+
           <section id="about">
             <div className="bg-white rounded-3xl shadow-xl p-10 sm:p-12 lg:p-14 max-w-4xl mx-auto">
               <h2 className="text-4xl font-bold text-[#0e1f3e] mb-8 text-center">
@@ -401,6 +456,80 @@ function App() {
                   Join Waitlist for This Program
                 </button>
               )}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Experience Day Popup Modal */}
+      {showExperiencePopup && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm" onClick={() => setShowExperiencePopup(false)}>
+          <div
+            className="bg-white rounded-3xl w-full max-w-lg overflow-hidden shadow-2xl animate-in fade-in zoom-in duration-300"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="bg-gradient-to-r from-[#ca3433] via-[#d94140] to-[#e85653] p-6 text-white">
+              <div className="flex items-center justify-between">
+                <div>
+                  <div className="flex items-center gap-2 mb-2">
+                    <Sparkles className="w-5 h-5 text-yellow-300" />
+                    <span className="text-sm font-semibold bg-yellow-400 text-[#0e1f3e] px-3 py-0.5 rounded-full">FREE</span>
+                  </div>
+                  <h3 className="text-2xl font-bold">60-Minute Experience</h3>
+                  <p className="text-white/80 text-sm mt-1">Choose your preferred date & time</p>
+                </div>
+                <button
+                  onClick={() => setShowExperiencePopup(false)}
+                  className="p-2 text-white/70 hover:text-white hover:bg-white/20 rounded-full transition-colors"
+                >
+                  <X className="w-6 h-6" />
+                </button>
+              </div>
+            </div>
+
+            <div className="p-6 space-y-4">
+              {/* Date Options */}
+              {[
+                { date: 'January 18, 2026', day: 'Saturday' },
+                { date: 'January 19, 2026', day: 'Sunday' },
+                { date: 'February 8, 2026', day: 'Saturday' },
+              ].map((item, index) => (
+                <div key={index} className="bg-[#fff7e5] rounded-2xl p-5 border-2 border-[#ffe0b2] hover:border-[#ca3433] transition-colors">
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="p-2 bg-[#ca3433] rounded-lg">
+                      <Calendar className="w-5 h-5 text-white" />
+                    </div>
+                    <div>
+                      <div className="font-bold text-[#0e1f3e]">{item.date}</div>
+                      <div className="text-sm text-gray-500">{item.day}</div>
+                    </div>
+                  </div>
+                  <div className="flex gap-3">
+                    <a
+                      href={`https://docs.google.com/forms/d/e/1FAIpQLSexampleform/viewform?usp=sf_link&entry.date=${encodeURIComponent(item.date)}&entry.time=10:00 AM`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex-1 flex items-center justify-center gap-2 py-3 bg-[#ca3433] text-white font-semibold rounded-full hover:bg-[#b1302f] transition-colors"
+                    >
+                      <Clock className="w-4 h-4" />
+                      10:00 AM
+                    </a>
+                    <a
+                      href={`https://docs.google.com/forms/d/e/1FAIpQLSexampleform/viewform?usp=sf_link&entry.date=${encodeURIComponent(item.date)}&entry.time=12:00 PM`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex-1 flex items-center justify-center gap-2 py-3 bg-[#0e1f3e] text-white font-semibold rounded-full hover:bg-[#1f2a4d] transition-colors"
+                    >
+                      <Clock className="w-4 h-4" />
+                      12:00 PM
+                    </a>
+                  </div>
+                </div>
+              ))}
+
+              <p className="text-center text-sm text-gray-500 mt-4">
+                📍 Exceed Academy • 🕐 60 minutes • 👨‍👩‍👧‍👦 Ages K-6
+              </p>
             </div>
           </div>
         </div>
