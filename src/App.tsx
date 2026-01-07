@@ -1,4 +1,4 @@
-import { X, Calendar, Sparkles, Clock, MapPin } from 'lucide-react';
+import { X, Calendar, Sparkles, Clock, MapPin, CheckCircle, Loader2, ArrowLeft } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import Lenis from '@studio-freight/lenis';
 import WaitlistForm from './components/WaitlistForm';
@@ -10,6 +10,12 @@ function App() {
   const [isAdminRoute, setIsAdminRoute] = useState(false);
   const [selectedProgram, setSelectedProgram] = useState<(typeof programs)[0] | null>(null);
   const [showExperiencePopup, setShowExperiencePopup] = useState(false);
+
+  // Experience registration form state
+  const [experienceSelection, setExperienceSelection] = useState<{ date: string; time: string } | null>(null);
+  const [expFormData, setExpFormData] = useState({ fullName: '', emailOrContact: '' });
+  const [expFormStatus, setExpFormStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [expFormError, setExpFormError] = useState('');
 
   useEffect(() => {
     const updateRoute = () => {
@@ -463,9 +469,15 @@ function App() {
 
       {/* Experience Day Popup Modal */}
       {showExperiencePopup && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm" onClick={() => setShowExperiencePopup(false)}>
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm" onClick={() => {
+          setShowExperiencePopup(false);
+          setExperienceSelection(null);
+          setExpFormData({ fullName: '', emailOrContact: '' });
+          setExpFormStatus('idle');
+          setExpFormError('');
+        }}>
           <div
-            className="bg-white rounded-3xl w-full max-w-lg overflow-hidden shadow-2xl animate-in fade-in zoom-in duration-300"
+            className="bg-white rounded-3xl w-full max-w-lg overflow-hidden shadow-2xl animate-in fade-in zoom-in duration-300 max-h-[90vh] overflow-y-auto"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="bg-gradient-to-r from-[#ca3433] via-[#d94140] to-[#e85653] p-6 text-white">
@@ -476,10 +488,22 @@ function App() {
                     <span className="text-sm font-semibold bg-yellow-400 text-[#0e1f3e] px-3 py-0.5 rounded-full">FREE</span>
                   </div>
                   <h3 className="text-2xl font-bold">60-Minute Experience</h3>
-                  <p className="text-white/80 text-sm mt-1">Choose your preferred date & time</p>
+                  <p className="text-white/80 text-sm mt-1">
+                    {expFormStatus === 'success'
+                      ? 'Registration complete!'
+                      : experienceSelection
+                        ? 'Complete your registration'
+                        : 'Choose your preferred date & time'}
+                  </p>
                 </div>
                 <button
-                  onClick={() => setShowExperiencePopup(false)}
+                  onClick={() => {
+                    setShowExperiencePopup(false);
+                    setExperienceSelection(null);
+                    setExpFormData({ fullName: '', emailOrContact: '' });
+                    setExpFormStatus('idle');
+                    setExpFormError('');
+                  }}
                   className="p-2 text-white/70 hover:text-white hover:bg-white/20 rounded-full transition-colors"
                 >
                   <X className="w-6 h-6" />
@@ -487,49 +511,190 @@ function App() {
               </div>
             </div>
 
-            <div className="p-6 space-y-4">
-              {/* Date Options */}
-              {[
-                { date: 'January 18, 2026', day: 'Saturday' },
-                { date: 'January 19, 2026', day: 'Sunday' },
-                { date: 'February 8, 2026', day: 'Saturday' },
-              ].map((item, index) => (
-                <div key={index} className="bg-[#fff7e5] rounded-2xl p-5 border-2 border-[#ffe0b2] hover:border-[#ca3433] transition-colors">
-                  <div className="flex items-center gap-3 mb-3">
-                    <div className="p-2 bg-[#ca3433] rounded-lg">
-                      <Calendar className="w-5 h-5 text-white" />
-                    </div>
-                    <div>
-                      <div className="font-bold text-[#0e1f3e]">{item.date}</div>
-                      <div className="text-sm text-gray-500">{item.day}</div>
-                    </div>
+            <div className="p-6">
+              {/* Success State */}
+              {expFormStatus === 'success' ? (
+                <div className="text-center py-8">
+                  <div className="inline-flex items-center justify-center w-20 h-20 bg-green-100 rounded-full mb-4">
+                    <CheckCircle className="w-10 h-10 text-green-600" />
                   </div>
-                  <div className="flex gap-3">
-                    <a
-                      href={`https://docs.google.com/forms/d/e/1FAIpQLSexampleform/viewform?usp=sf_link&entry.date=${encodeURIComponent(item.date)}&entry.time=10:00 AM`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex-1 flex items-center justify-center gap-2 py-3 bg-[#ca3433] text-white font-semibold rounded-full hover:bg-[#b1302f] transition-colors"
-                    >
-                      <Clock className="w-4 h-4" />
-                      10:00 AM
-                    </a>
-                    <a
-                      href={`https://docs.google.com/forms/d/e/1FAIpQLSexampleform/viewform?usp=sf_link&entry.date=${encodeURIComponent(item.date)}&entry.time=12:00 PM`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex-1 flex items-center justify-center gap-2 py-3 bg-[#0e1f3e] text-white font-semibold rounded-full hover:bg-[#1f2a4d] transition-colors"
-                    >
-                      <Clock className="w-4 h-4" />
-                      12:00 PM
-                    </a>
+                  <h4 className="text-2xl font-bold text-[#0e1f3e] mb-2">You&apos;re Registered!</h4>
+                  <p className="text-gray-600 mb-4">
+                    We've received your registration for the 60-minute experience on:
+                  </p>
+                  <div className="inline-block bg-[#fff7e5] rounded-xl px-6 py-3 mb-6">
+                    <div className="font-bold text-[#ca3433]">{experienceSelection?.date}</div>
+                    <div className="text-[#0e1f3e]">{experienceSelection?.time}</div>
                   </div>
+                  <p className="text-sm text-gray-500">
+                    We'll be in touch soon with more details!
+                  </p>
+                  <button
+                    onClick={() => {
+                      setShowExperiencePopup(false);
+                      setExperienceSelection(null);
+                      setExpFormData({ fullName: '', emailOrContact: '' });
+                      setExpFormStatus('idle');
+                    }}
+                    className="mt-6 px-8 py-3 bg-[#ca3433] text-white font-semibold rounded-full hover:bg-[#b1302f] transition-colors"
+                  >
+                    Done
+                  </button>
                 </div>
-              ))}
+              ) : experienceSelection ? (
+                /* Registration Form */
+                <div>
+                  {/* Back Button */}
+                  <button
+                    onClick={() => setExperienceSelection(null)}
+                    className="flex items-center gap-2 text-gray-600 hover:text-[#ca3433] mb-4 transition-colors"
+                  >
+                    <ArrowLeft className="w-4 h-4" />
+                    <span className="text-sm">Change date/time</span>
+                  </button>
 
-              <p className="text-center text-sm text-gray-500 mt-4">
-                📍 Exceed Academy • 🕐 60 minutes • 👨‍👩‍👧‍👦 Ages K-6
-              </p>
+                  {/* Selected Date/Time Display */}
+                  <div className="bg-[#fff7e5] rounded-2xl p-4 mb-6 border-2 border-[#ca3433]">
+                    <div className="flex items-center gap-3">
+                      <div className="p-2 bg-[#ca3433] rounded-lg">
+                        <Calendar className="w-5 h-5 text-white" />
+                      </div>
+                      <div>
+                        <div className="text-sm text-gray-500">Your selected session</div>
+                        <div className="font-bold text-[#0e1f3e]">{experienceSelection.date}</div>
+                        <div className="text-[#ca3433] font-semibold">{experienceSelection.time}</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Form Fields */}
+                  <form
+                    onSubmit={async (e) => {
+                      e.preventDefault();
+                      setExpFormStatus('loading');
+                      setExpFormError('');
+
+                      try {
+                        // Get API URL from environment
+                        const rawBaseUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+                        const baseUrl = rawBaseUrl.startsWith('http') ? rawBaseUrl : `http://${rawBaseUrl}`;
+
+                        const response = await fetch(`${baseUrl}/api/experience-registration`, {
+                          method: 'POST',
+                          headers: { 'Content-Type': 'application/json' },
+                          body: JSON.stringify({
+                            fullName: expFormData.fullName,
+                            emailOrContact: expFormData.emailOrContact,
+                            selectedDate: experienceSelection.date,
+                            selectedTime: experienceSelection.time,
+                          }),
+                        });
+
+                        if (!response.ok) {
+                          const data = await response.json();
+                          throw new Error(data.message || 'Something went wrong');
+                        }
+
+                        setExpFormStatus('success');
+                      } catch (err) {
+                        setExpFormStatus('error');
+                        setExpFormError(err instanceof Error ? err.message : 'Something went wrong');
+                      }
+                    }}
+                    className="space-y-4"
+                  >
+                    <div>
+                      <label className="block text-sm font-semibold text-[#0e1f3e] mb-2">
+                        Full Name *
+                      </label>
+                      <input
+                        type="text"
+                        required
+                        value={expFormData.fullName}
+                        onChange={(e) => setExpFormData(prev => ({ ...prev, fullName: e.target.value }))}
+                        placeholder="Enter your full name"
+                        className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-[#ca3433] focus:outline-none transition-colors"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-semibold text-[#0e1f3e] mb-2">
+                        Email or Phone Number *
+                      </label>
+                      <input
+                        type="text"
+                        required
+                        value={expFormData.emailOrContact}
+                        onChange={(e) => setExpFormData(prev => ({ ...prev, emailOrContact: e.target.value }))}
+                        placeholder="Enter email or phone number"
+                        className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-[#ca3433] focus:outline-none transition-colors"
+                      />
+                    </div>
+
+                    {expFormError && (
+                      <div className="p-3 bg-red-50 border border-red-200 rounded-xl text-red-600 text-sm">
+                        {expFormError}
+                      </div>
+                    )}
+
+                    <button
+                      type="submit"
+                      disabled={expFormStatus === 'loading'}
+                      className="w-full py-4 bg-[#ca3433] text-white font-bold text-lg rounded-full hover:bg-[#b1302f] transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                    >
+                      {expFormStatus === 'loading' ? (
+                        <>
+                          <Loader2 className="w-5 h-5 animate-spin" />
+                          Registering...
+                        </>
+                      ) : (
+                        'Register for FREE'
+                      )}
+                    </button>
+                  </form>
+                </div>
+              ) : (
+                /* Date/Time Selection */
+                <div className="space-y-4">
+                  {[
+                    { date: 'January 18, 2026', day: 'Saturday' },
+                    { date: 'January 19, 2026', day: 'Sunday' },
+                    { date: 'February 8, 2026', day: 'Saturday' },
+                  ].map((item, index) => (
+                    <div key={index} className="bg-[#fff7e5] rounded-2xl p-5 border-2 border-[#ffe0b2] hover:border-[#ca3433] transition-colors">
+                      <div className="flex items-center gap-3 mb-3">
+                        <div className="p-2 bg-[#ca3433] rounded-lg">
+                          <Calendar className="w-5 h-5 text-white" />
+                        </div>
+                        <div>
+                          <div className="font-bold text-[#0e1f3e]">{item.date}</div>
+                          <div className="text-sm text-gray-500">{item.day}</div>
+                        </div>
+                      </div>
+                      <div className="flex gap-3">
+                        <button
+                          onClick={() => setExperienceSelection({ date: item.date, time: '10:00 AM' })}
+                          className="flex-1 flex items-center justify-center gap-2 py-3 bg-[#ca3433] text-white font-semibold rounded-full hover:bg-[#b1302f] transition-colors"
+                        >
+                          <Clock className="w-4 h-4" />
+                          10:00 AM
+                        </button>
+                        <button
+                          onClick={() => setExperienceSelection({ date: item.date, time: '12:00 PM' })}
+                          className="flex-1 flex items-center justify-center gap-2 py-3 bg-[#0e1f3e] text-white font-semibold rounded-full hover:bg-[#1f2a4d] transition-colors"
+                        >
+                          <Clock className="w-4 h-4" />
+                          12:00 PM
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+
+                  <p className="text-center text-sm text-gray-500 mt-4">
+                    📍 Exceed Academy • 🕐 60 minutes • 👨‍👩‍👧‍👦 Ages K-6
+                  </p>
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -539,3 +704,4 @@ function App() {
 }
 
 export default App;
+

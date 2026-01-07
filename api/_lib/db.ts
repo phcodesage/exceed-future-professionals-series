@@ -6,16 +6,24 @@ if (!MONGODB_URI) {
     throw new Error('Please define the MONGODB_URI environment variable');
 }
 
+// Type for mongoose caching
+interface MongooseCache {
+    conn: typeof mongoose | null;
+    promise: Promise<typeof mongoose> | null;
+}
+
+// Extend global type for mongoose caching
+declare global {
+    // eslint-disable-next-line no-var
+    var mongoose: MongooseCache | undefined;
+}
+
 /**
  * Global is used here to maintain a cached connection across hot reloads
  * in development. This prevents connections growing exponentially
  * during API Route usage.
  */
-let cached = global.mongoose;
-
-if (!cached) {
-    cached = global.mongoose = { conn: null, promise: null };
-}
+const cached: MongooseCache = global.mongoose ?? (global.mongoose = { conn: null, promise: null });
 
 export async function connectDB() {
     if (cached.conn) {
@@ -27,9 +35,7 @@ export async function connectDB() {
             bufferCommands: false,
         };
 
-        cached.promise = mongoose.connect(MONGODB_URI, opts).then((mongoose) => {
-            return mongoose;
-        });
+        cached.promise = mongoose.connect(MONGODB_URI, opts);
     }
 
     try {
@@ -58,3 +64,17 @@ const waitlistEntrySchema = new mongoose.Schema(
 
 export const WaitlistEntry =
     mongoose.models.WaitlistEntry || mongoose.model('WaitlistEntry', waitlistEntrySchema);
+
+// Define the ExperienceRegistration schema for free experience day signups
+const experienceRegistrationSchema = new mongoose.Schema(
+    {
+        fullName: { type: String, required: true },
+        emailOrContact: { type: String, required: true },
+        selectedDate: { type: String, required: true },
+        selectedTime: { type: String, required: true },
+    },
+    { timestamps: true }
+);
+
+export const ExperienceRegistration =
+    mongoose.models.ExperienceRegistration || mongoose.model('ExperienceRegistration', experienceRegistrationSchema);
