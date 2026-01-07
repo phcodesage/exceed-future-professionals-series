@@ -577,7 +577,7 @@ function App() {
                       try {
                         // Get API URL from environment
                         const rawBaseUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
-                        const baseUrl = rawBaseUrl.startsWith('http') ? rawBaseUrl : `http://${rawBaseUrl}`;
+                        const baseUrl = (rawBaseUrl.startsWith('http') ? rawBaseUrl : `http://${rawBaseUrl}`).replace(/\/$/, '');
 
                         const response = await fetch(`${baseUrl}/api/experience-registration`, {
                           method: 'POST',
