@@ -182,6 +182,16 @@ app.get('/api/admin/waitlist', requireAdmin, async (_req, res) => {
   }
 });
 
+app.get('/api/admin/experience-registrations', requireAdmin, async (_req, res) => {
+  try {
+    const registrations = await ExperienceRegistration.find().sort({ createdAt: -1 });
+    return res.json(registrations);
+  } catch (error) {
+    console.error('Error fetching admin experience registrations', error);
+    return res.status(500).json({ message: 'Something went wrong.' });
+  }
+});
+
 // Experience Registration Schema and Route
 const experienceRegistrationSchema = new mongoose.Schema(
   {
