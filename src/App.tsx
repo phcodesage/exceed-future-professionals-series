@@ -53,6 +53,55 @@ function App() {
     };
   }, []);
 
+  // Analytics Tracking
+  useEffect(() => {
+    // Don't track admin routes
+    if (isAdminRoute) return;
+
+    // Generate or retrieve session ID
+    let sessionId = localStorage.getItem('analytics_session_id');
+    if (!sessionId) {
+      sessionId = `session_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
+      localStorage.setItem('analytics_session_id', sessionId);
+    }
+
+    const rawBaseUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+    const baseUrl = (rawBaseUrl.startsWith('http') ? rawBaseUrl : `http://${rawBaseUrl}`).replace(/\/$/, '');
+
+    const trackVisit = async () => {
+      try {
+        await fetch(`${baseUrl}/api/analytics/track`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            sessionId,
+            page: window.location.pathname + window.location.hash,
+            referrer: document.referrer,
+            userAgent: navigator.userAgent,
+          }),
+        });
+      } catch (err) {
+        // Silently fail - analytics shouldn't break the app
+        console.debug('Analytics tracking failed:', err);
+      }
+    };
+
+    // Track initial page load
+    trackVisit();
+
+    // Heartbeat every 30 seconds to maintain "real-time" status
+    const heartbeatInterval = setInterval(trackVisit, 30000);
+
+    // Track hash changes (SPA navigation)
+    const handleHashChange = () => trackVisit();
+    window.addEventListener('hashchange', handleHashChange);
+
+    return () => {
+      clearInterval(heartbeatInterval);
+      window.removeEventListener('hashchange', handleHashChange);
+    };
+  }, [isAdminRoute]);
+
   // Lock body scroll when modal is open
   useEffect(() => {
     if (selectedProgram || showExperiencePopup) {

@@ -205,6 +205,196 @@ const experienceRegistrationSchema = new mongoose.Schema(
 
 const ExperienceRegistration = mongoose.model('ExperienceRegistration', experienceRegistrationSchema);
 
+// PageVisit Schema for Analytics
+const pageVisitSchema = new mongoose.Schema(
+  {
+    sessionId: { type: String, required: true, index: true },
+    page: { type: String, required: true },
+    referrer: { type: String, default: '' },
+    userAgent: { type: String, default: '' },
+    lastActive: { type: Date, default: Date.now, index: true },
+  },
+  { timestamps: true },
+);
+
+const PageVisit = mongoose.model('PageVisit', pageVisitSchema);
+
+// Analytics Tracking Endpoint (Public)
+app.post('/api/analytics/track', async (req, res) => {
+  try {
+    const { sessionId, page, referrer, userAgent } = req.body;
+
+    if (!sessionId || !page) {
+      return res.status(400).json({ message: 'Missing required fields.' });
+    }
+
+    // Upsert: update lastActive if session exists, else create new
+    await PageVisit.findOneAndUpdate(
+      { sessionId },
+      {
+        sessionId,
+        page,
+        referrer: referrer || '',
+        userAgent: userAgent || '',
+        lastActive: new Date(),
+      },
+      { upsert: true, new: true }
+    );
+
+    return res.status(200).json({ message: 'Visit tracked' });
+  } catch (error) {
+    console.error('Error tracking visit', error);
+    return res.status(500).json({ message: 'Something went wrong.' });
+  }
+});
+
+// Analytics Summary Endpoint (Admin)
+app.get('/api/admin/analytics/summary', requireAdmin, async (_req, res) => {
+  try {
+    const now = new Date();
+    const fiveMinutesAgo = new Date(now.getTime() - 5 * 60 * 1000);
+    const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+
+    // Real-time visitors (active in last 5 minutes)
+    const realTimeVisitors = await PageVisit.countDocuments({
+      lastActive: { $gte: fiveMinutesAgo },
+    });
+
+    // Today's stats
+    const todayVisits = await PageVisit.countDocuments({
+      createdAt: { $gte: todayStart },
+    });
+
+    const todayUniqueVisitors = await PageVisit.distinct('sessionId', {
+      createdAt: { $gte: todayStart },
+    });
+
+    // This week's stats
+    const weekVisits = await PageVisit.countDocuments({
+      createdAt: { $gte: weekAgo },
+    });
+
+    const weekUniqueVisitors = await PageVisit.distinct('sessionId', {
+      createdAt: { $gte: weekAgo },
+    });
+
+    // Total all-time
+    const totalVisits = await PageVisit.countDocuments({});
+    const totalUniqueVisitors = (await PageVisit.distinct('sessionId')).length;
+
+    return res.json({
+      realTimeVisitors,
+      today: {
+        visits: todayVisits,
+        uniqueVisitors: todayUniqueVisitors.length,
+      },
+      week: {
+        visits: weekVisits,
+        uniqueVisitors: weekUniqueVisitors.length,
+      },
+      total: {
+        visits: totalVisits,
+        uniqueVisitors: totalUniqueVisitors,
+      },
+    });
+  } catch (error) {
+    console.error('Error fetching analytics summary', error);
+    return res.status(500).json({ message: 'Something went wrong.' });
+  }
+});
+
+// Analytics Visits by Day (Admin) - Last 7 days
+app.get('/api/admin/analytics/visits', requireAdmin, async (_req, res) => {
+  try {
+    const now = new Date();
+    const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+
+    // Aggregate visits by day
+    const visitsByDay = await PageVisit.aggregate([
+      {
+        $match: {
+          createdAt: { $gte: weekAgo },
+        },
+      },
+      {
+        $group: {
+          _id: {
+            year: { $year: '$createdAt' },
+            month: { $month: '$createdAt' },
+            day: { $dayOfMonth: '$createdAt' },
+          },
+          visits: { $sum: 1 },
+          uniqueVisitors: { $addToSet: '$sessionId' },
+        },
+      },
+      {
+        $project: {
+          _id: 0,
+          date: {
+            $dateFromParts: {
+              year: '$_id.year',
+              month: '$_id.month',
+              day: '$_id.day',
+            },
+          },
+          visits: 1,
+          uniqueVisitors: { $size: '$uniqueVisitors' },
+        },
+      },
+      { $sort: { date: 1 } },
+    ]);
+
+    return res.json(visitsByDay);
+  } catch (error) {
+    console.error('Error fetching analytics visits', error);
+    return res.status(500).json({ message: 'Something went wrong.' });
+  }
+});
+
+// Analytics Browser/Device Breakdown (Admin)
+app.get('/api/admin/analytics/browsers', requireAdmin, async (_req, res) => {
+  try {
+    const visits = await PageVisit.find({}, 'userAgent').lean();
+
+    const parseBrowser = (ua) => {
+      if (!ua) return 'Unknown';
+      if (ua.includes('Edg/')) return 'Edge';
+      if (ua.includes('Chrome/') && !ua.includes('Edg/')) return 'Chrome';
+      if (ua.includes('Safari/') && !ua.includes('Chrome/')) return 'Safari';
+      if (ua.includes('Firefox/')) return 'Firefox';
+      if (ua.includes('Opera/') || ua.includes('OPR/')) return 'Opera';
+      return 'Other';
+    };
+
+    const parseDevice = (ua) => {
+      if (!ua) return 'Unknown';
+      if (/(tablet|ipad|playbook|silk)|(android(?!.*mobi))/i.test(ua)) return 'Tablet';
+      if (/Mobile|Android|iP(hone|od)|IEMobile|BlackBerry|Kindle|Silk-Accelerated|(hpw|web)OS|Opera M(obi|ini)/.test(ua)) return 'Mobile';
+      return 'Desktop';
+    };
+
+    const browserCounts = {};
+    const deviceCounts = {};
+
+    visits.forEach(visit => {
+      const browser = parseBrowser(visit.userAgent);
+      const device = parseDevice(visit.userAgent);
+
+      browserCounts[browser] = (browserCounts[browser] || 0) + 1;
+      deviceCounts[device] = (deviceCounts[device] || 0) + 1;
+    });
+
+    return res.json({
+      browsers: Object.entries(browserCounts).map(([name, count]) => ({ name, count })),
+      devices: Object.entries(deviceCounts).map(([name, count]) => ({ name, count })),
+    });
+  } catch (error) {
+    console.error('Error fetching browser analytics', error);
+    return res.status(500).json({ message: 'Something went wrong.' });
+  }
+});
+
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
 
 const adminRecipients = [

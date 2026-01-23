@@ -1,4 +1,4 @@
-import { FormEvent, useEffect, useState } from 'react';
+import { FormEvent, useEffect, useState, useCallback } from 'react';
 import {
     Users,
     Calendar,
@@ -14,6 +14,13 @@ import {
     EyeOff,
     Phone,
     Mail,
+    BarChart3,
+    Activity,
+    TrendingUp,
+    Globe,
+    Monitor,
+    Smartphone,
+    Tablet,
 } from 'lucide-react';
 
 interface WaitlistEntry {
@@ -37,7 +44,35 @@ interface ExperienceRegistration {
     createdAt?: string;
 }
 
-type ActiveSection = 'waitlist' | 'experience';
+interface AnalyticsSummary {
+    realTimeVisitors: number;
+    today: { visits: number; uniqueVisitors: number };
+    week: { visits: number; uniqueVisitors: number };
+    total: { visits: number; uniqueVisitors: number };
+}
+
+interface DailyVisit {
+    date: string;
+    visits: number;
+    uniqueVisitors: number;
+}
+
+interface BrowserStat {
+    name: string;
+    count: number;
+}
+
+interface DeviceStat {
+    name: string;
+    count: number;
+}
+
+interface BrowserDeviceData {
+    browsers: BrowserStat[];
+    devices: DeviceStat[];
+}
+
+type ActiveSection = 'waitlist' | 'experience' | 'analytics';
 
 function getApiBaseUrl() {
     let rawBaseUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
@@ -74,7 +109,10 @@ export default function AdminDashboard() {
     const [loading, setLoading] = useState(false);
     const [entries, setEntries] = useState<WaitlistEntry[]>([]);
     const [experienceRegistrations, setExperienceRegistrations] = useState<ExperienceRegistration[]>([]);
-    const [activeSection, setActiveSection] = useState<ActiveSection>('waitlist');
+    const [activeSection, setActiveSection] = useState<ActiveSection>('analytics');
+    const [analyticsSummary, setAnalyticsSummary] = useState<AnalyticsSummary | null>(null);
+    const [dailyVisits, setDailyVisits] = useState<DailyVisit[]>([]);
+    const [browserDeviceData, setBrowserDeviceData] = useState<BrowserDeviceData | null>(null);
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 5;
     const [sidebarOpen, setSidebarOpen] = useState(() => {
@@ -146,10 +184,45 @@ export default function AdminDashboard() {
         }
     };
 
+    const fetchAnalytics = useCallback(async () => {
+        if (!token) return;
+        try {
+            const [summaryRes, visitsRes, browsersRes] = await Promise.all([
+                fetch(`${baseUrl}/api/admin/analytics/summary`, {
+                    headers: { Authorization: `Bearer ${token}` },
+                }),
+                fetch(`${baseUrl}/api/admin/analytics/visits`, {
+                    headers: { Authorization: `Bearer ${token}` },
+                }),
+                fetch(`${baseUrl}/api/admin/analytics/browsers`, {
+                    headers: { Authorization: `Bearer ${token}` },
+                }),
+            ]);
+
+            if (summaryRes.ok) {
+                const summaryData = await summaryRes.json();
+                setAnalyticsSummary(summaryData);
+            }
+
+            if (visitsRes.ok) {
+                const visitsData = await visitsRes.json();
+                setDailyVisits(visitsData);
+            }
+
+            if (browsersRes.ok) {
+                const browsersData = await browsersRes.json();
+                setBrowserDeviceData(browsersData);
+            }
+        } catch (err) {
+            console.error('Error fetching analytics', err);
+        }
+    }, [token, baseUrl]);
+
     useEffect(() => {
         if (token) {
             fetchEntries();
             fetchExperienceRegistrations();
+            fetchAnalytics();
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [token]);
@@ -197,10 +270,22 @@ export default function AdminDashboard() {
     const handleRefresh = () => {
         if (activeSection === 'waitlist') {
             fetchEntries();
-        } else {
+        } else if (activeSection === 'experience') {
             fetchExperienceRegistrations();
+        } else {
+            fetchAnalytics();
         }
     };
+
+    // Auto-refresh analytics every 10 seconds when on analytics tab
+    useEffect(() => {
+        if (activeSection === 'analytics' && token) {
+            const interval = setInterval(() => {
+                fetchAnalytics();
+            }, 10000);
+            return () => clearInterval(interval);
+        }
+    }, [activeSection, token, fetchAnalytics]);
 
     const handleDownloadWaitlistTxt = () => {
         if (!entries.length) return;
@@ -428,6 +513,22 @@ export default function AdminDashboard() {
                                 </>
                             )}
                         </button>
+
+                        <button
+                            onClick={() => { setActiveSection('analytics'); setCurrentPage(1); }}
+                            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all group ${activeSection === 'analytics'
+                                ? 'bg-[#ca3433] text-white shadow-lg shadow-[#ca3433]/30'
+                                : 'text-white/70 hover:bg-white/10 hover:text-white'
+                                }`}
+                        >
+                            <BarChart3 className="w-5 h-5 shrink-0" />
+                            {sidebarOpen && (
+                                <>
+                                    <span className="font-medium flex-1 text-left">Analytics</span>
+                                    <ChevronRight className={`w-4 h-4 transition-transform ${activeSection === 'analytics' ? 'rotate-90' : ''}`} />
+                                </>
+                            )}
+                        </button>
                     </nav>
 
                     {/* Logout */}
@@ -467,12 +568,14 @@ export default function AdminDashboard() {
                         {/* Center: Title */}
                         <div className="flex-1 text-center px-2">
                             <h1 className="text-base sm:text-xl font-bold text-[#0e1f3e] truncate">
-                                {activeSection === 'waitlist' ? 'Waitlist Entries' : '60-Min Experience'}
+                                {activeSection === 'waitlist' ? 'Waitlist Entries' : activeSection === 'experience' ? '60-Min Experience' : 'Site Analytics'}
                             </h1>
                             <p className="text-xs text-gray-500 hidden sm:block">
                                 {activeSection === 'waitlist'
                                     ? 'Manage program waitlist registrations'
-                                    : 'Manage experience day registrations'}
+                                    : activeSection === 'experience'
+                                        ? 'Manage experience day registrations'
+                                        : 'Track visits, clicks, and real-time visitors'}
                             </p>
                         </div>
 
@@ -485,13 +588,15 @@ export default function AdminDashboard() {
                             >
                                 <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
                             </button>
-                            <button
-                                onClick={activeSection === 'waitlist' ? handleDownloadWaitlistTxt : handleDownloadExperienceTxt}
-                                disabled={activeSection === 'waitlist' ? !entries.length : !experienceRegistrations.length}
-                                className="p-2 sm:px-4 sm:py-2 bg-gradient-to-r from-[#ca3433] to-[#e85653] text-white font-medium rounded-lg shadow-md hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-                            >
-                                <Download className="w-4 h-4" />
-                            </button>
+                            {activeSection !== 'analytics' && (
+                                <button
+                                    onClick={activeSection === 'waitlist' ? handleDownloadWaitlistTxt : handleDownloadExperienceTxt}
+                                    disabled={activeSection === 'waitlist' ? !entries.length : !experienceRegistrations.length}
+                                    className="p-2 sm:px-4 sm:py-2 bg-gradient-to-r from-[#ca3433] to-[#e85653] text-white font-medium rounded-lg shadow-md hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                                >
+                                    <Download className="w-4 h-4" />
+                                </button>
+                            )}
                         </div>
                     </div>
                 </header>
@@ -572,7 +677,199 @@ export default function AdminDashboard() {
                         return (
                             <>
                                 <div className="flex-1 bg-white rounded-2xl shadow-sm border border-gray-100 overflow-y-auto min-h-0">
-                                    {activeSection === 'waitlist' ? (
+                                    {activeSection === 'analytics' ? (
+                                        /* Analytics Section */
+                                        <div className="p-6 space-y-6">
+                                            {/* Real-time Visitors Banner */}
+                                            <div className="bg-gradient-to-r from-green-500 to-emerald-600 rounded-2xl p-6 text-white shadow-lg">
+                                                <div className="flex items-center justify-between">
+                                                    <div className="flex items-center gap-4">
+                                                        <div className="relative">
+                                                            <div className="w-4 h-4 bg-white rounded-full animate-ping absolute" />
+                                                            <div className="w-4 h-4 bg-white rounded-full relative" />
+                                                        </div>
+                                                        <div>
+                                                            <div className="text-sm font-medium text-white/80">Real-time Visitors</div>
+                                                            <div className="text-4xl font-bold">{analyticsSummary?.realTimeVisitors ?? 0}</div>
+                                                        </div>
+                                                    </div>
+                                                    <Activity className="w-12 h-12 text-white/30" />
+                                                </div>
+                                                <div className="mt-3 text-sm text-white/70">
+                                                    Active in the last 5 minutes • Auto-refreshes every 10s
+                                                </div>
+                                            </div>
+
+                                            {/* Stats Grid */}
+                                            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                                                {/* Today's Visits */}
+                                                <div className="bg-gray-50 rounded-xl p-5 border border-gray-100">
+                                                    <div className="flex items-center gap-3 mb-3">
+                                                        <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                                                            <Eye className="w-5 h-5 text-blue-600" />
+                                                        </div>
+                                                        <span className="text-sm font-medium text-gray-500">Today's Views</span>
+                                                    </div>
+                                                    <div className="text-3xl font-bold text-[#0e1f3e]">{analyticsSummary?.today.visits ?? 0}</div>
+                                                </div>
+
+                                                {/* Today's Unique */}
+                                                <div className="bg-gray-50 rounded-xl p-5 border border-gray-100">
+                                                    <div className="flex items-center gap-3 mb-3">
+                                                        <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
+                                                            <Users className="w-5 h-5 text-purple-600" />
+                                                        </div>
+                                                        <span className="text-sm font-medium text-gray-500">Unique Today</span>
+                                                    </div>
+                                                    <div className="text-3xl font-bold text-[#0e1f3e]">{analyticsSummary?.today.uniqueVisitors ?? 0}</div>
+                                                </div>
+
+                                                {/* Week's Views */}
+                                                <div className="bg-gray-50 rounded-xl p-5 border border-gray-100">
+                                                    <div className="flex items-center gap-3 mb-3">
+                                                        <div className="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center">
+                                                            <TrendingUp className="w-5 h-5 text-orange-600" />
+                                                        </div>
+                                                        <span className="text-sm font-medium text-gray-500">This Week</span>
+                                                    </div>
+                                                    <div className="text-3xl font-bold text-[#0e1f3e]">{analyticsSummary?.week.visits ?? 0}</div>
+                                                </div>
+
+                                                {/* Total All-time */}
+                                                <div className="bg-gray-50 rounded-xl p-5 border border-gray-100">
+                                                    <div className="flex items-center gap-3 mb-3">
+                                                        <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+                                                            <Globe className="w-5 h-5 text-green-600" />
+                                                        </div>
+                                                        <span className="text-sm font-medium text-gray-500">All-time</span>
+                                                    </div>
+                                                    <div className="text-3xl font-bold text-[#0e1f3e]">{analyticsSummary?.total.visits ?? 0}</div>
+                                                </div>
+                                            </div>
+
+                                            {/* Weekly Chart */}
+                                            <div className="bg-gray-50 rounded-xl p-6 border border-gray-100">
+                                                <h3 className="text-lg font-bold text-[#0e1f3e] mb-4 flex items-center gap-2">
+                                                    <BarChart3 className="w-5 h-5 text-[#ca3433]" />
+                                                    Last 7 Days
+                                                </h3>
+                                                {dailyVisits.length > 0 ? (
+                                                    <div className="flex items-end gap-2 h-40">
+                                                        {dailyVisits.map((day, index) => {
+                                                            const maxVisits = Math.max(...dailyVisits.map(d => d.visits), 1);
+                                                            const heightPercent = (day.visits / maxVisits) * 100;
+                                                            const date = new Date(day.date);
+                                                            const dayName = date.toLocaleDateString('en-US', { weekday: 'short' });
+                                                            return (
+                                                                <div key={index} className="flex-1 flex flex-col items-center gap-2">
+                                                                    <div className="text-xs font-semibold text-[#0e1f3e]">{day.visits}</div>
+                                                                    <div
+                                                                        className="w-full bg-gradient-to-t from-[#ca3433] to-[#e85653] rounded-t-lg transition-all hover:from-[#b1302f] hover:to-[#ca3433]"
+                                                                        style={{ height: `${Math.max(heightPercent, 5)}%` }}
+                                                                    />
+                                                                    <div className="text-xs text-gray-500">{dayName}</div>
+                                                                </div>
+                                                            );
+                                                        })}
+                                                    </div>
+                                                ) : (
+                                                    <div className="h-40 flex items-center justify-center text-gray-400">
+                                                        <div className="text-center">
+                                                            <BarChart3 className="w-12 h-12 mx-auto mb-2 opacity-30" />
+                                                            <p>No visit data yet</p>
+                                                            <p className="text-sm">Data will appear as visitors come</p>
+                                                        </div>
+                                                    </div>
+                                                )}
+                                            </div>
+
+                                            {/* Browser & Device Breakdown */}
+                                            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                                                {/* Browsers */}
+                                                <div className="bg-gray-50 rounded-xl p-6 border border-gray-100">
+                                                    <h3 className="text-lg font-bold text-[#0e1f3e] mb-4">Browsers</h3>
+                                                    {browserDeviceData && browserDeviceData.browsers.length > 0 ? (
+                                                        <div className="space-y-3">
+                                                            {browserDeviceData.browsers.map((browser, index) => {
+                                                                const total = browserDeviceData.browsers.reduce((sum, b) => sum + b.count, 0);
+                                                                const percentage = ((browser.count / total) * 100).toFixed(1);
+                                                                const getBrowserIcon = (name: string) => {
+                                                                    switch (name) {
+                                                                        case 'Chrome': return '🌐';
+                                                                        case 'Safari': return '🧭';
+                                                                        case 'Firefox': return '🦊';
+                                                                        case 'Edge': return '🌊';
+                                                                        default: return '🌍';
+                                                                    }
+                                                                };
+                                                                return (
+                                                                    <div key={index} className="flex items-center justify-between">
+                                                                        <div className="flex items-center gap-2">
+                                                                            <span className="text-xl">{getBrowserIcon(browser.name)}</span>
+                                                                            <span className="font-medium text-gray-700">{browser.name}</span>
+                                                                        </div>
+                                                                        <div className="flex items-center gap-3">
+                                                                            <div className="text-sm text-gray-500">{percentage}%</div>
+                                                                            <div className="font-bold text-[#0e1f3e]">{browser.count}</div>
+                                                                        </div>
+                                                                    </div>
+                                                                );
+                                                            })}
+                                                        </div>
+                                                    ) : (
+                                                        <div className="text-center text-gray-400 py-4">No browser data yet</div>
+                                                    )}
+                                                </div>
+
+                                                {/* Devices */}
+                                                <div className="bg-gray-50 rounded-xl p-6 border border-gray-100">
+                                                    <h3 className="text-lg font-bold text-[#0e1f3e] mb-4">Devices</h3>
+                                                    {browserDeviceData && browserDeviceData.devices.length > 0 ? (
+                                                        <div className="space-y-3">
+                                                            {browserDeviceData.devices.map((device, index) => {
+                                                                const total = browserDeviceData.devices.reduce((sum, d) => sum + d.count, 0);
+                                                                const percentage = ((device.count / total) * 100).toFixed(1);
+                                                                const getDeviceIcon = (name: string) => {
+                                                                    switch (name) {
+                                                                        case 'Desktop': return <Monitor className="w-5 h-5 text-blue-600" />;
+                                                                        case 'Mobile': return <Smartphone className="w-5 h-5 text-green-600" />;
+                                                                        case 'Tablet': return <Tablet className="w-5 h-5 text-purple-600" />;
+                                                                        default: return <Monitor className="w-5 h-5 text-gray-600" />;
+                                                                    }
+                                                                };
+                                                                return (
+                                                                    <div key={index} className="flex items-center justify-between">
+                                                                        <div className="flex items-center gap-2">
+                                                                            {getDeviceIcon(device.name)}
+                                                                            <span className="font-medium text-gray-700">{device.name}</span>
+                                                                        </div>
+                                                                        <div className="flex items-center gap-3">
+                                                                            <div className="text-sm text-gray-500">{percentage}%</div>
+                                                                            <div className="font-bold text-[#0e1f3e]">{device.count}</div>
+                                                                        </div>
+                                                                    </div>
+                                                                );
+                                                            })}
+                                                        </div>
+                                                    ) : (
+                                                        <div className="text-center text-gray-400 py-4">No device data yet</div>
+                                                    )}
+                                                </div>
+                                            </div>
+
+                                            {/* Summary Stats */}
+                                            <div className="grid grid-cols-2 gap-4">
+                                                <div className="bg-[#0e1f3e] rounded-xl p-5 text-white">
+                                                    <div className="text-sm text-white/70 mb-1">Total Unique Visitors</div>
+                                                    <div className="text-3xl font-bold">{analyticsSummary?.total.uniqueVisitors ?? 0}</div>
+                                                </div>
+                                                <div className="bg-gradient-to-r from-[#ca3433] to-[#e85653] rounded-xl p-5 text-white">
+                                                    <div className="text-sm text-white/70 mb-1">Unique This Week</div>
+                                                    <div className="text-3xl font-bold">{analyticsSummary?.week.uniqueVisitors ?? 0}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ) : activeSection === 'waitlist' ? (
                                         <>
                                             {!entries.length && !loading ? (
                                                 <div className="p-12 text-center">

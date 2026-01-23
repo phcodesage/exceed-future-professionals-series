@@ -78,3 +78,18 @@ const experienceRegistrationSchema = new mongoose.Schema(
 
 export const ExperienceRegistration =
     mongoose.models.ExperienceRegistration || mongoose.model('ExperienceRegistration', experienceRegistrationSchema);
+
+// Define the PageVisit schema for analytics tracking
+const pageVisitSchema = new mongoose.Schema(
+    {
+        sessionId: { type: String, required: true, index: true },
+        page: { type: String, required: true },
+        referrer: { type: String, default: '' },
+        userAgent: { type: String, default: '' },
+        lastActive: { type: Date, default: Date.now, index: true },
+    },
+    { timestamps: true }
+);
+
+export const PageVisit =
+    mongoose.models.PageVisit || mongoose.model('PageVisit', pageVisitSchema);
