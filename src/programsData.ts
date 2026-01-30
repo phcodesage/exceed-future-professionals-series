@@ -146,15 +146,13 @@ export const programs = [
                     {
                         grades: 'K-2',
                         options: [
-                            { label: 'Option 1', time: 'Sundays 2-3', dates: 'Apr 19 - June 7' },
-                            { label: 'Option 2', time: 'Wednesdays 4-5', dates: 'Apr 22 - June 10' },
+                            { label: '', time: 'Fridays 3:30-4:30pm', dates: 'May 1 - June 19' },
                         ],
                     },
                     {
                         grades: '3-6',
                         options: [
-                            { label: 'Option 1', time: 'Sundays 3:30-4:30', dates: 'Apr 19 - June 7' },
-                            { label: 'Option 2', time: 'Fridays 4-5', dates: 'Apr 24 - June 12' },
+                            { label: '', time: 'Fridays 5-6pm', dates: 'May 1 - June 19' },
                         ],
                     },
                 ],
@@ -179,20 +177,18 @@ export const programs = [
         videos: [],
         content: [
             {
-                title: '8 Weeks Program',
+                title: '8 Weeks Program - Coming in June!',
                 schedules: [
                     {
                         grades: 'K-2',
                         options: [
-                            { label: 'Option 1', time: 'Sundays 3-4', dates: 'Apr 19 - June 7' },
-                            { label: 'Option 2', time: 'Wednesdays 5:30-6:30', dates: 'Apr 22 - June 10' },
+                            { label: '', time: 'Schedule coming soon', dates: 'June 2026' },
                         ],
                     },
                     {
                         grades: '3-6',
                         options: [
-                            { label: 'Option 1', time: 'Sundays 4:30-5:30', dates: 'Apr 19 - June 7' },
-                            { label: 'Option 2', time: 'Thursdays 5:30-6:30', dates: 'Apr 23 - June 11' },
+                            { label: '', time: 'Schedule coming soon', dates: 'June 2026' },
                         ],
                     },
                 ],
