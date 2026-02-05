@@ -211,7 +211,7 @@ function App() {
                 <div className="flex flex-wrap justify-center gap-4 mb-8 text-sm sm:text-base">
                   <div className="flex items-center gap-2 bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full">
                     <Calendar className="w-5 h-5" />
-                    <span>Jan 18, 19 & Feb 8</span>
+                    <span>Feb 8</span>
                   </div>
                   <div className="flex items-center gap-2 bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full">
                     <Clock className="w-5 h-5" />
@@ -706,9 +706,7 @@ function App() {
                 /* Date/Time Selection */
                 <div className="space-y-4">
                   {[
-                    { date: 'January 18, 2026', day: 'Saturday' },
-                    { date: 'January 19, 2026', day: 'Sunday' },
-                    { date: 'February 8, 2026', day: 'Saturday' },
+                    { date: 'February 8, 2026', day: 'Sunday' },
                   ].map((item, index) => (
                     <div key={index} className="bg-[#fff7e5] rounded-2xl p-5 border-2 border-[#ffe0b2] hover:border-[#ca3433] transition-colors">
                       <div className="flex items-center gap-3 mb-3">
