@@ -159,14 +159,6 @@ function App() {
                   </p>
                 </div>
               </div>
-              <div className="flex flex-wrap justify-center lg:justify-start items-center gap-5">
-                <a
-                  href="#about"
-                  className="inline-flex items-center justify-center px-10 py-4 rounded-full bg-[#ca3433] text-white text-lg sm:text-xl font-bold shadow-lg hover:bg-[#b1302f] transition-colors"
-                >
-                  Register Now
-                </a>
-              </div>
             </div>
 
             <div className="flex-1 w-full max-w-md">
@@ -181,60 +173,33 @@ function App() {
           </div>
         </header>
 
-        <main className="space-y-20">
-          {/* FREE Experience Day Section - First/Top */}
-          <section id="experience-day" className="relative">
-            <div className="bg-gradient-to-r from-[#ca3433] via-[#d94140] to-[#e85653] rounded-3xl shadow-2xl p-8 sm:p-12 max-w-4xl mx-auto text-white overflow-hidden">
-              {/* Decorative elements */}
-              <div className="absolute top-0 right-0 w-40 h-40 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2" />
-              <div className="absolute bottom-0 left-0 w-32 h-32 bg-white/10 rounded-full translate-y-1/2 -translate-x-1/2" />
-
-              <div className="relative z-10">
-                <div className="flex items-center justify-center gap-2 mb-4">
-                  <Sparkles className="w-6 h-6 text-yellow-300 animate-pulse" />
-                  <span className="inline-block bg-yellow-400 text-[#0e1f3e] text-sm font-bold px-4 py-1 rounded-full uppercase tracking-wide">
-                    FREE Event
-                  </span>
-                  <Sparkles className="w-6 h-6 text-yellow-300 animate-pulse" />
-                </div>
-
-                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-center mb-4">
-                  Future Professionals<br />
-                  <span className="text-yellow-300">60-Minute Experience</span>
-                </h2>
-
-                <p className="text-lg sm:text-xl text-white/90 text-center max-w-2xl mx-auto mb-6">
-                  Come experience what it means to be a <strong>Future Doctor</strong> or <strong>Future Dentist</strong>!
-                  Kids dive into exciting hands-on activities while parents learn more about our programs.
-                </p>
-
-                <div className="flex flex-wrap justify-center gap-4 mb-8 text-sm sm:text-base">
-                  <div className="flex items-center gap-2 bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full">
-                    <Calendar className="w-5 h-5" />
-                    <span>Feb 8</span>
-                  </div>
-                  <div className="flex items-center gap-2 bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full">
-                    <Clock className="w-5 h-5" />
-                    <span>10:00 AM & 12:00 PM</span>
-                  </div>
-                  <div className="flex items-center gap-2 bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full">
-                    <MapPin className="w-5 h-5" />
-                    <span>Exceed Academy</span>
-                  </div>
-                </div>
-
-                <div className="flex justify-center">
-                  <button
-                    onClick={() => setShowExperiencePopup(true)}
-                    className="group inline-flex items-center gap-3 px-10 py-4 bg-white text-[#ca3433] text-lg sm:text-xl font-bold rounded-full shadow-lg hover:bg-yellow-300 hover:text-[#0e1f3e] transition-all hover:scale-105 hover:shadow-xl"
-                  >
-                    <span>Join for FREE</span>
-                    <span className="group-hover:translate-x-1 transition-transform">→</span>
-                  </button>
-                </div>
-              </div>
+        {/* Register Now CTA Section */}
+        <section className="py-16 -mt-8">
+          <div className="relative">
+            {/* Decorative background elements */}
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="w-64 h-64 bg-[#ca3433]/5 rounded-full blur-3xl" />
             </div>
-          </section>
+
+            <div className="relative text-center">
+              <p className="text-lg sm:text-xl text-[#1f2a4d]/70 mb-6 font-medium">
+                Ready to give your child an unforgettable experience?
+              </p>
+              <a
+                href="#about"
+                className="inline-flex items-center justify-center px-14 py-5 rounded-full bg-[#ca3433] text-white text-xl sm:text-2xl font-bold shadow-xl hover:bg-[#b1302f] hover:shadow-2xl hover:scale-105 transition-all duration-300"
+              >
+                <Sparkles className="w-6 h-6 mr-3" />
+                Register Now
+              </a>
+              <p className="mt-4 text-sm text-[#1f2a4d]/50">
+                Enrolling now for February 2026
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <main className="space-y-20">
 
           <section id="about">
             <div className="bg-white rounded-3xl shadow-xl p-10 sm:p-12 lg:p-14 max-w-4xl mx-auto">
