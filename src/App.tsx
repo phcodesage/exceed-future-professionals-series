@@ -219,11 +219,11 @@ function App() {
                 a young age, children can gain clarity and confidence in understanding the possibilities for their future.
               </p>
 
-              {/* Active Programs - Doctor and Dentist */}
+              {/* Active Programs - Chef and Artist */}
               <div className="mb-12">
                 <h3 className="text-3xl font-bold text-[#ca3433] mb-6 text-center">Now Enrolling</h3>
                 <div className="grid grid-cols-2 gap-5">
-                  {programs.filter(p => p.id === 'doctor' || p.id === 'dentist').map((program) => {
+                  {programs.filter(p => p.id === 'chef' || p.id === 'artist').map((program) => {
                     const Icon = program.icon;
                     return (
                       <div
@@ -259,14 +259,14 @@ function App() {
                 </div>
               </div>
 
-              {/* March 2026 Programs - Chef and Artist */}
+              {/* July 2026 Programs - Doctor and Dentist */}
               <div className="mb-12">
-                <h3 className="text-2xl font-bold text-[#0e1f3e] mb-2 text-center">March 2026 Programs</h3>
+                <h3 className="text-2xl font-bold text-[#0e1f3e] mb-2 text-center">July 2026 Programs</h3>
                 <p className="text-sm text-gray-600 mb-4 text-center">
                   Interested in these programs? Join the waitlist to be notified!
                 </p>
                 <div className="grid grid-cols-2 gap-5 mb-6">
-                  {programs.filter(p => p.id === 'chef' || p.id === 'artist').map((program) => {
+                  {programs.filter(p => p.id === 'doctor' || p.id === 'dentist').map((program) => {
                     const Icon = program.icon;
                     return (
                       <div
@@ -345,8 +345,8 @@ function App() {
             </div>
 
             <div className="p-6 sm:p-10">
-              {/* Registration Buttons at Top for Doctor/Dentist */}
-              {(selectedProgram.id === 'doctor' || selectedProgram.id === 'dentist') && (
+              {/* Registration Buttons at Top for Chef/Artist */}
+              {(selectedProgram.id === 'chef' || selectedProgram.id === 'artist') && (
                 <div className="mb-8 p-6 bg-gradient-to-r from-[#f7e0e0] to-[#fff7e5] rounded-2xl">
                   <h4 className="text-lg font-bold text-[#0e1f3e] mb-4 text-center">Ready to Register?</h4>
                   <div className="flex flex-col sm:flex-row gap-3 justify-center">
@@ -464,8 +464,8 @@ function App() {
             </div>
 
             <div className="p-6 border-t border-gray-100 bg-gray-50 flex flex-col sm:flex-row items-center justify-end gap-4">
-              {/* Show waitlist button for Chef/Artist programs */}
-              {(selectedProgram.id === 'chef' || selectedProgram.id === 'artist') && (
+              {/* Show waitlist button for Doctor/Dentist programs */}
+              {(selectedProgram.id === 'doctor' || selectedProgram.id === 'dentist') && (
                 <button
                   onClick={() => {
                     setSelectedProgram(null);
