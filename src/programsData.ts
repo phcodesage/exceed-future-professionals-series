@@ -9,18 +9,18 @@ export const programs = [
         videos: [],
         content: [
             {
-                title: '8 Weeks Program - Coming in April!',
+                title: '8-Week Program - Starts April 17, 2026',
                 schedules: [
                     {
                         grades: 'K-2',
                         options: [
-                            { label: '', time: 'Fridays 3:30-4:30pm', dates: 'Starting April 2026' },
+                            { label: '', time: 'Fridays 3:30-4:30pm', dates: 'Starting April 17, 2026' },
                         ],
                     },
                     {
                         grades: '3-6',
                         options: [
-                            { label: '', time: 'Fridays 5-6pm', dates: 'Starting April 2026' },
+                            { label: '', time: 'Fridays 5-6pm', dates: 'Starting April 17, 2026' },
                         ],
                     },
                 ],
@@ -45,18 +45,18 @@ export const programs = [
         videos: [],
         content: [
             {
-                title: '8 Weeks Program - Coming in April!',
+                title: '8-Week Program - Starts April 15, 2026',
                 schedules: [
                     {
                         grades: 'K-2',
                         options: [
-                            { label: '', time: 'Schedule coming soon', dates: 'April 2026' },
+                            { label: '', time: 'Wednesdays 4:00pm', dates: 'Starting April 15, 2026' },
                         ],
                     },
                     {
                         grades: '3-6',
                         options: [
-                            { label: '', time: 'Schedule coming soon', dates: 'April 2026' },
+                            { label: '', time: 'Wednesdays 5:30pm', dates: 'Starting April 15, 2026' },
                         ],
                     },
                 ],
@@ -88,15 +88,15 @@ export const programs = [
                     {
                         grades: 'K-2',
                         options: [
-                            { label: 'Option 1', time: 'Sundays 2-3', dates: 'Starting July 2026' },
-                            { label: 'Option 2', time: 'Wednesdays 4-5', dates: 'Starting July 2026' },
+                            { label: 'Option 1', time: 'Sundays 2-3', dates: 'Starting September 2026' },
+                            { label: 'Option 2', time: 'Wednesdays 4-5', dates: 'Starting September 2026' },
                         ],
                     },
                     {
                         grades: '3-6',
                         options: [
-                            { label: 'Option 1', time: 'Sundays 3:30-4:30', dates: 'Starting July 2026' },
-                            { label: 'Option 2', time: 'Fridays 4-5', dates: 'Starting July 2026' },
+                            { label: 'Option 1', time: 'Sundays 3:30-4:30', dates: 'Starting September 2026' },
+                            { label: 'Option 2', time: 'Fridays 4-5', dates: 'Starting September 2026' },
                         ],
                     },
                 ],
@@ -154,15 +154,15 @@ export const programs = [
                     {
                         grades: 'K-2',
                         options: [
-                            { label: 'Option 1', time: 'Sundays 3-4', dates: 'Starting July 2026' },
-                            { label: 'Option 2', time: 'Thursdays 4-5', dates: 'Starting July 2026' },
+                            { label: 'Option 1', time: 'Sundays 3-4', dates: 'Starting September 2026' },
+                            { label: 'Option 2', time: 'Thursdays 4-5', dates: 'Starting September 2026' },
                         ],
                     },
                     {
                         grades: '3-6',
                         options: [
-                            { label: 'Option 1', time: 'Sundays 4:30-5:30', dates: 'Starting July 2026' },
-                            { label: 'Option 2', time: 'Thursdays 5:30-6:30', dates: 'Starting July 2026' },
+                            { label: 'Option 1', time: 'Sundays 4:30-5:30', dates: 'Starting September 2026' },
+                            { label: 'Option 2', time: 'Thursdays 5:30-6:30', dates: 'Starting September 2026' },
                         ],
                     },
                 ],

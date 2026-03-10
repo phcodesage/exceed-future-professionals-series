@@ -1,4 +1,4 @@
-import { X, Calendar, Sparkles, Clock, MapPin, CheckCircle, Loader2, ArrowLeft } from 'lucide-react';
+import { X, Calendar, Sparkles, Clock, CheckCircle, Loader2, ArrowLeft } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import Lenis from '@studio-freight/lenis';
 import WaitlistForm from './components/WaitlistForm';
@@ -193,7 +193,7 @@ function App() {
                 Register Now
               </a>
               <p className="mt-4 text-sm text-[#1f2a4d]/50">
-                Enrolling now for February 2026
+                Enrolling now for April 2026
               </p>
             </div>
           </div>
@@ -259,11 +259,11 @@ function App() {
                 </div>
               </div>
 
-              {/* July 2026 Programs - Doctor and Dentist */}
+              {/* September 2026 Programs - Doctor and Dentist */}
               <div className="mb-12">
-                <h3 className="text-2xl font-bold text-[#0e1f3e] mb-2 text-center">July 2026 Programs</h3>
+                <h3 className="text-2xl font-bold text-[#0e1f3e] mb-2 text-center">September 2026 Programs</h3>
                 <p className="text-sm text-gray-600 mb-4 text-center">
-                  Interested in these programs? Join the waitlist to be notified!
+                  Coming in September 2026. Join the waitlist to be notified!
                 </p>
                 <div className="grid grid-cols-2 gap-5 mb-6">
                   {programs.filter(p => p.id === 'doctor' || p.id === 'dentist').map((program) => {
@@ -277,6 +277,9 @@ function App() {
                         <Icon className="w-12 h-12 text-[#ca3433] mb-2 group-hover:text-[#b1302f] transition-colors" />
                         <span className="text-sm sm:text-base font-semibold text-[#0e1f3e] text-center">
                           {program.name}
+                        </span>
+                        <span className="text-xs sm:text-sm text-[#ca3433] mt-2 font-semibold">
+                          Waitlist
                         </span>
                       </div>
                     );
@@ -309,7 +312,7 @@ function App() {
               </div>
 
               {/* Waitlist Form */}
-              <div>
+              <div id="join">
                 <WaitlistForm />
               </div>
             </div>
@@ -367,6 +370,31 @@ function App() {
                       >
                         Register for Both Semesters
                       </a>
+                    )}
+                  </div>
+                  <div className="mt-5 text-center text-sm sm:text-base text-gray-700">
+                    <div className="font-semibold text-[#0e1f3e]">
+                      {selectedProgram.id === 'chef' ? 'Starts April 17, 2026' : 'Starts April 15, 2026'}
+                    </div>
+                    <div className="font-bold text-[#ca3433] mt-1">$439 for all 8 weeks</div>
+                    {selectedProgram.id === 'chef' ? (
+                      <>
+                        <div className="mt-2">
+                          Early enrollment through April 1: kitchen tools included for free.
+                        </div>
+                        <div>
+                          After April 1: add $59 for kitchen tools.
+                        </div>
+                      </>
+                    ) : (
+                      <>
+                        <div className="mt-2">
+                          Early bird registration through April 1: free apron and art tools.
+                        </div>
+                        <div>
+                          After April 1: add $59 for apron and art tools.
+                        </div>
+                      </>
                     )}
                   </div>
                 </div>
