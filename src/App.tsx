@@ -376,7 +376,7 @@ function App() {
                     <div className="font-semibold text-[#0e1f3e]">
                       {selectedProgram.id === 'chef' ? 'Starts April 17, 2026' : 'Starts April 15, 2026'}
                     </div>
-                    <div className="font-bold text-[#ca3433] mt-1">$439 for all 8 weeks</div>
+                    <div className="font-bold text-[#ca3433] mt-1">$539 for all 8 weeks</div>
                     {selectedProgram.id === 'chef' ? (
                       <>
                         <div className="mt-2">
