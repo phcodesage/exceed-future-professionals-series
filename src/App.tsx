@@ -142,7 +142,7 @@ function App() {
                 Big dreams for little professionals
               </div>
               <div className="flex items-center justify-center lg:justify-start gap-6 mb-6">
-                <div className="inline-flex items-center justify-center w-24 h-24 sm:w-28 sm:h-28 bg-white rounded-3xl rotate-3 shadow-lg overflow-hidden">
+                <div className="inline-flex items-center justify-center w-24 h-24 sm:w-28 sm:h-28 bg-white rounded-3xl shadow-lg overflow-hidden">
                   <img
                     src="/images/logo.png"
                     alt="Exceed logo"
