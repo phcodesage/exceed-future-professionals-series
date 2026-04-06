@@ -10,7 +10,7 @@ const resend = RESEND_API_KEY ? new Resend(RESEND_API_KEY) : null;
 
 // Admin recipients for notifications
 const adminRecipients = [
-    'Info@exceedlearningcenterny.com',
+    'info@exceedlearningcenterny.com',
     'olganyc21@gmail.com',
     'phcodesage@gmail.com',
 ];
