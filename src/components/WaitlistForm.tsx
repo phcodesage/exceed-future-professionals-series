@@ -284,24 +284,20 @@ export default function WaitlistForm() {
 
               <div className="space-y-4">
                 <a
-                  href="https://buy.stripe.com/5kQ28k9Kk9se9S92SfdfG01"
+                  href="https://pay.ipospays.com/externalPay?t=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0cmFuc2FjdGlvbl9pZCI6Ijg4OTc5ODg0Mjk0NyIsInBheW1lbnRfdHlwZSI6MX0.hk91sjk6QiApfj193LJdgNc6BmYs3ect-NLrmSL7d8c"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="block w-full px-6 py-4 rounded-xl bg-[#ca3433] text-white text-center font-semibold shadow-md hover:bg-[#b1302f] transition-colors"
                 >
-                  <div className="text-lg mb-1">Semester 1 Only</div>
-                  <div className="text-sm opacity-90">Single semester registration</div>
+                  <div className="text-lg mb-1">Pay via Card</div>
+                  <div className="text-sm opacity-90">Registration fee</div>
                 </a>
 
-                <a
-                  href="https://buy.stripe.com/14A14g8Gg47Uc0hgJ5dfG07"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block w-full px-6 py-4 rounded-xl bg-[#0e1f3e] text-white text-center font-semibold shadow-md hover:bg-[#1f2a4d] transition-colors"
-                >
-                  <div className="text-lg mb-1">2 Semesters</div>
-                  <div className="text-sm opacity-90">Full year registration</div>
-                </a>
+                <div className="text-center text-sm text-[#0e1f3e] bg-gray-50 rounded-xl p-4 border border-gray-100 shadow-sm">
+                  <p className="font-bold mb-2">Payment Options (Cash & Card)</p>
+                  <p>Cash will be $539 (Pay at the center)</p>
+                  <p>Card payments add 4% processing fee</p>
+                </div>
               </div>
 
               <button

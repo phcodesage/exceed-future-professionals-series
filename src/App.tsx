@@ -352,46 +352,43 @@ function App() {
               {(selectedProgram.id === 'chef' || selectedProgram.id === 'artist') && (
                 <div className="mb-8 p-6 bg-gradient-to-r from-[#f7e0e0] to-[#fff7e5] rounded-2xl">
                   <h4 className="text-lg font-bold text-[#0e1f3e] mb-4 text-center">Ready to Register?</h4>
-                  <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                  <div className="flex flex-col sm:flex-row gap-3 justify-center mb-2">
                     <a
-                      href="https://buy.stripe.com/14A14g8Gg47Uc0hgJ5dfG07"
+                      href="https://pay.ipospays.com/externalPay?t=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0cmFuc2FjdGlvbl9pZCI6Ijg4OTc5ODg0Mjk0NyIsInBheW1lbnRfdHlwZSI6MX0.hk91sjk6QiApfj193LJdgNc6BmYs3ect-NLrmSL7d8c"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="px-6 py-3 bg-[#ca3433] text-white font-semibold rounded-full shadow-md hover:bg-[#b1302f] transition-colors text-center"
+                      className="px-8 py-3 bg-[#ca3433] text-white font-semibold rounded-full shadow-md hover:bg-[#b1302f] transition-colors text-center"
                     >
-                      {selectedProgram.content && selectedProgram.content.length > 1 ? 'Register for Semester 1' : 'Register Now'}
+                      Pay Registration via Card
                     </a>
-                    {selectedProgram.content && selectedProgram.content.length > 1 && (
-                      <a
-                        href="https://buy.stripe.com/3cI00c7Cc33Q1lDboLdfG09"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="px-6 py-3 bg-[#0e1f3e] text-white font-semibold rounded-full shadow-md hover:bg-[#1f2a4d] transition-colors text-center"
-                      >
-                        Register for Both Semesters
-                      </a>
-                    )}
                   </div>
+                  
                   <div className="mt-5 text-center text-sm sm:text-base text-gray-700">
                     <div className="font-semibold text-[#0e1f3e]">
                       {selectedProgram.id === 'chef' ? 'Starts April 17, 2026' : 'Starts April 15, 2026'}
                     </div>
-                    <div className="font-bold text-[#ca3433] mt-1">$539 for all 8 weeks</div>
+                    
+                    <div className="bg-white/60 rounded-xl p-4 mt-4 mb-4 inline-block shadow-sm border border-[#ca3433]/10">
+                      <div className="font-bold text-[#0e1f3e] mb-2 leading-tight">Payment Options (Cash & Card)</div>
+                      <div className="text-sm font-medium text-gray-800">Cash: <span className="font-bold text-[#ca3433]">$539</span> (Pay at the center)</div>
+                      <div className="text-sm font-medium text-gray-800">Card: Added 4% processing fee</div>
+                    </div>
+
                     {selectedProgram.id === 'chef' ? (
                       <>
-                        <div className="mt-2">
+                        <div className="mt-2 text-sm">
                           Early enrollment through April 1: kitchen tools included for free.
                         </div>
-                        <div>
+                        <div className="text-sm">
                           After April 1: add $59 for kitchen tools.
                         </div>
                       </>
                     ) : (
                       <>
-                        <div className="mt-2">
+                        <div className="mt-2 text-sm">
                           Early bird registration through April 1: free apron and art tools.
                         </div>
-                        <div>
+                        <div className="text-sm">
                           After April 1: add $59 for apron and art tools.
                         </div>
                       </>
