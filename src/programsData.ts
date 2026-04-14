@@ -3,24 +3,34 @@ import { Stethoscope, Smile, Scale, PawPrint, Pill, ChefHat, FlaskConical, Palet
 export const programs = [
     {
         id: 'chef',
-        name: 'Young Chef',
+        name: 'Future Chef',
         icon: ChefHat,
         hasSyllabus: true,
         videos: [],
         content: [
             {
-                title: '8-Week Program - Starts April 17, 2026',
+                title: '8-Week Program',
+                ceremony: '',
                 schedules: [
                     {
-                        grades: 'K-2',
+                        grades: 'K-2 (Ages 4-7)',
                         options: [
-                            { label: '', time: 'Fridays 3:30-4:30pm', dates: 'Starting April 17, 2026' },
+                            { label: 'Sundays', time: 'Sundays 2-3pm', dates: 'Oct 4, 11, 18, 25, Nov 1, Nov 8, Nov 15, Nov 22' },
+                            { label: 'Fridays', time: 'Fridays 4-5pm', dates: 'Oct 9, 16, 23, 30, Nov 6, 13, 20, Dec 4' },
                         ],
                     },
                     {
-                        grades: '3-6',
+                        grades: '3-5 (Ages 8-11)',
                         options: [
-                            { label: '', time: 'Fridays 5-6pm', dates: 'Starting April 17, 2026' },
+                            { label: 'Sundays', time: 'Sundays 2-3pm', dates: 'Oct 4, 11, 18, 25, Nov 1, Nov 8, Nov 15, Nov 22' },
+                            { label: 'Fridays', time: 'Fridays 4-5pm', dates: 'Oct 9, 16, 23, 30, Nov 6, 13, 20, Dec 4' },
+                        ],
+                    },
+                    {
+                        grades: '6-8 (Ages 12-15)',
+                        options: [
+                            { label: 'Sundays', time: 'Sundays 2-3pm', dates: 'Oct 4, 11, 18, 25, Nov 1, Nov 8, Nov 15, Nov 22' },
+                            { label: 'Fridays', time: 'Fridays 4-5pm', dates: 'Oct 9, 16, 23, 30, Nov 6, 13, 20, Dec 4' },
                         ],
                     },
                 ],
@@ -39,24 +49,34 @@ export const programs = [
     },
     {
         id: 'artist',
-        name: 'Young Artist',
+        name: 'Future Artist',
         icon: Palette,
         hasSyllabus: true,
         videos: [],
         content: [
             {
-                title: '8-Week Program - Starts April 15, 2026',
+                title: '8-Week Program',
+                ceremony: '',
                 schedules: [
                     {
-                        grades: 'K-2',
+                        grades: 'K-2 (Ages 4-7)',
                         options: [
-                            { label: '', time: 'Wednesdays 4:00pm', dates: 'Starting April 15, 2026' },
+                            { label: 'Sundays', time: 'Sundays 2-3pm', dates: 'Jan 10, 17, 24, 31, Feb 7, 14, 21, 28' },
+                            { label: 'Fridays', time: 'Fridays 4-5pm', dates: 'Jan 14, 21, 28, Feb 4, 11, 18, 25, March 3' },
                         ],
                     },
                     {
-                        grades: '3-6',
+                        grades: '3-5 (Ages 8-11)',
                         options: [
-                            { label: '', time: 'Wednesdays 5:30pm', dates: 'Starting April 15, 2026' },
+                            { label: 'Sundays', time: 'Sundays 2-3pm', dates: 'Jan 10, 17, 24, 31, Feb 7, 14, 21, 28' },
+                            { label: 'Fridays', time: 'Fridays 4-5pm', dates: 'Jan 14, 21, 28, Feb 4, 11, 18, 25, March 3' },
+                        ],
+                    },
+                    {
+                        grades: '6-8 (Ages 12-15)',
+                        options: [
+                            { label: 'Sundays', time: 'Sundays 2-3pm', dates: 'Jan 10, 17, 24, 31, Feb 7, 14, 21, 28' },
+                            { label: 'Fridays', time: 'Fridays 4-5pm', dates: 'Jan 14, 21, 28, Feb 4, 11, 18, 25, March 3' },
                         ],
                     },
                 ],
@@ -84,19 +104,27 @@ export const programs = [
         content: [
             {
                 title: 'Semester 1 - 6 weeks',
+                ceremony: '',
                 schedules: [
                     {
-                        grades: 'K-2',
+                        grades: 'K-2 (Ages 4-7)',
                         options: [
-                            { label: 'Option 1', time: 'Sundays 2-3', dates: 'Starting September 2026' },
-                            { label: 'Option 2', time: 'Wednesdays 4-5', dates: 'Starting September 2026' },
+                            { label: 'Sundays', time: 'Sundays 2-3pm', dates: 'Oct 4, 11, 18, 25, Nov 1, Nov 8' },
+                            { label: 'Wednesdays', time: 'Wednesdays 4-5pm', dates: 'Oct 7, 14, 28, Nov 4, Nov 11' },
                         ],
                     },
                     {
-                        grades: '3-6',
+                        grades: '3-5 (Ages 8-11)',
                         options: [
-                            { label: 'Option 1', time: 'Sundays 3:30-4:30', dates: 'Starting September 2026' },
-                            { label: 'Option 2', time: 'Fridays 4-5', dates: 'Starting September 2026' },
+                            { label: 'Sundays', time: 'Sundays 2-3pm', dates: 'Oct 4, 11, 18, 25, Nov 1, Nov 8' },
+                            { label: 'Wednesdays', time: 'Wednesdays 4-5pm', dates: 'Oct 7, 14, 28, Nov 4, Nov 11' },
+                        ],
+                    },
+                    {
+                        grades: '6-8 (Ages 12-15)',
+                        options: [
+                            { label: 'Sundays', time: 'Sundays 2-3pm', dates: 'Oct 4, 11, 18, 25, Nov 1, Nov 8' },
+                            { label: 'Wednesdays', time: 'Wednesdays 4-5pm', dates: 'Oct 7, 14, 28, Nov 4, Nov 11' },
                         ],
                     },
                 ],
@@ -111,20 +139,27 @@ export const programs = [
             },
             {
                 title: 'Semester 2 - 6 weeks + White Coat Ceremony',
-                ceremony: 'White Coat Ceremony and Graduation: all sections: Date TBD',
+                ceremony: 'White Coat Ceremony and Graduation: December 27 at 2pm',
                 schedules: [
                     {
-                        grades: 'K-2',
+                        grades: 'K-2 (Ages 4-7)',
                         options: [
-                            { label: 'Option 1', time: 'Sundays 2-3', dates: 'Fall 2026' },
-                            { label: 'Option 2', time: 'Wednesdays 4-5', dates: 'Fall 2026' },
+                            { label: 'Sundays', time: 'Sundays 2-3pm', dates: 'Nov 15, 22, 29, Dec 6, Dec 13, Dec 20' },
+                            { label: 'Wednesdays', time: 'Wednesdays 4-5pm', dates: 'Nov 18, 25, Dec 2, 9, 16, 23' },
                         ],
                     },
                     {
-                        grades: '3-6',
+                        grades: '3-5 (Ages 8-11)',
                         options: [
-                            { label: 'Option 1', time: 'Sundays 3:30-4:30', dates: 'Fall 2026' },
-                            { label: 'Option 2', time: 'Fridays 4-5', dates: 'Fall 2026' },
+                            { label: 'Sundays', time: 'Sundays 2-3pm', dates: 'Nov 15, 22, 29, Dec 6, Dec 13, Dec 20' },
+                            { label: 'Wednesdays', time: 'Wednesdays 4-5pm', dates: 'Nov 18, 25, Dec 2, 9, 16, 23' },
+                        ],
+                    },
+                    {
+                        grades: '6-8 (Ages 12-15)',
+                        options: [
+                            { label: 'Sundays', time: 'Sundays 2-3pm', dates: 'Nov 15, 22, 29, Dec 6, Dec 13, Dec 20' },
+                            { label: 'Wednesdays', time: 'Wednesdays 4-5pm', dates: 'Nov 18, 25, Dec 2, 9, 16, 23' },
                         ],
                     },
                 ],
@@ -150,19 +185,27 @@ export const programs = [
         content: [
             {
                 title: 'Semester 1 - 6 weeks',
+                ceremony: '',
                 schedules: [
                     {
-                        grades: 'K-2',
+                        grades: 'K-2 (Ages 4-7)',
                         options: [
-                            { label: 'Option 1', time: 'Sundays 3-4', dates: 'Starting September 2026' },
-                            { label: 'Option 2', time: 'Thursdays 4-5', dates: 'Starting September 2026' },
+                            { label: 'Sundays', time: 'Sundays 3-4pm', dates: 'Jan 10, 17, 24, 31, Feb 7, 14' },
+                            { label: 'Wednesdays', time: 'Wednesdays 4-5pm', dates: 'Jan 13, 20, 27, Feb 3, 10, 17' },
                         ],
                     },
                     {
-                        grades: '3-6',
+                        grades: '3-5 (Ages 8-11)',
                         options: [
-                            { label: 'Option 1', time: 'Sundays 4:30-5:30', dates: 'Starting September 2026' },
-                            { label: 'Option 2', time: 'Thursdays 5:30-6:30', dates: 'Starting September 2026' },
+                            { label: 'Sundays', time: 'Sundays 3-4pm', dates: 'Jan 10, 17, 24, 31, Feb 7, 14' },
+                            { label: 'Wednesdays', time: 'Wednesdays 4-5pm', dates: 'Jan 13, 20, 27, Feb 3, 10, 17' },
+                        ],
+                    },
+                    {
+                        grades: '6-8 (Ages 12-15)',
+                        options: [
+                            { label: 'Sundays', time: 'Sundays 3-4pm', dates: 'Jan 10, 17, 24, 31, Feb 7, 14' },
+                            { label: 'Wednesdays', time: 'Wednesdays 4-5pm', dates: 'Jan 13, 20, 27, Feb 3, 10, 17' },
                         ],
                     },
                 ],
@@ -177,20 +220,27 @@ export const programs = [
             },
             {
                 title: 'Semester 2 - 6 weeks + White Coat Ceremony',
-                ceremony: 'White Coat Ceremony and Graduation: all sections: Date TBD',
+                ceremony: 'White Coat Ceremony and Graduation: April 14 at 5pm',
                 schedules: [
                     {
-                        grades: 'K-2',
+                        grades: 'K-2 (Ages 4-7)',
                         options: [
-                            { label: 'Option 1', time: 'Sundays 3-4', dates: 'Fall 2026' },
-                            { label: 'Option 2', time: 'Thursdays 4-5', dates: 'Fall 2026' },
+                            { label: 'Sundays', time: 'Sundays 3-4pm', dates: 'Feb 21, 28, March 7, 14, April 4, 11' },
+                            { label: 'Wednesdays', time: 'Wednesdays 4-5pm', dates: 'March 3, 10, 17, 24, 31, April 7' },
                         ],
                     },
                     {
-                        grades: '3-6',
+                        grades: '3-5 (Ages 8-11)',
                         options: [
-                            { label: 'Option 1', time: 'Sundays 4:30-5:30', dates: 'Fall 2026' },
-                            { label: 'Option 2', time: 'Thursdays 5:30-6:30', dates: 'Fall 2026' },
+                            { label: 'Sundays', time: 'Sundays 3-4pm', dates: 'Feb 21, 28, March 7, 14, April 4, 11' },
+                            { label: 'Wednesdays', time: 'Wednesdays 4-5pm', dates: 'March 3, 10, 17, 24, 31, April 7' },
+                        ],
+                    },
+                    {
+                        grades: '6-8 (Ages 12-15)',
+                        options: [
+                            { label: 'Sundays', time: 'Sundays 3-4pm', dates: 'Feb 21, 28, March 7, 14, April 4, 11' },
+                            { label: 'Wednesdays', time: 'Wednesdays 4-5pm', dates: 'March 3, 10, 17, 24, 31, April 7' },
                         ],
                     },
                 ],
@@ -209,8 +259,43 @@ export const programs = [
         id: 'lawyer',
         name: 'Future Lawyer',
         icon: Scale,
-        hasSyllabus: false,
+        hasSyllabus: true,
         videos: [],
+        content: [
+            {
+                title: '7-Week Program',
+                ceremony: '',
+                schedules: [
+                    {
+                        grades: 'K-2 (Ages 4-7)',
+                        options: [
+                            { label: 'Sundays', time: 'Sundays 2-3pm', dates: 'May 2, 9, 16, 23, 30, June 6, 13, 20' },
+                        ],
+                    },
+                    {
+                        grades: '3-5 (Ages 8-11)',
+                        options: [
+                            { label: 'Sundays', time: 'Sundays 2-3pm', dates: 'May 2, 9, 16, 23, 30, June 6, 13, 20' },
+                        ],
+                    },
+                    {
+                        grades: '6-8 (Ages 12-15)',
+                        options: [
+                            { label: 'Sundays', time: 'Sundays 2-3pm', dates: 'May 2, 9, 16, 23, 30, June 6, 13, 20' },
+                        ],
+                    },
+                ],
+                syllabus: [
+                    { week: 'Week 1', title: 'Introduction to Law', desc: 'What is law and how does it work?' },
+                    { week: 'Week 2', title: 'Types of Law', desc: 'Criminal, civil, and constitutional law basics' },
+                    { week: 'Week 3', title: 'The Court System', desc: 'How courts work and who works in them' },
+                    { week: 'Week 4', title: 'Mock Trial Basics', desc: 'Roles in a trial and courtroom procedures' },
+                    { week: 'Week 5', title: 'Evidence and Arguments', desc: 'Building a case and presenting evidence' },
+                    { week: 'Week 6', title: 'Debate Skills', desc: 'Persuasive speaking and critical thinking' },
+                    { week: 'Week 7', title: 'Mock Trial Competition', desc: 'Put your skills to the test in a mock trial' },
+                ],
+            },
+        ],
     },
     {
         id: 'vet',

@@ -4,12 +4,15 @@ import Lenis from '@studio-freight/lenis';
 import WaitlistForm from './components/WaitlistForm';
 import AdminDashboard from './components/AdminDashboard';
 import { programs } from './programsData';
+import PaymentModal, { calcCardPrice } from './PaymentModal';
 
 
 function App() {
   const [isAdminRoute, setIsAdminRoute] = useState(false);
   const [selectedProgram, setSelectedProgram] = useState<(typeof programs)[0] | null>(null);
   const [showExperiencePopup, setShowExperiencePopup] = useState(false);
+  const [paymentModalOpen, setPaymentModalOpen] = useState(false);
+  const IPOS_LINK = 'https://pay.ipospays.com/externalPay?t=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0cmFuc2FjdGlvbl9pZCI6Ijg4OTc5ODg0Mjk0NyIsInBheW1lbnRfdHlwZSI6MX0.hk91sjk6QiApfj193LJdgNc6BmYs3ect-NLrmSL7d8c';
 
   // Experience registration form state
   const [experienceSelection, setExperienceSelection] = useState<{ date: string; time: string } | null>(null);
@@ -133,6 +136,14 @@ function App() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#ffe8f0] via-[#fff7e5] to-white text-[#0e1f3e]">
+      <PaymentModal
+        isOpen={paymentModalOpen}
+        onClose={() => setPaymentModalOpen(false)}
+        courseName={selectedProgram ? selectedProgram.name : "Future Professionals Series"}
+        cashPrice="$539"
+        cardPrice={calcCardPrice('$539')}
+        stripeLink={IPOS_LINK}
+      />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
         <header className="mb-20" id="hero">
           <div className="flex flex-col lg:flex-row items-center gap-10">
@@ -353,14 +364,12 @@ function App() {
                 <div className="mb-8 p-6 bg-gradient-to-r from-[#f7e0e0] to-[#fff7e5] rounded-2xl">
                   <h4 className="text-lg font-bold text-[#0e1f3e] mb-4 text-center">Ready to Register?</h4>
                   <div className="flex flex-col sm:flex-row gap-3 justify-center mb-2">
-                    <a
-                      href="https://pay.ipospays.com/externalPay?t=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0cmFuc2FjdGlvbl9pZCI6Ijg4OTc5ODg0Mjk0NyIsInBheW1lbnRfdHlwZSI6MX0.hk91sjk6QiApfj193LJdgNc6BmYs3ect-NLrmSL7d8c"
-                      target="_blank"
-                      rel="noopener noreferrer"
+                    <button
+                      onClick={() => setPaymentModalOpen(true)}
                       className="px-8 py-3 bg-[#ca3433] text-white font-semibold rounded-full shadow-md hover:bg-[#b1302f] transition-colors text-center"
                     >
-                      Pay Registration via Card
-                    </a>
+                      Enroll Now — Choose Payment
+                    </button>
                   </div>
                   
                   <div className="mt-5 text-center text-sm sm:text-base text-gray-700">
