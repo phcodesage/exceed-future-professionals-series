@@ -373,35 +373,11 @@ function App() {
                   </div>
                   
                   <div className="mt-5 text-center text-sm sm:text-base text-gray-700">
-                    <div className="font-semibold text-[#0e1f3e]">
-                      {selectedProgram.id === 'chef' ? 'Starts April 17, 2026' : 'Starts April 15, 2026'}
-                    </div>
-                    
                     <div className="bg-white/60 rounded-xl p-4 mt-4 mb-4 inline-block shadow-sm border border-[#ca3433]/10">
                       <div className="font-bold text-[#0e1f3e] mb-2 leading-tight">Payment Options (Cash & Card)</div>
                       <div className="text-sm font-medium text-gray-800">Cash: <span className="font-bold text-[#ca3433]">$539</span> (Pay at the center)</div>
                       <div className="text-sm font-medium text-gray-800">Card: Added 4% processing fee</div>
                     </div>
-
-                    {selectedProgram.id === 'chef' ? (
-                      <>
-                        <div className="mt-2 text-sm">
-                          Early enrollment through April 1: kitchen tools included for free.
-                        </div>
-                        <div className="text-sm">
-                          After April 1: add $59 for kitchen tools.
-                        </div>
-                      </>
-                    ) : (
-                      <>
-                        <div className="mt-2 text-sm">
-                          Early bird registration through April 1: free apron and art tools.
-                        </div>
-                        <div className="text-sm">
-                          After April 1: add $59 for apron and art tools.
-                        </div>
-                      </>
-                    )}
                   </div>
                 </div>
               )}
