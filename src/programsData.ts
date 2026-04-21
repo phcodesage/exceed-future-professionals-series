@@ -15,22 +15,22 @@ export const programs = [
                     {
                         grades: 'K-2 (Ages 4-7)',
                         options: [
-                            { label: 'Sundays', time: 'Sundays 2-3pm', dates: 'Oct 4, 11, 18, 25, Nov 1, Nov 8, Nov 15, Nov 22' },
-                            { label: 'Fridays', time: 'Fridays 4-5pm', dates: 'Oct 9, 16, 23, 30, Nov 6, 13, 20, Dec 4' },
+                            { label: 'Sundays', time: 'Sundays 2-3pm', dates: 'May 10, 17, 24, 31, June 7, 14, 21, 28' },
+                            { label: 'Wednesdays', time: 'Wednesdays 4-5pm', dates: 'May 6, 13, 20, 27, June 3, 10, 17, 24' },
                         ],
                     },
                     {
                         grades: '3-5 (Ages 8-11)',
                         options: [
-                            { label: 'Sundays', time: 'Sundays 2-3pm', dates: 'Oct 4, 11, 18, 25, Nov 1, Nov 8, Nov 15, Nov 22' },
-                            { label: 'Fridays', time: 'Fridays 4-5pm', dates: 'Oct 9, 16, 23, 30, Nov 6, 13, 20, Dec 4' },
+                            { label: 'Sundays', time: 'Sundays 2-3pm', dates: 'May 10, 17, 24, 31, June 7, 14, 21, 28' },
+                            { label: 'Wednesdays', time: 'Wednesdays 4-5pm', dates: 'May 6, 13, 20, 27, June 3, 10, 17, 24' },
                         ],
                     },
                     {
                         grades: '6-8 (Ages 12-15)',
                         options: [
-                            { label: 'Sundays', time: 'Sundays 2-3pm', dates: 'Oct 4, 11, 18, 25, Nov 1, Nov 8, Nov 15, Nov 22' },
-                            { label: 'Fridays', time: 'Fridays 4-5pm', dates: 'Oct 9, 16, 23, 30, Nov 6, 13, 20, Dec 4' },
+                            { label: 'Sundays', time: 'Sundays 2-3pm', dates: 'May 10, 17, 24, 31, June 7, 14, 21, 28' },
+                            { label: 'Wednesdays', time: 'Wednesdays 4-5pm', dates: 'May 6, 13, 20, 27, June 3, 10, 17, 24' },
                         ],
                     },
                 ],
@@ -61,22 +61,22 @@ export const programs = [
                     {
                         grades: 'K-2 (Ages 4-7)',
                         options: [
-                            { label: 'Sundays', time: 'Sundays 2-3pm', dates: 'Jan 10, 17, 24, 31, Feb 7, 14, 21, 28' },
-                            { label: 'Fridays', time: 'Fridays 4-5pm', dates: 'Jan 14, 21, 28, Feb 4, 11, 18, 25, March 3' },
+                            { label: 'Sundays', time: 'Sundays 2-3pm', dates: 'May 3, 10, 17, 24, 31, June 7, 14, 21' },
+                            { label: 'Fridays', time: 'Fridays 4-5pm', dates: 'May 1, 8, 15, 22, 29, June 5, 12, 19' },
                         ],
                     },
                     {
                         grades: '3-5 (Ages 8-11)',
                         options: [
-                            { label: 'Sundays', time: 'Sundays 2-3pm', dates: 'Jan 10, 17, 24, 31, Feb 7, 14, 21, 28' },
-                            { label: 'Fridays', time: 'Fridays 4-5pm', dates: 'Jan 14, 21, 28, Feb 4, 11, 18, 25, March 3' },
+                            { label: 'Sundays', time: 'Sundays 2-3pm', dates: 'May 3, 10, 17, 24, 31, June 7, 14, 21' },
+                            { label: 'Fridays', time: 'Fridays 4-5pm', dates: 'May 1, 8, 15, 22, 29, June 5, 12, 19' },
                         ],
                     },
                     {
                         grades: '6-8 (Ages 12-15)',
                         options: [
-                            { label: 'Sundays', time: 'Sundays 2-3pm', dates: 'Jan 10, 17, 24, 31, Feb 7, 14, 21, 28' },
-                            { label: 'Fridays', time: 'Fridays 4-5pm', dates: 'Jan 14, 21, 28, Feb 4, 11, 18, 25, March 3' },
+                            { label: 'Sundays', time: 'Sundays 2-3pm', dates: 'May 3, 10, 17, 24, 31, June 7, 14, 21' },
+                            { label: 'Fridays', time: 'Fridays 4-5pm', dates: 'May 1, 8, 15, 22, 29, June 5, 12, 19' },
                         ],
                     },
                 ],
