@@ -5,6 +5,7 @@ export const programs = [
         id: 'chef',
         name: 'Future Chef',
         icon: ChefHat,
+        startDate: 'May 6',
         hasSyllabus: true,
         videos: [],
         content: [
@@ -51,6 +52,7 @@ export const programs = [
         id: 'artist',
         name: 'Future Artist',
         icon: Palette,
+        startDate: 'May 1',
         hasSyllabus: true,
         videos: [],
         content: [

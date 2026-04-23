@@ -204,7 +204,7 @@ function App() {
                 Register Now
               </a>
               <p className="mt-4 text-sm text-[#1f2a4d]/50">
-                Enrolling now for April 2026
+                Enrolling now for May 2026
               </p>
             </div>
           </div>
@@ -246,6 +246,11 @@ function App() {
                         <span className="text-base sm:text-lg font-semibold text-[#0e1f3e] text-center group-hover:text-white transition-colors">
                           {program.name}
                         </span>
+                        {program.startDate && (
+                          <span className="text-xs font-bold text-[#ca3433] mt-1 px-2 py-0.5 bg-white/50 rounded-full group-hover:bg-white group-hover:text-[#ca3433] transition-all">
+                            Starts {program.startDate}
+                          </span>
+                        )}
                         <span className="text-xs sm:text-sm text-gray-600 mt-2 group-hover:text-white/90 transition-colors">
                           Register Now
                         </span>
@@ -348,7 +353,15 @@ function App() {
                 <div className="p-3 bg-[#f7e0e0] rounded-xl">
                   <selectedProgram.icon className="w-8 h-8 text-[#ca3433]" />
                 </div>
-                <h3 className="text-2xl sm:text-3xl font-bold text-[#0e1f3e]">{selectedProgram.name}</h3>
+                <div>
+                  <h3 className="text-2xl sm:text-3xl font-bold text-[#0e1f3e]">{selectedProgram.name}</h3>
+                  {selectedProgram.startDate && (
+                    <div className="text-sm font-bold text-[#ca3433] flex items-center gap-1 mt-1">
+                      <Calendar className="w-4 h-4" />
+                      Starts {selectedProgram.startDate}, 2026
+                    </div>
+                  )}
+                </div>
               </div>
               <button
                 onClick={() => setSelectedProgram(null)}
