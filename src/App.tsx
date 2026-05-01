@@ -1,10 +1,9 @@
 import { X, Calendar, Sparkles, Clock, CheckCircle, Loader2, ArrowLeft } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import Lenis from '@studio-freight/lenis';
-import WaitlistForm from './components/WaitlistForm';
 import AdminDashboard from './components/AdminDashboard';
 import { programs } from './programsData';
-import PaymentModal, { calcCardPrice } from './PaymentModal';
+import PaymentModal from './PaymentModal';
 
 
 function App() {
@@ -19,6 +18,18 @@ function App() {
   const [expFormData, setExpFormData] = useState({ fullName: '', emailOrContact: '' });
   const [expFormStatus, setExpFormStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [expFormError, setExpFormError] = useState('');
+
+  // Lock background scroll when any modal is open
+  useEffect(() => {
+    if (showExperiencePopup || selectedProgram) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [showExperiencePopup, selectedProgram]);
 
   useEffect(() => {
     const updateRoute = () => {
@@ -140,17 +151,17 @@ function App() {
         isOpen={paymentModalOpen}
         onClose={() => setPaymentModalOpen(false)}
         courseName={selectedProgram ? selectedProgram.name : "Future Professionals Series"}
-        cashPrice="$539"
-        cardPrice={calcCardPrice('$539')}
+        cashPrice="$559"
+        cardPrice="$559"
         stripeLink={IPOS_LINK}
       />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
         <header className="mb-20" id="hero">
           <div className="flex flex-col lg:flex-row items-center gap-10">
             <div className="flex-1 text-center lg:text-left">
-              <div className="inline-flex items-center mb-5 rounded-full bg-white/70 px-5 py-2 text-sm sm:text-base font-semibold text-[#ca3433] shadow-sm">
-                <span className="mr-2 inline-block h-2 w-2 rounded-full bg-[#ca3433]" />
-                Big dreams for little professionals
+              <div className="inline-flex items-center mb-5 rounded-full bg-[#ca3433] px-5 py-2 text-sm sm:text-base font-bold text-white shadow-sm animate-pulse">
+                <span className="mr-2 inline-block h-2 w-2 rounded-full bg-white" />
+                Now Enrolling — Limited Spots!
               </div>
               <div className="flex items-center justify-center lg:justify-start gap-6 mb-6">
                 <div className="inline-flex items-center justify-center w-24 h-24 sm:w-28 sm:h-28 bg-white rounded-3xl shadow-lg overflow-hidden">
@@ -162,21 +173,21 @@ function App() {
                 </div>
                 <div className="text-left">
                   <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black tracking-tight mb-3">
-                    Exceed&apos;s Future
-                    <span className="block text-[#ca3433]">Professionals Series</span>
+                    Now Enrolling —
+                    <span className="block text-[#ca3433]">Limited Spots!</span>
                   </h1>
-                  <p className="text-base sm:text-lg text-[#1f2a4d]/80 max-w-xl">
-                    Fun, career-inspired adventures for curious kids in K-6 coming soon.
+                  <p className="text-base sm:text-lg text-[#1f2a4d]/80 max-w-xl font-bold">
+                    NOW ENROLLING CHEF AND ARTIST — SECURE YOUR SPOT TODAY!
                   </p>
                 </div>
               </div>
             </div>
 
             <div className="flex-1 w-full max-w-md">
-              <div className="rounded-3xl bg-white/70 shadow-xl overflow-hidden">
+              <div className="rounded-3xl bg-white/70 shadow-xl overflow-hidden border-4 border-white">
                 <img
-                  src="/images/kids-group.png"
-                  alt="Kids exploring future careers together"
+                  src="/images/white-coat-ceremony-perfect.png"
+                  alt="Children enrolled in the program"
                   className="w-full h-full object-cover"
                 />
               </div>
@@ -184,28 +195,119 @@ function App() {
           </div>
         </header>
 
-        {/* Register Now CTA Section */}
-        <section className="py-16 -mt-8">
+        {/* White Coat Ceremony Prioritization Section */}
+        <section className="mb-20">
+          <div className="bg-white rounded-[3rem] shadow-2xl p-10 sm:p-16 border-b-8 border-[#ca3433] relative overflow-hidden">
+            <div className="absolute top-0 right-0 p-8 opacity-10">
+              <Sparkles className="w-32 h-32 text-[#ca3433]" />
+            </div>
+            <div className="max-w-6xl mx-auto flex flex-col items-center">
+              <h2 className="text-4xl sm:text-5xl font-black text-[#0e1f3e] mb-6 text-center leading-tight">
+                Lead with <span className="text-[#ca3433]">Emotion</span>, Not Logistics.
+              </h2>
+              <p className="text-xl sm:text-2xl text-gray-700 text-center leading-relaxed font-medium italic mb-12 max-w-3xl">
+                "Your child walks across the stage in a real white coat — a moment of pure pride they'll never forget."
+              </p>
+
+              {/* Photo Gallery Grid */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-12 w-full">
+                {/* Primary Featured Image */}
+                <div className="md:col-span-2 lg:row-span-2 rounded-[2rem] overflow-hidden shadow-2xl border-4 border-white md:rotate-1 hover:rotate-0 transition-transform duration-500 group">
+                  <img
+                    src="/images/white-coat-ceremony-perfect.png"
+                    alt="White Coat Ceremony Highlight"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                  />
+                </div>
+
+                {/* Gallery Slots */}
+                {[
+                  { src: '/images/gallery/Screenshot_23.png', alt: 'Ceremony Moment 1', rotate: 'md:-rotate-2' },
+                  { src: '/images/gallery/Screenshot_24.png', alt: 'Ceremony Moment 2', rotate: 'md:rotate-3' },
+                  { src: '/images/gallery/Screenshot_25.png', alt: 'Ceremony Moment 3', rotate: 'md:-rotate-1' },
+                  { src: '/images/gallery/Screenshot_26.png', alt: 'Ceremony Moment 4', rotate: 'md:rotate-2' },
+                ].map((img, i) => (
+                  <div key={i} className={`aspect-square rounded-3xl overflow-hidden shadow-xl border-4 border-white ${img.rotate} hover:rotate-0 transition-transform duration-500 group bg-gray-100`}>
+                    <img
+                      src={img.src}
+                      alt={img.alt}
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                      onError={(e) => {
+                        // Fallback for missing images to show a nice placeholder
+                        (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1516627145497-ae6968895b74?q=80&w=400&auto=format&fit=crop';
+                        (e.target as HTMLImageElement).className = 'w-full h-full object-cover opacity-20 grayscale';
+                      }}
+                    />
+                  </div>
+                ))}
+              </div>
+
+              <div className="inline-block px-8 py-4 bg-[#f7e0e0] rounded-2xl border-2 border-[#ca3433]/20 mb-8 text-center">
+                <p className="text-[#ca3433] font-bold text-lg">
+                  The White Coat Ceremony is the heart of our program.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Hero CTA & Pricing Section */}
+        <section className="py-10 -mt-4">
           <div className="relative">
-            {/* Decorative background elements */}
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="w-64 h-64 bg-[#ca3433]/5 rounded-full blur-3xl" />
             </div>
 
             <div className="relative text-center">
+              <h2 className="text-3xl sm:text-4xl font-black text-[#0e1f3e] mb-2">
+                Now Enrolling — <span className="text-[#ca3433]">Limited Spots!</span>
+              </h2>
               <p className="text-lg sm:text-xl text-[#1f2a4d]/70 mb-6 font-medium">
-                Ready to give your child an unforgettable experience?
+                Now Enrolling Chef and Artist — Fill up the form to enroll today.
               </p>
-              <a
-                href="#about"
+              <button
+                onClick={() => setPaymentModalOpen(true)}
                 className="inline-flex items-center justify-center px-14 py-5 rounded-full bg-[#ca3433] text-white text-xl sm:text-2xl font-bold shadow-xl hover:bg-[#b1302f] hover:shadow-2xl hover:scale-105 transition-all duration-300"
               >
                 <Sparkles className="w-6 h-6 mr-3" />
-                Register Now
-              </a>
-              <p className="mt-4 text-sm text-[#1f2a4d]/50">
-                Enrolling now for May 2026
+                Enroll Now
+              </button>
+              <p className="mt-4 text-sm text-[#ca3433] font-bold animate-pulse">
+                ⚠️ Spots are limited and filling up fast for May 2026!
               </p>
+
+              {/* Pricing Block */}
+              <div className="mt-10 max-w-xl mx-auto bg-white rounded-3xl shadow-xl p-8 border border-[#f7e0e0] relative overflow-hidden">
+                <div className="absolute top-4 right-4 bg-green-100 text-green-700 text-xs font-bold px-3 py-1 rounded-full border border-green-200">
+                  SAVE 4% WITH ZELLE
+                </div>
+                <div className="text-4xl font-black text-[#ca3433] mb-1">$559</div>
+                <div className="text-base text-[#0e1f3e]/60 font-medium mb-5">Full program — flat rate, no hidden fees</div>
+
+                {/* White Coat Ceremony Highlight */}
+                <div className="bg-gradient-to-r from-[#f7e0e0] to-[#fff7e5] rounded-2xl p-5 flex items-center gap-4 border-2 border-[#ca3433] mb-6">
+                  <span className="text-4xl">🥼</span>
+                  <div className="text-left">
+                    <div className="font-bold text-[#ca3433] text-lg">White Coat Ceremony & Graduation</div>
+                    <div className="text-sm text-[#0e1f3e]/70">The most emotional moment of the series. Your child is honored for their hard work and dedication.</div>
+                  </div>
+                </div>
+
+                <ul className="space-y-3 text-left mb-6 bg-gray-50 p-6 rounded-2xl">
+                  <li className="flex items-center gap-3 text-[#0e1f3e] font-medium">
+                    <CheckCircle className="w-5 h-5 text-green-500" /> Hands-On Learning Every Session
+                  </li>
+                  <li className="flex items-center gap-3 text-[#0e1f3e] font-medium">
+                    <CheckCircle className="w-5 h-5 text-green-500" /> Professional Syllabus &amp; Curriculum
+                  </li>
+                  <li className="flex items-center gap-3 text-[#0e1f3e] font-medium">
+                    <CheckCircle className="w-5 h-5 text-green-500" /> Real Props &amp; Professional Tools
+                  </li>
+                  <li className="flex items-center gap-3 text-[#0e1f3e] font-medium">
+                    <CheckCircle className="w-5 h-5 text-green-500" /> Taught by Real Professionals
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
         </section>
@@ -231,15 +333,22 @@ function App() {
               </p>
 
               {/* Active Programs - Chef and Artist */}
-              <div className="mb-12">
-                <h3 className="text-3xl font-bold text-[#ca3433] mb-6 text-center">Now Enrolling</h3>
-                <div className="grid grid-cols-2 gap-5">
+              <div className="mb-12" id="enroll">
+                <h3 className="text-3xl font-bold text-[#ca3433] mb-2 text-center">Now Enrolling</h3>
+                <p className="text-center text-[#0e1f3e]/60 mb-6 text-sm font-medium">Chef &amp; Artist — Limited spots available for May 2026</p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                   {programs.filter(p => p.id === 'chef' || p.id === 'artist').map((program) => {
                     const Icon = program.icon;
+                    const description = program.id === 'chef'
+                      ? 'Give your child the chance to feel the pure pride of creating something with their own two hands, turning simple ingredients into a masterpiece they\'re proud to share.'
+                      : 'It is a beautiful, soul-stirring journey where every splash of color builds a sense of wonder and a deep, lasting pride in their own unique vision.';
                     return (
                       <div
                         key={program.name}
-                        onClick={() => setSelectedProgram(program)}
+                        onClick={() => {
+                          setSelectedProgram(program);
+                          setPaymentModalOpen(true);
+                        }}
                         className="group flex flex-col items-center p-6 bg-[#f7e0e0] rounded-2xl hover:shadow-lg transition-all cursor-pointer hover:bg-[#ca3433] hover:text-white hover:-translate-y-1"
                       >
                         <Icon className="w-16 h-16 text-[#ca3433] mb-3 group-hover:text-white transition-colors" />
@@ -251,8 +360,11 @@ function App() {
                             Starts {program.startDate}
                           </span>
                         )}
-                        <span className="text-xs sm:text-sm text-gray-600 mt-2 group-hover:text-white/90 transition-colors">
-                          Register Now
+                        <p className="text-xs sm:text-sm text-gray-600 mt-3 text-center leading-relaxed group-hover:text-white/90 transition-colors">
+                          {description}
+                        </p>
+                        <span className="mt-4 text-xs sm:text-sm font-bold text-white bg-[#ca3433] group-hover:bg-white group-hover:text-[#ca3433] px-4 py-1.5 rounded-full transition-all">
+                          Fill Up the Form to Enroll
                         </span>
                       </div>
                     );
@@ -279,9 +391,9 @@ function App() {
               <div className="mb-12">
                 <h3 className="text-2xl font-bold text-[#0e1f3e] mb-2 text-center">September 2026 Programs</h3>
                 <p className="text-sm text-gray-600 mb-4 text-center">
-                  Coming in September 2026. Join the waitlist to be notified!
+                  Coming in September 2026. Register early to secure your spot!
                 </p>
-                <div className="grid grid-cols-2 gap-5 mb-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-6">
                   {programs.filter(p => p.id === 'doctor' || p.id === 'dentist').map((program) => {
                     const Icon = program.icon;
                     return (
@@ -295,7 +407,7 @@ function App() {
                           {program.name}
                         </span>
                         <span className="text-xs sm:text-sm text-[#ca3433] mt-2 font-semibold">
-                          Waitlist
+                          Register Early
                         </span>
                       </div>
                     );
@@ -328,15 +440,13 @@ function App() {
               </div>
 
               {/* Waitlist Form */}
-              <div id="join">
-                <WaitlistForm />
-              </div>
+              {/* Removed Waitlist Form */}
             </div>
           </section>
         </main>
 
         <footer className="mt-12 text-center text-gray-600 text-base">
-          <p>&copy; 2025 Exceed&apos;s Future Professionals Series. All rights reserved.</p>
+          <p>&copy; 2026 Exceed&apos;s Future Professionals Series. All rights reserved.</p>
         </footer>
       </div>
 
@@ -384,12 +494,12 @@ function App() {
                       Enroll Now — Choose Payment
                     </button>
                   </div>
-                  
+
                   <div className="mt-5 text-center text-sm sm:text-base text-gray-700">
                     <div className="bg-white/60 rounded-xl p-4 mt-4 mb-4 inline-block shadow-sm border border-[#ca3433]/10">
-                      <div className="font-bold text-[#0e1f3e] mb-2 leading-tight">Payment Options (Cash & Card)</div>
-                      <div className="text-sm font-medium text-gray-800">Cash: <span className="font-bold text-[#ca3433]">$539</span> (Pay at the center)</div>
-                      <div className="text-sm font-medium text-gray-800">Card: Added 4% processing fee</div>
+                      <div className="font-bold text-[#0e1f3e] mb-1 leading-tight">Full Program — Flat Rate</div>
+                      <div className="text-2xl font-black text-[#ca3433]">$559</div>
+                      <div className="text-xs text-gray-500 mt-1">No hidden fees · Pay by cash or card</div>
                     </div>
                   </div>
                 </div>
@@ -487,16 +597,15 @@ function App() {
             </div>
 
             <div className="p-6 border-t border-gray-100 bg-gray-50 flex flex-col sm:flex-row items-center justify-end gap-4">
-              {/* Show waitlist button for Doctor/Dentist programs */}
+              {/* Show registration button for Doctor/Dentist programs */}
               {(selectedProgram.id === 'doctor' || selectedProgram.id === 'dentist') && (
                 <button
                   onClick={() => {
-                    setSelectedProgram(null);
-                    document.getElementById('join')?.scrollIntoView({ behavior: 'smooth' });
+                    setPaymentModalOpen(true);
                   }}
                   className="px-8 py-3 bg-[#ca3433] text-white font-semibold rounded-full shadow-md hover:bg-[#b1302f] transition-colors"
                 >
-                  Join Waitlist for This Program
+                  Register Early for This Program
                 </button>
               )}
             </div>
@@ -514,23 +623,23 @@ function App() {
           setExpFormError('');
         }}>
           <div
-            className="bg-white rounded-3xl w-full max-w-lg overflow-hidden shadow-2xl animate-in fade-in zoom-in duration-300 max-h-[90vh] overflow-y-auto"
+            className="bg-white rounded-3xl w-full md:max-w-3xl lg:max-w-4xl overflow-hidden shadow-2xl animate-in fade-in zoom-in duration-300 max-h-[90vh] overflow-y-auto"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="bg-gradient-to-r from-[#ca3433] via-[#d94140] to-[#e85653] p-6 text-white">
+            <div className="bg-gradient-to-r from-[#ca3433] via-[#d94140] to-[#e85653] p-5 sm:p-6 text-white">
               <div className="flex items-center justify-between">
                 <div>
-                  <div className="flex items-center gap-2 mb-2">
-                    <Sparkles className="w-5 h-5 text-yellow-300" />
-                    <span className="text-sm font-semibold bg-yellow-400 text-[#0e1f3e] px-3 py-0.5 rounded-full">FREE</span>
+                  <div className="flex items-center gap-2 mb-1 sm:mb-2">
+                    <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-yellow-300" />
+                    <span className="text-[10px] sm:text-sm font-semibold bg-yellow-400 text-[#0e1f3e] px-2 sm:px-3 py-0.5 rounded-full">FREE</span>
                   </div>
-                  <h3 className="text-2xl font-bold">60-Minute Experience</h3>
-                  <p className="text-white/80 text-sm mt-1">
+                  <h3 className="text-xl sm:text-2xl font-bold">60-Min Experience</h3>
+                  <p className="text-white/80 text-xs sm:text-sm mt-0.5">
                     {expFormStatus === 'success'
                       ? 'Registration complete!'
                       : experienceSelection
                         ? 'Complete your registration'
-                        : 'Choose your preferred date & time'}
+                        : 'Choose your session'}
                   </p>
                 </div>
                 <button
@@ -541,14 +650,14 @@ function App() {
                     setExpFormStatus('idle');
                     setExpFormError('');
                   }}
-                  className="p-2 text-white/70 hover:text-white hover:bg-white/20 rounded-full transition-colors"
+                  className="p-1.5 sm:p-2 text-white/70 hover:text-white hover:bg-white/20 rounded-full transition-colors"
                 >
-                  <X className="w-6 h-6" />
+                  <X className="w-5 h-5 sm:w-6 sm:h-6" />
                 </button>
               </div>
             </div>
 
-            <div className="p-6">
+            <div className="p-5 sm:p-6">
               {/* Success State */}
               {expFormStatus === 'success' ? (
                 <div className="text-center py-8">
@@ -612,7 +721,6 @@ function App() {
                       setExpFormError('');
 
                       try {
-                        // Get API URL from environment
                         const rawBaseUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
                         const baseUrl = (rawBaseUrl.startsWith('http') ? rawBaseUrl : `http://${rawBaseUrl}`).replace(/\/$/, '');
 
@@ -641,7 +749,7 @@ function App() {
                     className="space-y-4"
                   >
                     <div>
-                      <label className="block text-sm font-semibold text-[#0e1f3e] mb-2">
+                      <label className="block text-xs font-bold text-[#0e1f3e] uppercase tracking-wider mb-2">
                         Full Name *
                       </label>
                       <input
@@ -650,12 +758,12 @@ function App() {
                         value={expFormData.fullName}
                         onChange={(e) => setExpFormData(prev => ({ ...prev, fullName: e.target.value }))}
                         placeholder="Enter your full name"
-                        className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-[#ca3433] focus:outline-none transition-colors"
+                        className="w-full px-4 py-3 border-2 border-gray-100 rounded-xl focus:border-[#ca3433] focus:outline-none transition-colors text-base"
                       />
                     </div>
 
                     <div>
-                      <label className="block text-sm font-semibold text-[#0e1f3e] mb-2">
+                      <label className="block text-xs font-bold text-[#0e1f3e] uppercase tracking-wider mb-2">
                         Email or Phone Number *
                       </label>
                       <input
@@ -663,8 +771,8 @@ function App() {
                         required
                         value={expFormData.emailOrContact}
                         onChange={(e) => setExpFormData(prev => ({ ...prev, emailOrContact: e.target.value }))}
-                        placeholder="Enter email or phone number"
-                        className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-[#ca3433] focus:outline-none transition-colors"
+                        placeholder="Enter email or phone"
+                        className="w-full px-4 py-3 border-2 border-gray-100 rounded-xl focus:border-[#ca3433] focus:outline-none transition-colors text-base"
                       />
                     </div>
 
