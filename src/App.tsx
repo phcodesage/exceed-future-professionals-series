@@ -79,8 +79,8 @@ function App() {
       localStorage.setItem('analytics_session_id', sessionId);
     }
 
-    const rawBaseUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
-    const baseUrl = (rawBaseUrl.startsWith('http') ? rawBaseUrl : `http://${rawBaseUrl}`).replace(/\/$/, '');
+    const rawBaseUrl = process.env.NEXT_PUBLIC_API_URL || '';
+    const baseUrl = rawBaseUrl ? rawBaseUrl.replace(/\/$/, '') : '';
 
     const trackVisit = async () => {
       try {
@@ -720,8 +720,8 @@ function App() {
                       setExpFormError('');
 
                       try {
-                        const rawBaseUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
-                        const baseUrl = (rawBaseUrl.startsWith('http') ? rawBaseUrl : `http://${rawBaseUrl}`).replace(/\/$/, '');
+                        const rawBaseUrl = process.env.NEXT_PUBLIC_API_URL || '';
+                        const baseUrl = rawBaseUrl ? rawBaseUrl.replace(/\/$/, '') : '';
 
                         const response = await fetch(`${baseUrl}/api/experience-registration`, {
                           method: 'POST',

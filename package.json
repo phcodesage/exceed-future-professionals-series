@@ -1,17 +1,14 @@
 {
-  "name": "vite-react-typescript-starter",
+  "name": "exceed-future-professionals-series",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite --port 3008",
-    "build": "vite build",
-    "lint": "eslint .",
-    "preview": "vite preview",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
     "typecheck": "tsc --noEmit -p tsconfig.app.json",
-    "server": "node server/index.mjs",
-    "dev:server": "nodemon server/index.mjs",
-    "dev:full": "concurrently \"npm run dev\" \"npm run dev:server\"",
     "test:api": "node --test tests/waitlistApi.test.mjs"
   },
   "dependencies": {
@@ -20,34 +17,28 @@
     "@supabase/supabase-js": "^2.57.4",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
-    "express": "^4.19.2",
     "jsonwebtoken": "^9.0.2",
     "lucide-react": "^0.344.0",
     "mongoose": "^8.6.0",
-    "nodemailer": "^7.0.10",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "next": "^14.2.14",
     "resend": "^6.6.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.9.1",
     "@types/mailchimp__mailchimp_marketing": "^3.0.22",
+    "@types/node": "^20.14.0",
     "@types/react": "^18.3.5",
     "@types/react-dom": "^18.3.0",
-    "@vercel/node": "^5.5.16",
-    "@vitejs/plugin-react": "^4.3.1",
     "autoprefixer": "^10.4.18",
-    "concurrently": "^9.0.0",
     "daisyui": "^5.5.14",
     "eslint": "^9.9.1",
     "eslint-plugin-react-hooks": "^5.1.0-rc.0",
-    "eslint-plugin-react-refresh": "^0.4.11",
     "globals": "^15.9.0",
-    "nodemon": "^3.1.4",
     "postcss": "^8.4.35",
     "tailwindcss": "^3.4.1",
     "typescript": "^5.5.3",
-    "typescript-eslint": "^8.3.0",
-    "vite": "^5.4.2"
+    "typescript-eslint": "^8.3.0"
   }
 }

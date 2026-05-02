@@ -76,10 +76,13 @@ export default function PaymentModal({
     setError("");
 
     try {
-      const rawBaseUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
-      const baseUrl = rawBaseUrl.replace(/\/+$/, '');
+      // Use relative URL so it goes through the Next.js API proxy (same-origin, no CORS issues).
+      // Falls back to the explicit backend URL only in local dev when NEXT_PUBLIC_API_URL is set.
+      const baseUrl = process.env.NEXT_PUBLIC_API_URL
+        ? process.env.NEXT_PUBLIC_API_URL.replace(/\/+$/, '')
+        : '';
 
-      const response = await fetch(`${baseUrl}/api/waitlist`, { // Reusing waitlist API for enrollment
+      const response = await fetch(`${baseUrl}/api/waitlist`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

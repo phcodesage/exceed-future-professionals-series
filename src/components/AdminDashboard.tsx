@@ -75,12 +75,14 @@ interface BrowserDeviceData {
 type ActiveSection = 'waitlist' | 'experience' | 'analytics';
 
 function getApiBaseUrl() {
-    let rawBaseUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
-    // Ensure URL has http:// or https:// prefix
-    if (rawBaseUrl && !rawBaseUrl.startsWith('http://') && !rawBaseUrl.startsWith('https://')) {
-        rawBaseUrl = `http://${rawBaseUrl}`;
+    const rawBaseUrl = process.env.NEXT_PUBLIC_API_URL || '';
+    if (!rawBaseUrl) {
+        return '';
     }
-    return rawBaseUrl.replace(/\/+$/, '');
+    if (!rawBaseUrl.startsWith('http://') && !rawBaseUrl.startsWith('https://')) {
+        return `http://${rawBaseUrl.replace(/\/+$|\/$/, '')}`;
+    }
+    return rawBaseUrl.replace(/\/+$|\/$/, '');
 }
 
 // Color mapping for program tags

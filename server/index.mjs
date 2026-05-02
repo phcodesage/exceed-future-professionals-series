@@ -48,7 +48,11 @@ app.use(
       if (!origin) {
         return callback(null, true);
       }
-      if (allowedOrigins.includes(origin)) {
+      // Allow exact matches or any Vercel preview deployment for this project
+      if (
+        allowedOrigins.includes(origin) ||
+        /^https:\/\/exceed-future-professionals-series[a-z0-9-]*\.vercel\.app$/.test(origin)
+      ) {
         return callback(null, true);
       }
       return callback(null, false);

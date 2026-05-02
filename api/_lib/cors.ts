@@ -9,7 +9,12 @@ const allowedOrigins = [
 export function setCorsHeaders(req: VercelRequest, res: VercelResponse): boolean {
     const origin = req.headers.origin;
 
-    if (origin && allowedOrigins.includes(origin)) {
+    if (
+        origin &&
+        (allowedOrigins.includes(origin) ||
+            // Allow all Vercel preview deployments for this project
+            /^https:\/\/exceed-future-professionals-series[a-z0-9-]*\.vercel\.app$/.test(origin))
+    ) {
         res.setHeader('Access-Control-Allow-Origin', origin);
     } else if (!origin) {
         // Allow requests with no origin (like mobile apps or curl)

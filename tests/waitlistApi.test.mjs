@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 
-const baseUrl = process.env.VITE_API_URL || 'http://localhost:5000';
+const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
 
 const samplePayload = {
   parentName: 'Test Parent',
