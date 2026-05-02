@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import mailchimp from '@mailchimp/mailchimp_marketing';
-import { connectDB, WaitlistEntry } from '../../api/_lib/db';
+import { connectDB, WaitlistEntry } from '../../lib/db';
 
 const MAILCHIMP_API_KEY = process.env.MAILCHIMP_API_KEY;
 const MAILCHIMP_SERVER_PREFIX = process.env.MAILCHIMP_SERVER_PREFIX;
@@ -44,7 +44,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         const [firstName, ...lastNameParts] = parentName.split(' ');
         const lastName = lastNameParts.join(' ') || '';
 
-        await mailchimp.lists.addListMember(MAILCHIMP_AUDIENCE_ID, {
+        const memberData: any = {
           email_address: email,
           status: 'subscribed',
           tags: ['Exceed-Website-Signup'],
@@ -53,7 +53,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             LNAME: lastName,
             PHONE: phone,
           },
-        });
+        };
+
+        await (mailchimp.lists as any).addListMember(MAILCHIMP_AUDIENCE_ID, memberData);
       } catch (error) {
         console.error('Mailchimp addListMember failed:', error);
       }

@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { connectDB, WaitlistEntry } from '../../../api/_lib/db';
-import { verifyToken } from '../../../api/_lib/auth';
+import { connectDB, WaitlistEntry } from '../../../lib/db';
+import { verifyToken } from '../../../lib/auth';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'GET') {

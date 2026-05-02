@@ -34,6 +34,7 @@
   "exclude": [
     "node_modules",
     "api",
+    "legacy_api",
     "server",
     "vite.config.ts",
     "src/vite-env.d.ts",

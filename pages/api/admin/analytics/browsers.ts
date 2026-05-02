@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { connectDB, PageVisit } from '../../../../api/_lib/db';
-import { verifyToken } from '../../../../api/_lib/auth';
+import { connectDB, PageVisit } from '../../../../lib/db';
+import { verifyToken } from '../../../../lib/auth';
 
 function parseBrowser(ua: string | undefined) {
   if (!ua) return 'Unknown';
