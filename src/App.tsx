@@ -347,7 +347,6 @@ function App() {
                         key={program.name}
                         onClick={() => {
                           setSelectedProgram(program);
-                          setPaymentModalOpen(true);
                         }}
                         className="group flex flex-col items-center p-6 bg-[#f7e0e0] rounded-2xl hover:shadow-lg transition-all cursor-pointer hover:bg-[#ca3433] hover:text-white hover:-translate-y-1"
                       >
