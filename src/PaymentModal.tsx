@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { X, CreditCard, Banknote, Send, CheckCircle2, Loader2, Banknote as CashIcon } from "lucide-react";
+import { X, CreditCard, Banknote, Send, CheckCircle2, Loader2, Banknote as CashIcon, ChefHat, Palette } from "lucide-react";
 
 interface PaymentModalProps {
   isOpen: boolean;
@@ -18,6 +18,7 @@ interface RegistrationForm {
   email: string;
   phone: string;
   gradeLevel: string;
+  programPreference: string;
 }
 
 export default function PaymentModal({
@@ -36,6 +37,17 @@ export default function PaymentModal({
     };
   }, []);
 
+  // Pre-select program based on courseName
+  useEffect(() => {
+    if (isOpen) {
+      if (courseName.toLowerCase().includes("chef")) {
+        setRegForm(f => ({ ...f, programPreference: "chef" }));
+      } else if (courseName.toLowerCase().includes("artist")) {
+        setRegForm(f => ({ ...f, programPreference: "artist" }));
+      }
+    }
+  }, [courseName, isOpen]);
+
   const [step, setStep] = useState<"register" | "choose" | "zelle" | "done">("register");
   const [regForm, setRegForm] = useState<RegistrationForm>({
     parentName: "",
@@ -43,6 +55,7 @@ export default function PaymentModal({
     email: "",
     phone: "",
     gradeLevel: "",
+    programPreference: "",
   });
   const [zelleReference, setZelleReference] = useState("");
   const [loading, setLoading] = useState(false);
@@ -58,6 +71,7 @@ export default function PaymentModal({
       email: "",
       phone: "",
       gradeLevel: "",
+      programPreference: "",
     });
     setZelleReference("");
     setLoading(false);
@@ -73,7 +87,11 @@ export default function PaymentModal({
   async function handleRegisterSubmit(e: React.FormEvent) {
     e.preventDefault();
     setLoading(true);
-    setError("");
+    if (!regForm.programPreference) {
+      setError("Please select a program (Chef or Artist).");
+      setLoading(false);
+      return;
+    }
 
     try {
       // Use relative URL so it goes through the Next.js API proxy (same-origin, no CORS issues).
@@ -87,7 +105,7 @@ export default function PaymentModal({
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           ...regForm,
-          programInterests: [courseName],
+          programInterests: [regForm.programPreference === 'chef' ? 'Future Chef' : 'Future Artist'],
         }),
       });
 
@@ -117,7 +135,7 @@ export default function PaymentModal({
     >
       <div className="bg-white rounded-3xl shadow-2xl w-full md:max-w-2xl lg:max-w-3xl overflow-hidden flex flex-col max-h-[90vh]">
         {/* Header */}
-        <div className="px-6 py-5 flex items-center justify-between border-b bg-[#05264d]">
+        <div className="px-6 py-4 flex items-center justify-between border-b bg-[#05264d]">
           <div>
             <p className="text-xs font-semibold uppercase tracking-widest text-white/60">
               Payment Options
@@ -133,7 +151,7 @@ export default function PaymentModal({
         </div>
 
         {/* Price Note Banner */}
-        <div className="bg-[#f7e0e0] border-b border-[#ca3433]/20 px-4 sm:px-6 py-3 flex flex-col gap-1">
+        <div className="bg-[#f7e0e0] border-b border-[#ca3433]/20 px-4 sm:px-6 py-2 flex flex-col gap-1">
           <div className="flex items-center gap-2 text-sm font-bold text-[#0e1f3e]">
             <span className="text-[#ca3433] text-lg shrink-0">🎓</span>
             <div className="flex flex-wrap items-center">
@@ -143,10 +161,10 @@ export default function PaymentModal({
           </div>
         </div>
 
-        <div className="p-4 sm:p-6 overflow-y-auto overscroll-contain">
+        <div className="p-4 sm:p-5 overflow-y-auto overscroll-contain">
           {/* STEP: Register */}
           {step === "register" && (
-            <form onSubmit={handleRegisterSubmit} className="space-y-4">
+            <form onSubmit={handleRegisterSubmit} className="space-y-3">
               <p className="text-sm text-gray-600 mb-2 font-medium">
                 Fill up the form to enroll in <span className="text-[#ca3433] font-bold">{courseName}</span>.
               </p>
@@ -157,28 +175,30 @@ export default function PaymentModal({
                 </div>
               )}
 
-              <div className="grid grid-cols-1 gap-4 sm:gap-6">
-                <div className="space-y-1">
-                  <label className="text-xs font-bold text-[#05264d] uppercase tracking-wider">Parent / Guardian Name *</label>
-                  <input
-                    required
-                    type="text"
-                    value={regForm.parentName}
-                    onChange={(e) => setRegForm(f => ({ ...f, parentName: e.target.value }))}
-                    className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 focus:bg-white focus:border-[#ca3433] outline-none transition-all text-base"
-                  />
+              <div className="grid grid-cols-1 gap-3 sm:gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
+                  <div className="space-y-1">
+                    <label className="text-xs font-bold text-[#05264d] uppercase tracking-wider">Parent / Guardian Name *</label>
+                    <input
+                      required
+                      type="text"
+                      value={regForm.parentName}
+                      onChange={(e) => setRegForm(f => ({ ...f, parentName: e.target.value }))}
+                      className="w-full px-4 py-2.5 rounded-xl bg-gray-50 border border-gray-200 focus:bg-white focus:border-[#ca3433] outline-none transition-all text-base"
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <label className="text-xs font-bold text-[#05264d] uppercase tracking-wider">Child&apos;s Name *</label>
+                    <input
+                      required
+                      type="text"
+                      value={regForm.childName}
+                      onChange={(e) => setRegForm(f => ({ ...f, childName: e.target.value }))}
+                      className="w-full px-4 py-2.5 rounded-xl bg-gray-50 border border-gray-200 focus:bg-white focus:border-[#ca3433] outline-none transition-all text-base"
+                    />
+                  </div>
                 </div>
-                <div className="space-y-1">
-                  <label className="text-xs font-bold text-[#05264d] uppercase tracking-wider">Child&apos;s Name *</label>
-                  <input
-                    required
-                    type="text"
-                    value={regForm.childName}
-                    onChange={(e) => setRegForm(f => ({ ...f, childName: e.target.value }))}
-                    className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 focus:bg-white focus:border-[#ca3433] outline-none transition-all text-base"
-                  />
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
                   <div className="space-y-1">
                     <label className="text-xs font-bold text-[#05264d] uppercase tracking-wider">Email Address *</label>
                     <input
@@ -186,7 +206,7 @@ export default function PaymentModal({
                       type="email"
                       value={regForm.email}
                       onChange={(e) => setRegForm(f => ({ ...f, email: e.target.value }))}
-                      className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 focus:bg-white focus:border-[#ca3433] outline-none transition-all"
+                      className="w-full px-4 py-2.5 rounded-xl bg-gray-50 border border-gray-200 focus:bg-white focus:border-[#ca3433] outline-none transition-all"
                     />
                   </div>
                   <div className="space-y-1">
@@ -196,31 +216,55 @@ export default function PaymentModal({
                       type="tel"
                       value={regForm.phone}
                       onChange={(e) => setRegForm(f => ({ ...f, phone: e.target.value }))}
-                      className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 focus:bg-white focus:border-[#ca3433] outline-none transition-all"
+                      className="w-full px-4 py-2.5 rounded-xl bg-gray-50 border border-gray-200 focus:bg-white focus:border-[#ca3433] outline-none transition-all"
                     />
                   </div>
                 </div>
-                <div className="space-y-1">
-                  <label className="text-xs font-bold text-[#05264d] uppercase tracking-wider">Child&apos;s Grade Level *</label>
-                  <select
-                    required
-                    value={regForm.gradeLevel}
-                    onChange={(e) => setRegForm(f => ({ ...f, gradeLevel: e.target.value }))}
-                    className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 focus:bg-white focus:border-[#ca3433] outline-none transition-all"
-                  >
-                    <option value="">Select Grade</option>
-                    <option value="K">Kindergarten</option>
-                    <option value="1-2">Grades 1-2</option>
-                    <option value="3-4">Grades 3-4</option>
-                    <option value="5-6">Grades 5-6</option>
-                  </select>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
+                  <div className="space-y-1">
+                    <label className="text-xs font-bold text-[#05264d] uppercase tracking-wider">Child&apos;s Grade Level *</label>
+                    <select
+                      required
+                      value={regForm.gradeLevel}
+                      onChange={(e) => setRegForm(f => ({ ...f, gradeLevel: e.target.value }))}
+                      className="w-full px-4 py-2.5 rounded-xl bg-gray-50 border border-gray-200 focus:bg-white focus:border-[#ca3433] outline-none transition-all"
+                    >
+                      <option value="">Select Grade</option>
+                      <option value="K">Kindergarten</option>
+                      <option value="1-2">Grades 1-2</option>
+                      <option value="3-4">Grades 3-4</option>
+                      <option value="5-6">Grades 5-6</option>
+                    </select>
+                  </div>
+                  
+                  <div className="space-y-1">
+                    <label className="text-xs font-bold text-[#05264d] uppercase tracking-wider">Select Program *</label>
+                    <div className="flex gap-3 mt-1">
+                      <button
+                        type="button"
+                        onClick={() => setRegForm(f => ({ ...f, programPreference: 'chef' }))}
+                        className={`flex-1 flex items-center justify-center gap-2 p-2.5 rounded-xl border-2 transition-all ${regForm.programPreference === 'chef' ? 'border-[#ca3433] bg-[#f7e0e0] text-[#ca3433]' : 'border-gray-100 bg-gray-50 text-gray-500 hover:border-gray-200'}`}
+                      >
+                        <ChefHat className={`w-4 h-4 ${regForm.programPreference === 'chef' ? 'text-[#ca3433]' : 'text-gray-400'}`} />
+                        <span className="font-bold text-sm">Future Chef</span>
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setRegForm(f => ({ ...f, programPreference: 'artist' }))}
+                        className={`flex-1 flex items-center justify-center gap-2 p-2.5 rounded-xl border-2 transition-all ${regForm.programPreference === 'artist' ? 'border-[#ca3433] bg-[#f7e0e0] text-[#ca3433]' : 'border-gray-100 bg-gray-50 text-gray-500 hover:border-gray-200'}`}
+                      >
+                        <Palette className={`w-4 h-4 ${regForm.programPreference === 'artist' ? 'text-[#ca3433]' : 'text-gray-400'}`} />
+                        <span className="font-bold text-sm">Future Artist</span>
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </div>
 
               <button
                 disabled={loading}
                 type="submit"
-                className="w-full py-4 bg-[#ca3433] text-white font-bold text-lg rounded-full hover:bg-[#b1302f] transition-all shadow-lg mt-4 disabled:opacity-60"
+                className="w-full py-3 bg-[#ca3433] text-white font-bold text-lg rounded-full hover:bg-[#b1302f] transition-all shadow-lg mt-3 disabled:opacity-60"
               >
                 {loading ? "Saving..." : "Continue to Payment"}
               </button>
@@ -231,7 +275,7 @@ export default function PaymentModal({
           {step === "choose" && (
             <div className="space-y-3">
               <div className="flex items-center justify-between mb-4">
-                <button 
+                <button
                   onClick={() => setStep("register")}
                   className="text-xs font-bold text-gray-500 hover:text-[#ca3433] flex items-center gap-1"
                 >
@@ -239,11 +283,11 @@ export default function PaymentModal({
                 </button>
                 <span className="text-xs font-bold text-gray-400">Step 2 of 2</span>
               </div>
-              
+
               <p className="text-sm text-gray-600 mb-4">
                 Choose your preferred payment method below.
               </p>
-              
+
               {/* Cash / Zelle */}
               <button
                 onClick={() => setStep("zelle")}
