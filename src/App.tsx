@@ -263,9 +263,9 @@ function App() {
                 Now Enrolling — <span className="text-[#ca3433]">Limited Spots!</span>
               </h2>
               <p className="text-lg sm:text-xl text-[#1f2a4d]/70 mb-6 font-medium">
-                Now Enrolling Chef and Artist — Fill up the form to enroll today.
+                Now Enrolling Future Chef and Future Artist — Fill up the form to enroll today.
               </p>
-              <button
+              <button type="button"
                 onClick={() => setPaymentModalOpen(true)}
                 className="inline-flex items-center justify-center px-14 py-5 rounded-full bg-[#ca3433] text-white text-xl sm:text-2xl font-bold shadow-xl hover:bg-[#b1302f] hover:shadow-2xl hover:scale-105 transition-all duration-300"
               >
@@ -273,7 +273,7 @@ function App() {
                 Enroll Now
               </button>
               <p className="mt-4 text-sm text-[#ca3433] font-bold animate-pulse">
-                ⚠️ Spots are limited and filling up fast for May 2026!
+                ⚠️ Spots are limited and filling up fast for 2027 sessions!
               </p>
 
               {/* Pricing Block */}
@@ -335,7 +335,7 @@ function App() {
               {/* Active Programs - Chef and Artist */}
               <div className="mb-12" id="enroll">
                 <h3 className="text-3xl font-bold text-[#ca3433] mb-2 text-center">Now Enrolling</h3>
-                <p className="text-center text-[#0e1f3e]/60 mb-6 text-sm font-medium">Chef &amp; Artist — Limited spots available for May 2026</p>
+                <p className="text-center text-[#0e1f3e]/60 mb-6 text-sm font-medium">Chef &amp; Artist — Limited spots available for 2027 sessions</p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                   {programs.filter(p => p.id === 'chef' || p.id === 'artist').map((program) => {
                     const Icon = program.icon;
@@ -388,9 +388,9 @@ function App() {
 
               {/* September 2026 Programs - Doctor and Dentist */}
               <div className="mb-12">
-                <h3 className="text-2xl font-bold text-[#0e1f3e] mb-2 text-center">September 2026 Programs</h3>
+                <h3 className="text-2xl font-bold text-[#0e1f3e] mb-2 text-center">Upcoming Programs</h3>
                 <p className="text-sm text-gray-600 mb-4 text-center">
-                  Coming in September 2026. Register early to secure your spot!
+                  See the next start dates below and register early to secure your spot!
                 </p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-6">
                   {programs.filter(p => p.id === 'doctor' || p.id === 'dentist').map((program) => {
@@ -423,6 +423,7 @@ function App() {
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
                   {programs.filter(p => p.id !== 'doctor' && p.id !== 'dentist' && p.id !== 'chef' && p.id !== 'artist').map((program) => {
                     const Icon = program.icon;
+                    const dateLabel = program.startDates ? program.startDates.join(' / ') : program.startDate;
                     return (
                       <div
                         key={program.name}
@@ -432,6 +433,11 @@ function App() {
                         <span className="text-xs sm:text-sm font-semibold text-gray-500 text-center">
                           {program.name}
                         </span>
+                        {dateLabel && (
+                          <span className="text-[10px] sm:text-xs text-[#ca3433] mt-2 font-semibold text-center">
+                            {dateLabel}
+                          </span>
+                        )}
                       </div>
                     );
                   })}
@@ -464,10 +470,10 @@ function App() {
                 </div>
                 <div>
                   <h3 className="text-2xl sm:text-3xl font-bold text-[#0e1f3e]">{selectedProgram.name}</h3>
-                  {selectedProgram.startDate && (
+                  {(selectedProgram.startDates || selectedProgram.startDate) && (
                     <div className="text-sm font-bold text-[#ca3433] flex items-center gap-1 mt-1">
                       <Calendar className="w-4 h-4" />
-                      Starts {selectedProgram.startDate}, 2026
+                      Starts {selectedProgram.startDates ? selectedProgram.startDates.join(' / ') : selectedProgram.startDate}
                     </div>
                   )}
                 </div>

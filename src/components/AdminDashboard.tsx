@@ -89,8 +89,8 @@ function getApiBaseUrl() {
 const programColors: Record<string, { bg: string; text: string; border: string }> = {
     'Future Doctor': { bg: 'bg-blue-100', text: 'text-blue-700', border: 'border-blue-200' },
     'Future Dentist': { bg: 'bg-cyan-100', text: 'text-cyan-700', border: 'border-cyan-200' },
-    'Young Chef': { bg: 'bg-orange-100', text: 'text-orange-700', border: 'border-orange-200' },
-    'Young Artist': { bg: 'bg-pink-100', text: 'text-pink-700', border: 'border-pink-200' },
+    'Future Chef': { bg: 'bg-orange-100', text: 'text-orange-700', border: 'border-orange-200' },
+    'Future Artist': { bg: 'bg-pink-100', text: 'text-pink-700', border: 'border-pink-200' },
     'Future Scientist': { bg: 'bg-purple-100', text: 'text-purple-700', border: 'border-purple-200' },
     'Future Vet': { bg: 'bg-green-100', text: 'text-green-700', border: 'border-green-200' },
     'Future Pharmacist': { bg: 'bg-teal-100', text: 'text-teal-700', border: 'border-teal-200' },
