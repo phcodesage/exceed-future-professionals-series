@@ -159,10 +159,10 @@ function App() {
         <header className="mb-20" id="hero">
           <div className="flex flex-col lg:flex-row items-center gap-10">
             <div className="flex-1 text-center lg:text-left">
-              <div className="inline-flex items-center mb-5 rounded-full bg-[#ca3433] px-5 py-2 text-sm sm:text-base font-bold text-white shadow-sm animate-pulse">
+              <a href="#enroll" className="inline-flex items-center mb-5 rounded-full bg-[#ca3433] px-5 py-2 text-sm sm:text-base font-bold text-white shadow-sm animate-pulse hover:bg-[#b1302f] transition-colors">
                 <span className="mr-2 inline-block h-2 w-2 rounded-full bg-white" />
                 Now Enrolling — Limited Spots!
-              </div>
+              </a>
               <div className="flex items-center justify-center lg:justify-start gap-6 mb-6">
                 <div className="inline-flex items-center justify-center w-24 h-24 sm:w-28 sm:h-28 bg-white rounded-3xl shadow-lg overflow-hidden">
                   <img
