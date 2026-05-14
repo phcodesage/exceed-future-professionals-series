@@ -405,7 +405,12 @@ function App() {
                         <span className="text-sm sm:text-base font-semibold text-[#0e1f3e] text-center">
                           {program.name}
                         </span>
-                        <span className="text-xs sm:text-sm text-[#ca3433] mt-2 font-semibold">
+                        {(program.startDates || program.startDate) && (
+                          <span className="text-xs font-bold text-[#0e1f3e]/70 mt-1 text-center">
+                            Starts {program.startDates ? program.startDates[0] : program.startDate}
+                          </span>
+                        )}
+                        <span className="text-xs sm:text-sm text-[#ca3433] mt-1 font-semibold">
                           Register Early
                         </span>
                       </div>
@@ -427,10 +432,10 @@ function App() {
                     return (
                       <div
                         key={program.name}
-                        className="flex flex-col items-center p-4 bg-gray-50 rounded-2xl opacity-60"
+                        className="flex flex-col items-center p-4 bg-gray-50 rounded-2xl"
                       >
                         <Icon className="w-10 h-10 text-gray-400 mb-2" />
-                        <span className="text-xs sm:text-sm font-semibold text-gray-500 text-center">
+                        <span className="text-xs sm:text-sm font-semibold text-gray-600 text-center">
                           {program.name}
                         </span>
                         {dateLabel && (
