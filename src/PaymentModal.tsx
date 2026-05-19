@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { X, CreditCard, Banknote, Send, CheckCircle2, Loader2, Banknote as CashIcon, ChefHat, Palette } from "lucide-react";
+import { X, CreditCard, Banknote, Send, CheckCircle2, Loader2, Banknote as CashIcon, ChefHat, Palette, Stethoscope, Smile } from "lucide-react";
 
 interface PaymentModalProps {
   isOpen: boolean;
@@ -44,6 +44,10 @@ export default function PaymentModal({
         setRegForm(f => ({ ...f, programPreference: "chef" }));
       } else if (courseName.toLowerCase().includes("artist")) {
         setRegForm(f => ({ ...f, programPreference: "artist" }));
+      } else if (courseName.toLowerCase().includes("doctor")) {
+        setRegForm(f => ({ ...f, programPreference: "doctor" }));
+      } else if (courseName.toLowerCase().includes("dentist")) {
+        setRegForm(f => ({ ...f, programPreference: "dentist" }));
       }
     }
   }, [courseName, isOpen]);
@@ -88,7 +92,7 @@ export default function PaymentModal({
     e.preventDefault();
     setLoading(true);
     if (!regForm.programPreference) {
-      setError("Please select a program (Chef or Artist).");
+      setError("Please select a program.");
       setLoading(false);
       return;
     }
@@ -100,12 +104,19 @@ export default function PaymentModal({
         ? process.env.NEXT_PUBLIC_API_URL.replace(/\/+$/, '')
         : '';
 
+      const programNames: Record<string, string> = {
+        chef: 'Future Chef',
+        artist: 'Future Artist',
+        doctor: 'Future Doctor',
+        dentist: 'Future Dentist',
+      };
+
       const response = await fetch(`${baseUrl}/api/waitlist`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           ...regForm,
-          programInterests: [regForm.programPreference === 'chef' ? 'Future Chef' : 'Future Artist'],
+          programInterests: [programNames[regForm.programPreference] || regForm.programPreference],
         }),
       });
 
@@ -239,22 +250,38 @@ export default function PaymentModal({
                   
                   <div className="space-y-1">
                     <label className="text-xs font-bold text-[#05264d] uppercase tracking-wider">Select Program *</label>
-                    <div className="flex gap-3 mt-1">
+                    <div className="grid grid-cols-2 gap-2 mt-1">
+                      <button
+                        type="button"
+                        onClick={() => setRegForm(f => ({ ...f, programPreference: 'doctor' }))}
+                        className={`flex items-center justify-center gap-2 p-2.5 rounded-xl border-2 transition-all ${regForm.programPreference === 'doctor' ? 'border-[#ca3433] bg-[#f7e0e0] text-[#ca3433]' : 'border-gray-100 bg-gray-50 text-gray-500 hover:border-gray-200'}`}
+                      >
+                        <Stethoscope className={`w-4 h-4 ${regForm.programPreference === 'doctor' ? 'text-[#ca3433]' : 'text-gray-400'}`} />
+                        <span className="font-bold text-xs">Future Doctor</span>
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setRegForm(f => ({ ...f, programPreference: 'dentist' }))}
+                        className={`flex items-center justify-center gap-2 p-2.5 rounded-xl border-2 transition-all ${regForm.programPreference === 'dentist' ? 'border-[#ca3433] bg-[#f7e0e0] text-[#ca3433]' : 'border-gray-100 bg-gray-50 text-gray-500 hover:border-gray-200'}`}
+                      >
+                        <Smile className={`w-4 h-4 ${regForm.programPreference === 'dentist' ? 'text-[#ca3433]' : 'text-gray-400'}`} />
+                        <span className="font-bold text-xs">Future Dentist</span>
+                      </button>
                       <button
                         type="button"
                         onClick={() => setRegForm(f => ({ ...f, programPreference: 'chef' }))}
-                        className={`flex-1 flex items-center justify-center gap-2 p-2.5 rounded-xl border-2 transition-all ${regForm.programPreference === 'chef' ? 'border-[#ca3433] bg-[#f7e0e0] text-[#ca3433]' : 'border-gray-100 bg-gray-50 text-gray-500 hover:border-gray-200'}`}
+                        className={`flex items-center justify-center gap-2 p-2.5 rounded-xl border-2 transition-all ${regForm.programPreference === 'chef' ? 'border-[#ca3433] bg-[#f7e0e0] text-[#ca3433]' : 'border-gray-100 bg-gray-50 text-gray-500 hover:border-gray-200'}`}
                       >
                         <ChefHat className={`w-4 h-4 ${regForm.programPreference === 'chef' ? 'text-[#ca3433]' : 'text-gray-400'}`} />
-                        <span className="font-bold text-sm">Future Chef</span>
+                        <span className="font-bold text-xs">Young Chef</span>
                       </button>
                       <button
                         type="button"
                         onClick={() => setRegForm(f => ({ ...f, programPreference: 'artist' }))}
-                        className={`flex-1 flex items-center justify-center gap-2 p-2.5 rounded-xl border-2 transition-all ${regForm.programPreference === 'artist' ? 'border-[#ca3433] bg-[#f7e0e0] text-[#ca3433]' : 'border-gray-100 bg-gray-50 text-gray-500 hover:border-gray-200'}`}
+                        className={`flex items-center justify-center gap-2 p-2.5 rounded-xl border-2 transition-all ${regForm.programPreference === 'artist' ? 'border-[#ca3433] bg-[#f7e0e0] text-[#ca3433]' : 'border-gray-100 bg-gray-50 text-gray-500 hover:border-gray-200'}`}
                       >
                         <Palette className={`w-4 h-4 ${regForm.programPreference === 'artist' ? 'text-[#ca3433]' : 'text-gray-400'}`} />
-                        <span className="font-bold text-sm">Future Artist</span>
+                        <span className="font-bold text-xs">Young Artist</span>
                       </button>
                     </div>
                   </div>

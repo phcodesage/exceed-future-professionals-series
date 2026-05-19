@@ -378,7 +378,15 @@ export default function AdminDashboard() {
                         </button>
 
                         <h1 className="text-3xl font-bold text-[#0e1f3e] mb-2 text-center">Admin Portal</h1>
-                        <p className="text-gray-500 text-center mb-8">Sign in to access the dashboard</p>
+                        <p className="text-gray-500 text-center mb-4">Sign in to access the dashboard</p>
+
+                        <a
+                            href="/"
+                            className="inline-flex items-center justify-center gap-2 mb-6 px-4 py-3 text-sm font-semibold text-[#0e1f3e] bg-gray-100 border border-gray-200 rounded-xl hover:bg-gray-200 transition"
+                        >
+                            <ChevronLeft className="w-4 h-4" />
+                            Back to Home
+                        </a>
 
                         {error && (
                             <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-xl text-red-600 text-sm text-center">

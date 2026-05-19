@@ -177,7 +177,7 @@ function App() {
                     <span className="block text-[#ca3433]">Limited Spots!</span>
                   </h1>
                   <p className="text-base sm:text-lg text-[#1f2a4d]/80 max-w-xl font-bold">
-                    NOW ENROLLING CHEF AND ARTIST — SECURE YOUR SPOT TODAY!
+                    NOW ENROLLING DOCTOR AND DENTIST — SECURE YOUR SPOT TODAY!
                   </p>
                 </div>
               </div>
@@ -263,7 +263,7 @@ function App() {
                 Now Enrolling — <span className="text-[#ca3433]">Limited Spots!</span>
               </h2>
               <p className="text-lg sm:text-xl text-[#1f2a4d]/70 mb-6 font-medium">
-                Now Enrolling Future Chef and Future Artist — Fill up the form to enroll today.
+                Now Enrolling Young Artist and Young Chef — Fill up the form to enroll today.
               </p>
               <button type="button"
                 onClick={() => setPaymentModalOpen(true)}
@@ -332,16 +332,16 @@ function App() {
                 a young age, children can gain clarity and confidence in understanding the possibilities for their future.
               </p>
 
-              {/* Active Programs - Chef and Artist */}
+              {/* Active Programs - Doctor and Dentist */}
               <div className="mb-12" id="enroll">
                 <h3 className="text-3xl font-bold text-[#ca3433] mb-2 text-center">Now Enrolling</h3>
-                <p className="text-center text-[#0e1f3e]/60 mb-6 text-sm font-medium">Chef &amp; Artist — Limited spots available for 2027 sessions</p>
+                <p className="text-center text-[#0e1f3e]/60 mb-6 text-sm font-medium">Young Artist &amp; Young Chef — Limited spots available</p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                   {programs.filter(p => p.id === 'chef' || p.id === 'artist').map((program) => {
                     const Icon = program.icon;
                     const description = program.id === 'chef'
-                      ? 'Give your child the chance to feel the pure pride of creating something with their own two hands, turning simple ingredients into a masterpiece they\'re proud to share.'
-                      : 'It is a beautiful, soul-stirring journey where every splash of color builds a sense of wonder and a deep, lasting pride in their own unique vision.';
+                      ? 'Kids cook, create, and learn kitchen confidence with fun culinary projects and healthy meal lessons.'
+                      : 'Young artists explore color, texture, and creativity through guided drawing, painting, and mixed-media activities.';
                     return (
                       <div
                         key={program.name}
@@ -371,6 +371,44 @@ function App() {
                 </div>
               </div>
 
+              <div className="mb-12">
+                <h3 className="text-2xl font-bold text-[#0e1f3e] mb-2 text-center">Also Enrolling</h3>
+                <p className="text-center text-[#0e1f3e]/60 mb-6 text-sm font-medium">Future Doctor &amp; Future Dentist — Click syllabus to register</p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                  {programs.filter(p => p.id === 'doctor' || p.id === 'dentist').map((program) => {
+                    const Icon = program.icon;
+                    const description = program.id === 'doctor'
+                      ? 'Your child will explore the world of medicine through hands-on activities, learning how real doctors diagnose, treat, and care for patients.'
+                      : 'A fun, immersive journey into dentistry where kids learn about oral health, dental tools, and what it takes to keep smiles healthy.';
+                    return (
+                      <div
+                        key={program.name}
+                        onClick={() => {
+                          setSelectedProgram(program);
+                        }}
+                        className="group flex flex-col items-center p-6 bg-[#fff7e5] rounded-2xl hover:shadow-lg transition-all cursor-pointer hover:bg-[#ffe0b2] hover:text-[#0e1f3e] hover:-translate-y-1"
+                      >
+                        <Icon className="w-16 h-16 text-[#ca3433] mb-3 group-hover:text-[#b1302f] transition-colors" />
+                        <span className="text-base sm:text-lg font-semibold text-[#0e1f3e] text-center group-hover:text-[#0e1f3e] transition-colors">
+                          {program.name}
+                        </span>
+                        {program.startDate && (
+                          <span className="text-xs font-bold text-[#ca3433] mt-1 px-2 py-0.5 bg-white/50 rounded-full group-hover:bg-white group-hover:text-[#ca3433] transition-all">
+                            Starts {program.startDate}
+                          </span>
+                        )}
+                        <p className="text-xs sm:text-sm text-gray-600 mt-3 text-center leading-relaxed group-hover:text-[#0e1f3e]/90 transition-colors">
+                          {description}
+                        </p>
+                        <span className="mt-4 text-xs sm:text-sm font-bold text-[#ca3433] bg-white border border-[#ca3433] px-4 py-1.5 rounded-full transition-all">
+                          View Syllabus & Register
+                        </span>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-10">
                 <div className="bg-[#f7e0e0] rounded-2xl p-7 text-center">
                   <div className="text-5xl font-bold text-[#ca3433] mb-2">K-6</div>
@@ -386,14 +424,14 @@ function App() {
                 </div>
               </div>
 
-              {/* September 2026 Programs - Doctor and Dentist */}
+              {/* Upcoming Programs - Chef and Artist */}
               <div className="mb-12">
                 <h3 className="text-2xl font-bold text-[#0e1f3e] mb-2 text-center">Upcoming Programs</h3>
                 <p className="text-sm text-gray-600 mb-4 text-center">
                   See the next start dates below and register early to secure your spot!
                 </p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-6">
-                  {programs.filter(p => p.id === 'doctor' || p.id === 'dentist').map((program) => {
+                  {programs.filter(p => p.id === 'chef' || p.id === 'artist').map((program) => {
                     const Icon = program.icon;
                     return (
                       <div
@@ -492,21 +530,38 @@ function App() {
             </div>
 
             <div className="p-6 sm:p-10">
-              {/* Registration Buttons at Top for Chef/Artist */}
-              {(selectedProgram.id === 'chef' || selectedProgram.id === 'artist') && (
+              {/* Registration Buttons at Top for all enrolling programs */}
+              {(selectedProgram.id === 'chef' || selectedProgram.id === 'artist' || selectedProgram.id === 'doctor' || selectedProgram.id === 'dentist') && (
                 <div className="mb-8 p-6 bg-gradient-to-r from-[#f7e0e0] to-[#fff7e5] rounded-2xl">
                   <h4 className="text-lg font-bold text-[#0e1f3e] mb-4 text-center">Ready to Register?</h4>
-                  <div className="flex flex-col sm:flex-row gap-3 justify-center mb-2">
-                    <button
-                      onClick={() => setPaymentModalOpen(true)}
-                      className="px-8 py-3 bg-[#ca3433] text-white font-semibold rounded-full shadow-md hover:bg-[#b1302f] transition-colors text-center"
-                    >
-                      Enroll Now — Choose Payment
-                    </button>
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4">
+                    {programs.filter(p => ['chef', 'artist', 'doctor', 'dentist'].includes(p.id)).map((prog) => {
+                      const ProgIcon = prog.icon;
+                      return (
+                        <button
+                          key={prog.id}
+                          onClick={() => {
+                            setSelectedProgram(prog);
+                            setPaymentModalOpen(true);
+                          }}
+                          className={`flex flex-col items-center p-3 rounded-xl border-2 transition-all hover:shadow-md ${
+                            selectedProgram.id === prog.id
+                              ? 'border-[#ca3433] bg-white shadow-md'
+                              : 'border-gray-200 bg-white/60 hover:border-[#ca3433]/50'
+                          }`}
+                        >
+                          <ProgIcon className="w-8 h-8 text-[#ca3433] mb-1" />
+                          <span className="text-[10px] sm:text-xs font-bold text-[#0e1f3e] text-center leading-tight">
+                            {prog.id === 'chef' ? 'Young Chef' : prog.id === 'artist' ? 'Young Artist' : prog.name}
+                          </span>
+                        </button>
+                      );
+                    })}
                   </div>
+                  <p className="text-xs text-center text-gray-500 mb-3">Select a program above to enroll</p>
 
-                  <div className="mt-5 text-center text-sm sm:text-base text-gray-700">
-                    <div className="bg-white/60 rounded-xl p-4 mt-4 mb-4 inline-block shadow-sm border border-[#ca3433]/10">
+                  <div className="mt-3 text-center text-sm sm:text-base text-gray-700">
+                    <div className="bg-white/60 rounded-xl p-4 inline-block shadow-sm border border-[#ca3433]/10">
                       <div className="font-bold text-[#0e1f3e] mb-1 leading-tight">Full Program — Flat Rate</div>
                       <div className="text-2xl font-black text-[#ca3433]">$559</div>
                       <div className="text-xs text-gray-500 mt-1">No hidden fees · Pay by cash or card</div>
