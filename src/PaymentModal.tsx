@@ -343,7 +343,7 @@ export default function PaymentModal({
                   <CreditCard className="w-6 h-6 text-white" />
                 </div>
                 <div className="text-left">
-                  <p className="font-bold text-gray-900">Pay by Card</p>
+                  <p className="font-bold text-gray-900">Pay by Card (Valor Pay)</p>
                   <p className="text-sm text-gray-600">
                     Standard rate: <strong className="text-[#05264d]">$559.00</strong>
                   </p>
