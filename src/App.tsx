@@ -11,7 +11,7 @@ function App() {
   const [selectedProgram, setSelectedProgram] = useState<(typeof programs)[0] | null>(null);
   const [showExperiencePopup, setShowExperiencePopup] = useState(false);
   const [paymentModalOpen, setPaymentModalOpen] = useState(false);
-  const IPOS_LINK = 'https://pay.ipospays.com/externalPay?t=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0cmFuc2FjdGlvbl9pZCI6Ijg4OTc5ODg0Mjk0NyIsInBheW1lbnRfdHlwZSI6MX0.hk91sjk6QiApfj193LJdgNc6BmYs3ect-NLrmSL7d8c';
+  const IPOS_LINK = 'https://securelink-prod.valorpaytech.com:4430/?redirect=1&uid=4166692e-5304-11f1-a8e1-12a0879a85b1';
 
   // Experience registration form state
   const [experienceSelection, setExperienceSelection] = useState<{ date: string; time: string } | null>(null);
@@ -521,12 +521,22 @@ function App() {
                   )}
                 </div>
               </div>
-              <button
-                onClick={() => setSelectedProgram(null)}
-                className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-full transition-colors"
-              >
-                <X className="w-6 h-6" />
-              </button>
+              <div className="flex items-center gap-3">
+                {(selectedProgram.id === 'chef' || selectedProgram.id === 'artist' || selectedProgram.id === 'doctor' || selectedProgram.id === 'dentist') && (
+                  <button
+                    onClick={() => setPaymentModalOpen(true)}
+                    className="px-5 py-2 bg-[#ca3433] text-white text-sm font-semibold rounded-full shadow-md hover:bg-[#b1302f] transition-colors"
+                  >
+                    Register Now
+                  </button>
+                )}
+                <button
+                  onClick={() => setSelectedProgram(null)}
+                  className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-full transition-colors"
+                >
+                  <X className="w-6 h-6" />
+                </button>
+              </div>
             </div>
 
             <div className="p-6 sm:p-10">
