@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { X, CreditCard, Banknote, Send, CheckCircle2, Loader2, Banknote as CashIcon, ChefHat, Palette, Stethoscope, Smile } from "lucide-react";
+import { X, CreditCard, Banknote, Send, CheckCircle2, ChefHat, Palette, Stethoscope, Smile } from "lucide-react";
 
 interface PaymentModalProps {
   isOpen: boolean;
@@ -25,8 +25,6 @@ export default function PaymentModal({
   isOpen,
   onClose,
   courseName,
-  cashPrice,
-  cardPrice,
   stripeLink,
 }: PaymentModalProps) {
   // Lock background scroll when modal is open
@@ -321,7 +319,7 @@ export default function PaymentModal({
                 className="w-full flex items-center gap-4 p-4 rounded-2xl border-2 border-green-200 bg-green-50 hover:border-green-400 hover:bg-green-100 transition-all group relative overflow-hidden"
               >
                 <div className="absolute top-0 right-0 bg-green-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-bl-lg">
-                  SAVE 4%
+                  We offer cash discount program
                 </div>
                 <div className="w-11 h-11 rounded-xl bg-green-600 flex items-center justify-center shrink-0">
                   <Banknote className="w-6 h-6 text-white" />

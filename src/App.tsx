@@ -1,14 +1,60 @@
-import { X, Calendar, Sparkles, Clock, CheckCircle, Loader2, ArrowLeft } from 'lucide-react';
+import { X, Calendar, Sparkles, Clock, CheckCircle, Loader2, ArrowLeft, MapPin, Mail, Phone } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import Lenis from '@studio-freight/lenis';
 import AdminDashboard from './components/AdminDashboard';
-import { programs } from './programsData';
+import { programs as rawPrograms } from './programsData';
 import PaymentModal from './PaymentModal';
 
+interface ProgramOption {
+  label: string;
+  time: string;
+  dates: string;
+}
+
+interface ProgramSchedule {
+  grades: string;
+  options: ProgramOption[];
+}
+
+interface SyllabusWeek {
+  week: string;
+  title: string;
+  desc: string;
+}
+
+interface ProgramPart {
+  title: string;
+  ceremony: string;
+  schedules: ProgramSchedule[];
+  syllabus: SyllabusWeek[];
+}
+
+interface Program {
+  id: string;
+  name: string;
+  icon: any;
+  startDate?: string;
+  startDates?: string[];
+  hasSyllabus: boolean;
+  videos?: string[];
+  content?: ProgramPart[];
+}
+
+const programs = rawPrograms as Program[];
 
 function App() {
   const [isAdminRoute, setIsAdminRoute] = useState(false);
-  const [selectedProgram, setSelectedProgram] = useState<(typeof programs)[0] | null>(null);
+  const [selectedProgram, setSelectedProgram] = useState<Program | null>(null);
+  const [modalImageSrc, setModalImageSrc] = useState<string>('');
+
+  useEffect(() => {
+    if (selectedProgram) {
+      setModalImageSrc(`/images/future-${selectedProgram.id}/future-${selectedProgram.id}.png`);
+    } else {
+      setModalImageSrc('');
+    }
+  }, [selectedProgram]);
+
   const [showExperiencePopup, setShowExperiencePopup] = useState(false);
   const [paymentModalOpen, setPaymentModalOpen] = useState(false);
   const IPOS_LINK = 'https://securelink-prod.valorpaytech.com:4430/?redirect=1&uid=4166692e-5304-11f1-a8e1-12a0879a85b1';
@@ -279,7 +325,7 @@ function App() {
               {/* Pricing Block */}
               <div className="mt-10 max-w-xl mx-auto bg-white rounded-3xl shadow-xl p-8 border border-[#f7e0e0] relative overflow-hidden">
                 <div className="absolute top-4 right-4 bg-green-100 text-green-700 text-xs font-bold px-3 py-1 rounded-full border border-green-200">
-                  SAVE 4% WITH ZELLE
+                  We offer cash discount program
                 </div>
                 <div className="text-4xl font-black text-[#ca3433] mb-1">$559</div>
                 <div className="text-base text-[#0e1f3e]/60 font-medium mb-5">Full program — flat rate, no hidden fees</div>
@@ -493,19 +539,79 @@ function App() {
           </section>
         </main>
 
-        <footer className="mt-12 text-center text-gray-600 text-base">
-          <p>&copy; 2026 Exceed&apos;s Future Professionals Series. All rights reserved.</p>
+        <footer className="mt-20 border-t border-gray-200/50 pt-10 pb-8 text-center text-gray-600 text-base">
+          <div className="max-w-3xl mx-auto mb-8 grid grid-cols-1 sm:grid-cols-3 gap-6 text-sm">
+            <div className="flex flex-col items-center p-4 bg-white/50 rounded-2xl border border-white/80 shadow-sm backdrop-blur-sm">
+              <MapPin className="w-5 h-5 text-[#ca3433] mb-2" />
+              <span className="font-bold text-[#0e1f3e] mb-1">Our Location</span>
+              <a href="https://maps.google.com/?q=1360+Willis+Ave,+Albertson,+NY+11507" target="_blank" rel="noopener noreferrer" className="hover:text-[#ca3433] transition-colors text-xs text-gray-500">
+                1360 Willis Ave.<br />Albertson, NY 11507
+              </a>
+            </div>
+            <div className="flex flex-col items-center p-4 bg-white/50 rounded-2xl border border-white/80 shadow-sm backdrop-blur-sm">
+              <Phone className="w-5 h-5 text-[#ca3433] mb-2" />
+              <span className="font-bold text-[#0e1f3e] mb-1">Call Us</span>
+              <a href="tel:+15162263114" className="hover:text-[#ca3433] transition-colors text-xs text-gray-500">
+                +1 (516) 226-3114
+              </a>
+            </div>
+            <div className="flex flex-col items-center p-4 bg-white/50 rounded-2xl border border-white/80 shadow-sm backdrop-blur-sm">
+              <Mail className="w-5 h-5 text-[#ca3433] mb-2" />
+              <span className="font-bold text-[#0e1f3e] mb-1">Email Us</span>
+              <a href="mailto:info@exceedlearningcenterny.com" className="hover:text-[#ca3433] transition-colors text-xs text-gray-500 break-all">
+                info@exceedlearningcenterny.com
+              </a>
+            </div>
+          </div>
+          <p className="text-sm text-gray-400">&copy; 2026 Exceed&apos;s Future Professionals Series. All rights reserved.</p>
         </footer>
       </div>
 
       {/* Syllabus Modal */}
       {selectedProgram && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm" onClick={() => setSelectedProgram(null)}>
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-0 sm:p-4 bg-black/60 backdrop-blur-sm" onClick={() => setSelectedProgram(null)}>
           <div
-            className="bg-white rounded-3xl w-full max-w-4xl max-h-[90vh] overflow-y-auto shadow-2xl animate-in fade-in zoom-in duration-300 overscroll-y-contain"
+            className="bg-white rounded-none sm:rounded-3xl w-full max-w-4xl h-full sm:h-auto max-h-screen sm:max-h-[90vh] overflow-y-auto shadow-2xl animate-in fade-in zoom-in duration-300 overscroll-y-contain"
             onClick={(e) => e.stopPropagation()}
             data-lenis-prevent
           >
+            {/* Modal Hero Banner */}
+            <div className="relative h-64 sm:h-80 md:h-96 w-full bg-[#0e1f3e] overflow-hidden flex items-center justify-center">
+              {/* Blurred Ambient Background */}
+              <img
+                src={modalImageSrc}
+                alt=""
+                className="absolute inset-0 w-full h-full object-cover blur-xl opacity-30 scale-105 pointer-events-none"
+              />
+              {/* Main Contained Image */}
+              <img
+                src={modalImageSrc}
+                alt={selectedProgram.name}
+                className="relative z-10 max-w-full max-h-full object-contain px-4 sm:px-8 py-2"
+                onError={() => {
+                  if (modalImageSrc && modalImageSrc.includes(`/images/future-${selectedProgram.id}`)) {
+                    setModalImageSrc(`/images/${selectedProgram.id}_banner.png`);
+                    return;
+                  }
+                  setModalImageSrc('/images/kids-group.png');
+                }}
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent z-20 pointer-events-none" />
+              <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-8 z-30 pointer-events-none">
+                <div className="flex items-center gap-4 text-white">
+                  <div className="p-3 bg-white/20 backdrop-blur-md rounded-2xl border border-white/20">
+                    <selectedProgram.icon className="w-8 h-8 sm:w-10 sm:h-10 text-white" />
+                  </div>
+                  <div>
+                    <span className="text-[10px] sm:text-xs font-bold uppercase tracking-wider text-yellow-300 bg-[#ca3433] px-2.5 py-1 rounded-full">
+                      Syllabus &amp; Schedule
+                    </span>
+                    <h3 className="text-2xl sm:text-4xl font-black mt-2 drop-shadow-md text-white">{selectedProgram.name}</h3>
+                  </div>
+                </div>
+              </div>
+            </div>
+
             <div className="sticky top-0 z-10 flex items-center justify-between p-6 bg-white border-b border-gray-100">
               <div className="flex items-center gap-4">
                 <div className="p-3 bg-[#f7e0e0] rounded-xl">
@@ -540,45 +646,7 @@ function App() {
             </div>
 
             <div className="p-6 sm:p-10">
-              {/* Registration Buttons at Top for all enrolling programs */}
-              {(selectedProgram.id === 'chef' || selectedProgram.id === 'artist' || selectedProgram.id === 'doctor' || selectedProgram.id === 'dentist') && (
-                <div className="mb-8 p-6 bg-gradient-to-r from-[#f7e0e0] to-[#fff7e5] rounded-2xl">
-                  <h4 className="text-lg font-bold text-[#0e1f3e] mb-4 text-center">Ready to Register?</h4>
-                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4">
-                    {programs.filter(p => ['chef', 'artist', 'doctor', 'dentist'].includes(p.id)).map((prog) => {
-                      const ProgIcon = prog.icon;
-                      return (
-                        <button
-                          key={prog.id}
-                          onClick={() => {
-                            setSelectedProgram(prog);
-                            setPaymentModalOpen(true);
-                          }}
-                          className={`flex flex-col items-center p-3 rounded-xl border-2 transition-all hover:shadow-md ${
-                            selectedProgram.id === prog.id
-                              ? 'border-[#ca3433] bg-white shadow-md'
-                              : 'border-gray-200 bg-white/60 hover:border-[#ca3433]/50'
-                          }`}
-                        >
-                          <ProgIcon className="w-8 h-8 text-[#ca3433] mb-1" />
-                          <span className="text-[10px] sm:text-xs font-bold text-[#0e1f3e] text-center leading-tight">
-                            {prog.id === 'chef' ? 'Young Chef' : prog.id === 'artist' ? 'Young Artist' : prog.name}
-                          </span>
-                        </button>
-                      );
-                    })}
-                  </div>
-                  <p className="text-xs text-center text-gray-500 mb-3">Select a program above to enroll</p>
 
-                  <div className="mt-3 text-center text-sm sm:text-base text-gray-700">
-                    <div className="bg-white/60 rounded-xl p-4 inline-block shadow-sm border border-[#ca3433]/10">
-                      <div className="font-bold text-[#0e1f3e] mb-1 leading-tight">Full Program — Flat Rate</div>
-                      <div className="text-2xl font-black text-[#ca3433]">$559</div>
-                      <div className="text-xs text-gray-500 mt-1">No hidden fees · Pay by cash or card</div>
-                    </div>
-                  </div>
-                </div>
-              )}
 
               {selectedProgram.hasSyllabus && selectedProgram.content ? (
                 <div className="space-y-12">
@@ -666,6 +734,45 @@ function App() {
                         <div className="absolute inset-0 bg-black/10 group-hover:bg-black/20 transition-colors" />
                       </div>
                     ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Registration Buttons at Bottom for all enrolling programs */}
+              {(selectedProgram.id === 'chef' || selectedProgram.id === 'artist' || selectedProgram.id === 'doctor' || selectedProgram.id === 'dentist') && (
+                <div className="mt-12 p-6 bg-gradient-to-r from-[#f7e0e0] to-[#fff7e5] rounded-2xl">
+                  <h4 className="text-lg font-bold text-[#0e1f3e] mb-4 text-center">Ready to Register?</h4>
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4">
+                    {programs.filter(p => ['chef', 'artist', 'doctor', 'dentist'].includes(p.id)).map((prog) => {
+                      const ProgIcon = prog.icon;
+                      return (
+                        <button
+                          key={prog.id}
+                          onClick={() => {
+                            setSelectedProgram(prog);
+                            setPaymentModalOpen(true);
+                          }}
+                          className={`flex flex-col items-center p-3 rounded-xl border-2 transition-all hover:shadow-md ${selectedProgram.id === prog.id
+                            ? 'border-[#ca3433] bg-white shadow-md'
+                            : 'border-gray-200 bg-white/60 hover:border-[#ca3433]/50'
+                            }`}
+                        >
+                          <ProgIcon className="w-8 h-8 text-[#ca3433] mb-1" />
+                          <span className="text-[10px] sm:text-xs font-bold text-[#0e1f3e] text-center leading-tight">
+                            {prog.id === 'chef' ? 'Young Chef' : prog.id === 'artist' ? 'Young Artist' : prog.name}
+                          </span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                  <p className="text-xs text-center text-gray-500 mb-3">Select a program above to enroll</p>
+
+                  <div className="mt-3 text-center text-sm sm:text-base text-gray-700">
+                    <div className="bg-white/60 rounded-xl p-4 inline-block shadow-sm border border-[#ca3433]/10">
+                      <div className="font-bold text-[#0e1f3e] mb-1 leading-tight">Full Program — Flat Rate</div>
+                      <div className="text-2xl font-black text-[#ca3433]">$559</div>
+                      <div className="text-xs text-gray-500 mt-1">No hidden fees · Pay by cash or card</div>
+                    </div>
                   </div>
                 </div>
               )}
