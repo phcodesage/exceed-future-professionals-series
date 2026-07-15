@@ -223,7 +223,7 @@ function App() {
                     <span className="block text-[#ca3433]">Limited Spots!</span>
                   </h1>
                   <p className="text-base sm:text-lg text-[#1f2a4d]/80 max-w-xl font-bold">
-                    NOW ENROLLING DOCTOR AND DENTIST — SECURE YOUR SPOT TODAY!
+                    NOW ENROLLING DOCTOR AND LAWYER — SECURE YOUR SPOT TODAY!
                   </p>
                 </div>
               </div>
@@ -309,7 +309,7 @@ function App() {
                 Now Enrolling — <span className="text-[#ca3433]">Limited Spots!</span>
               </h2>
               <p className="text-lg sm:text-xl text-[#1f2a4d]/70 mb-6 font-medium">
-                Now Enrolling Young Artist and Young Chef — Fill up the form to enroll today.
+                Now Enrolling Future Doctor and Future Lawyer — Fill up the form to enroll today.
               </p>
               <button type="button"
                 onClick={() => setPaymentModalOpen(true)}
@@ -378,16 +378,16 @@ function App() {
                 a young age, children can gain clarity and confidence in understanding the possibilities for their future.
               </p>
 
-              {/* Active Programs - Doctor and Dentist */}
+              {/* Active Programs - Doctor and Lawyer */}
               <div className="mb-12" id="enroll">
                 <h3 className="text-3xl font-bold text-[#ca3433] mb-2 text-center">Now Enrolling</h3>
-                <p className="text-center text-[#0e1f3e]/60 mb-6 text-sm font-medium">Young Artist &amp; Young Chef — Limited spots available</p>
+                <p className="text-center text-[#0e1f3e]/60 mb-6 text-sm font-medium">Future Doctor &amp; Future Lawyer — Limited spots available</p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                  {programs.filter(p => p.id === 'chef' || p.id === 'artist').map((program) => {
+                  {programs.filter(p => p.id === 'doctor' || p.id === 'lawyer').map((program) => {
                     const Icon = program.icon;
-                    const description = program.id === 'chef'
-                      ? 'Kids cook, create, and learn kitchen confidence with fun culinary projects and healthy meal lessons.'
-                      : 'Young artists explore color, texture, and creativity through guided drawing, painting, and mixed-media activities.';
+                    const description = program.id === 'doctor'
+                      ? 'Your child will explore the world of medicine through hands-on activities, learning how real doctors diagnose, treat, and care for patients.'
+                      : 'Introduce your child to the fundamentals of law, public speaking, and critical thinking through engaging mock trials and debates.';
                     return (
                       <div
                         key={program.name}
@@ -419,13 +419,13 @@ function App() {
 
               <div className="mb-12">
                 <h3 className="text-2xl font-bold text-[#0e1f3e] mb-2 text-center">Also Enrolling</h3>
-                <p className="text-center text-[#0e1f3e]/60 mb-6 text-sm font-medium">Future Doctor &amp; Future Dentist — Click syllabus to register</p>
+                <p className="text-center text-[#0e1f3e]/60 mb-6 text-sm font-medium">Young Chef &amp; Young Artist — Click syllabus to register</p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                  {programs.filter(p => p.id === 'doctor' || p.id === 'dentist').map((program) => {
+                  {programs.filter(p => p.id === 'chef' || p.id === 'artist').map((program) => {
                     const Icon = program.icon;
-                    const description = program.id === 'doctor'
-                      ? 'Your child will explore the world of medicine through hands-on activities, learning how real doctors diagnose, treat, and care for patients.'
-                      : 'A fun, immersive journey into dentistry where kids learn about oral health, dental tools, and what it takes to keep smiles healthy.';
+                    const description = program.id === 'chef'
+                      ? 'Kids cook, create, and learn kitchen confidence with fun culinary projects and healthy meal lessons.'
+                      : 'Young artists explore color, texture, and creativity through guided drawing, painting, and mixed-media activities.';
                     return (
                       <div
                         key={program.name}
@@ -436,7 +436,7 @@ function App() {
                       >
                         <Icon className="w-16 h-16 text-[#ca3433] mb-3 group-hover:text-[#b1302f] transition-colors" />
                         <span className="text-base sm:text-lg font-semibold text-[#0e1f3e] text-center group-hover:text-[#0e1f3e] transition-colors">
-                          {program.name}
+                          {program.id === 'chef' ? 'Young Chef' : program.id === 'artist' ? 'Young Artist' : program.name}
                         </span>
                         {program.startDate && (
                           <span className="text-xs font-bold text-[#ca3433] mt-1 px-2 py-0.5 bg-white/50 rounded-full group-hover:bg-white group-hover:text-[#ca3433] transition-all">
@@ -510,7 +510,7 @@ function App() {
                   More exciting programs are on the way!
                 </p>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-                  {programs.filter(p => p.id !== 'doctor' && p.id !== 'dentist' && p.id !== 'chef' && p.id !== 'artist').map((program) => {
+                  {programs.filter(p => p.id !== 'doctor' && p.id !== 'lawyer' && p.id !== 'chef' && p.id !== 'artist').map((program) => {
                     const Icon = program.icon;
                     const dateLabel = program.startDates ? program.startDates.join(' / ') : program.startDate;
                     return (
@@ -628,7 +628,7 @@ function App() {
                 </div>
               </div>
               <div className="flex items-center gap-3">
-                {(selectedProgram.id === 'chef' || selectedProgram.id === 'artist' || selectedProgram.id === 'doctor' || selectedProgram.id === 'dentist') && (
+                {(selectedProgram.id === 'chef' || selectedProgram.id === 'artist' || selectedProgram.id === 'doctor' || selectedProgram.id === 'lawyer') && (
                   <button
                     onClick={() => setPaymentModalOpen(true)}
                     className="px-5 py-2 bg-[#ca3433] text-white text-sm font-semibold rounded-full shadow-md hover:bg-[#b1302f] transition-colors"
@@ -739,11 +739,11 @@ function App() {
               )}
 
               {/* Registration Buttons at Bottom for all enrolling programs */}
-              {(selectedProgram.id === 'chef' || selectedProgram.id === 'artist' || selectedProgram.id === 'doctor' || selectedProgram.id === 'dentist') && (
+              {(selectedProgram.id === 'chef' || selectedProgram.id === 'artist' || selectedProgram.id === 'doctor' || selectedProgram.id === 'lawyer') && (
                 <div className="mt-12 p-6 bg-gradient-to-r from-[#f7e0e0] to-[#fff7e5] rounded-2xl">
                   <h4 className="text-lg font-bold text-[#0e1f3e] mb-4 text-center">Ready to Register?</h4>
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4">
-                    {programs.filter(p => ['chef', 'artist', 'doctor', 'dentist'].includes(p.id)).map((prog) => {
+                    {programs.filter(p => ['chef', 'artist', 'doctor', 'lawyer'].includes(p.id)).map((prog) => {
                       const ProgIcon = prog.icon;
                       return (
                         <button
@@ -780,7 +780,7 @@ function App() {
 
             <div className="p-6 border-t border-gray-100 bg-gray-50 flex flex-col sm:flex-row items-center justify-end gap-4">
               {/* Show registration button for Doctor/Dentist programs */}
-              {(selectedProgram.id === 'doctor' || selectedProgram.id === 'dentist') && (
+              {(selectedProgram.id === 'doctor' || selectedProgram.id === 'lawyer') && (
                 <button
                   onClick={() => {
                     setPaymentModalOpen(true);

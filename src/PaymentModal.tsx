@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { X, CreditCard, Banknote, Send, CheckCircle2, ChefHat, Palette, Stethoscope, Smile } from "lucide-react";
+import { X, CreditCard, Banknote, Send, CheckCircle2, ChefHat, Palette, Stethoscope, Smile, Scale } from "lucide-react";
 
 interface PaymentModalProps {
   isOpen: boolean;
@@ -46,6 +46,8 @@ export default function PaymentModal({
         setRegForm(f => ({ ...f, programPreference: "doctor" }));
       } else if (courseName.toLowerCase().includes("dentist")) {
         setRegForm(f => ({ ...f, programPreference: "dentist" }));
+      } else if (courseName.toLowerCase().includes("lawyer")) {
+        setRegForm(f => ({ ...f, programPreference: "lawyer" }));
       }
     }
   }, [courseName, isOpen]);
@@ -107,6 +109,7 @@ export default function PaymentModal({
         artist: 'Future Artist',
         doctor: 'Future Doctor',
         dentist: 'Future Dentist',
+        lawyer: 'Future Lawyer',
       };
 
       const response = await fetch(`${baseUrl}/api/waitlist`, {
@@ -259,11 +262,11 @@ export default function PaymentModal({
                       </button>
                       <button
                         type="button"
-                        onClick={() => setRegForm(f => ({ ...f, programPreference: 'dentist' }))}
-                        className={`flex items-center justify-center gap-2 p-2.5 rounded-xl border-2 transition-all ${regForm.programPreference === 'dentist' ? 'border-[#ca3433] bg-[#f7e0e0] text-[#ca3433]' : 'border-gray-100 bg-gray-50 text-gray-500 hover:border-gray-200'}`}
+                        onClick={() => setRegForm(f => ({ ...f, programPreference: 'lawyer' }))}
+                        className={`flex items-center justify-center gap-2 p-2.5 rounded-xl border-2 transition-all ${regForm.programPreference === 'lawyer' ? 'border-[#ca3433] bg-[#f7e0e0] text-[#ca3433]' : 'border-gray-100 bg-gray-50 text-gray-500 hover:border-gray-200'}`}
                       >
-                        <Smile className={`w-4 h-4 ${regForm.programPreference === 'dentist' ? 'text-[#ca3433]' : 'text-gray-400'}`} />
-                        <span className="font-bold text-xs">Future Dentist</span>
+                        <Scale className={`w-4 h-4 ${regForm.programPreference === 'lawyer' ? 'text-[#ca3433]' : 'text-gray-400'}`} />
+                        <span className="font-bold text-xs">Future Lawyer</span>
                       </button>
                       <button
                         type="button"
