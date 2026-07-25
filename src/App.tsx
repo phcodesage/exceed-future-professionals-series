@@ -201,6 +201,21 @@ function App() {
         cardPrice="$559"
         stripeLink={IPOS_LINK}
       />
+      <div className="sticky top-0 z-50 w-full bg-[#ca3433] text-white shadow-md">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 flex items-center justify-center sm:justify-between gap-3">
+          <span className="hidden sm:block text-sm font-bold">
+            Now Enrolling — Limited Spots for Future Doctor &amp; Future Lawyer!
+          </span>
+          <button
+            type="button"
+            onClick={() => setPaymentModalOpen(true)}
+            className="inline-flex items-center justify-center px-6 py-2 rounded-full bg-white text-[#ca3433] text-sm sm:text-base font-bold shadow-sm hover:bg-[#fff7e5] transition-colors"
+          >
+            <Sparkles className="w-4 h-4 mr-2" />
+            Enroll Now
+          </button>
+        </div>
+      </div>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
         <header className="mb-20" id="hero">
           <div className="flex flex-col lg:flex-row items-center gap-10">
@@ -316,7 +331,7 @@ function App() {
                 className="inline-flex items-center justify-center px-14 py-5 rounded-full bg-[#ca3433] text-white text-xl sm:text-2xl font-bold shadow-xl hover:bg-[#b1302f] hover:shadow-2xl hover:scale-105 transition-all duration-300"
               >
                 <Sparkles className="w-6 h-6 mr-3" />
-                Enroll Now
+                Reserve Spot Today
               </button>
               <p className="mt-4 text-sm text-[#ca3433] font-bold animate-pulse">
                 ⚠️ Spots are limited and filling up fast for 2027 sessions!
@@ -633,7 +648,7 @@ function App() {
                     onClick={() => setPaymentModalOpen(true)}
                     className="px-5 py-2 bg-[#ca3433] text-white text-sm font-semibold rounded-full shadow-md hover:bg-[#b1302f] transition-colors"
                   >
-                    Register Now
+                    Select Program
                   </button>
                 )}
                 <button
@@ -787,7 +802,7 @@ function App() {
                   }}
                   className="px-8 py-3 bg-[#ca3433] text-white font-semibold rounded-full shadow-md hover:bg-[#b1302f] transition-colors"
                 >
-                  Register Early for This Program
+                  Select This Program
                 </button>
               )}
             </div>
